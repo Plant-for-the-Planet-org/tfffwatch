@@ -164,6 +164,15 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       pledgedCapital: null,
       investedCapital: null,
     },
+    {
+      slug: "Luxembourg",
+      label: "Luxembourg",
+      iso2: "LU",
+      emoji: "🇺",
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
   ];
 
   const banksOthersList: ChipItemType[] = [
