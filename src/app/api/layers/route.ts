@@ -5,11 +5,29 @@ const layersAPIParams = (countryName: string, yearShorthand: string) =>
 // const layersAPIParams = (countryCode: string, yearShorthand: string) =>
 //   `https://layers.plant-for-the-planet.org/tttf-data/${countryCode}/${yearShorthand}`;
 
+// Country display name: letters (incl. accents), spaces, ., ', - ; 1-60 chars.
+// Blocks path-traversal / injection chars (/, \, %, ?, #, ..) from the proxied URL.
+const NAME_RE = /^[\p{L} .'-]{1,60}$/u;
+const YEAR_RE = /^\d{4}$/;
+
 export async function POST(request: Request) {
   const body = await request.json();
   const { name, year /* iso2 */ } = body;
 
-  const url = layersAPIParams(name, year.slice(2));
+  if (typeof name !== "string" || !NAME_RE.test(name)) {
+    return NextResponse.json(
+      { message: "Invalid 'name' parameter" },
+      { status: 400 }
+    );
+  }
+  if (typeof year !== "string" || !YEAR_RE.test(year)) {
+    return NextResponse.json(
+      { message: "Invalid 'year' parameter" },
+      { status: 400 }
+    );
+  }
+
+  const url = layersAPIParams(encodeURIComponent(name), year.slice(2));
   // const url = layersAPIParams(iso2, year)
 
   try {
