@@ -1,6 +1,6 @@
 import Br from "@/components/ui/Br";
 import Image from "next/image";
-import HowTFFFWorksFlowChart from "@/components/sections/features/HowTFFFWorksFlowChart";
+import HowTFFFWorksFlowChart from "@/components/sections/features/tfff/HowTFFFWorksFlowChart";
 import HowTFFFWorksContent from "./HowTFFFWorksContent";
 
 export default function HowTFFFWorks() {

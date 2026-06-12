@@ -1,5 +1,5 @@
-import HowTFFFWorks from "@/components/sections/features/HowTFFFWorks";
-import InterestedInDivingDeeper from "@/components/sections/features/InterestedInDivingDeeper";
+import HowTFFFWorks from "@/components/sections/features/tfff/HowTFFFWorks";
+import InterestedInDivingDeeper from "@/components/sections/features/tfff/InterestedInDivingDeeper";
 import SecondaryHero, {
   OverlayTheTFFFIdea,
 } from "@/components/sections/hero/SecondaryHero";

@@ -1,7 +1,7 @@
-import CountryListChips from "@/components/sections/features/CountryListChips";
-import InvestmentProgress from "@/components/sections/features/InvestmentProgress";
-import InvestmentTracker from "@/components/sections/features/InvestmentTracker";
-import InvestmentTrackerContent from "@/components/sections/features/InvestmentTrackerContent";
+import CountryListChips from "@/components/sections/features/investment/CountryListChips";
+import InvestmentProgress from "@/components/sections/features/investment/InvestmentProgress";
+import InvestmentTracker from "@/components/sections/features/investment/InvestmentTracker";
+import InvestmentTrackerContent from "@/components/sections/features/investment/InvestmentTrackerContent";
 import Br from "@/components/ui/Br";
 import { api, urls } from "@/utils/axios-helper";
 import { PageError } from "@/utils/errors";
