@@ -4,7 +4,7 @@ import { useWorldMapStore } from "@/stores/mapStore";
 import { transformAllForestCoverChangeData } from "@/utils/country-helper";
 import { downloadGeoJsonAsSvg } from "@/utils/download-map";
 import { env } from "@/utils/env";
-import { getGFWColorKey } from "@/utils/map-colors";
+import { eligibilityColor } from "@/domain/eligibility";
 import { useWorldMap } from "@/utils/store";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
 import * as turf from "@turf/turf";
@@ -107,7 +107,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
         const countrySlug = country.properties.countrySlug as string;
         const countyISO2 = country.properties.iso_a2 as string;
         const jrcEligibility = transformedJRC[countyISO2]?.eligibility;
-        const jrcColorKey = getGFWColorKey(jrcEligibility || "NA");
+        const jrcColorKey = eligibilityColor(jrcEligibility || "NA");
 
         return {
           ...country,
@@ -127,7 +127,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
         const countrySlug = country.properties.countrySlug as string;
         const countyISO2 = country.properties.iso_a2 as string;
         const gfwEligibility = transformedGFW[countyISO2]?.eligibility;
-        const gfwColorKey = getGFWColorKey(gfwEligibility || "NA");
+        const gfwColorKey = eligibilityColor(gfwEligibility || "NA");
 
         return {
           ...country,

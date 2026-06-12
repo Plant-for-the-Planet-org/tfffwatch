@@ -1,16 +1,14 @@
 import countries, { alpha2ToAlpha3 } from "i18n-iso-countries";
 import { slugISO2 } from "./slug-iso2";
-import { ForestCoverChange } from "./types";
+import type { CountryForestRecord } from "@/domain/forest-record.types";
+import { classify } from "@/domain/eligibility";
 // eslint-disable-next-line
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 import countryMapping from "./country-mapping.json";
+import type { CountryDetails } from "@/domain/country.types";
 
-export type CountryDetails = {
-  iso2: string;
-  iso3: string;
-  name: string;
-  flagImgUrl: string;
-};
+// Re-exported for existing importers; canonical definition lives in domain/.
+export type { CountryDetails };
 
 export function getCountryDetails({
   country = "",
@@ -70,21 +68,14 @@ type CountryForestData = {
   };
 };
 
-export function transformAllForestCoverChangeData(data: ForestCoverChange[]) {
+export function transformAllForestCoverChangeData(data: CountryForestRecord[]) {
   return data.reduce((acc: CountryForestData, row) => {
     const countryISO2 = row["country-iso2"];
     const countrySlug = row["country-slug"];
     const percDef = row.percentage_deforested || 0;
     const percDeg = row.percentage_degraded || 0;
 
-    let eligibility = "INELIGIBLE";
-    if (row.eligibility_deforestation_rate_below_half_percent === true) {
-      if (row.eligibility_decreasing_trend_of_deforestation === false) {
-        eligibility = "ALMOST_ELIGIBLE";
-      } else {
-        eligibility = "ELIGIBLE";
-      }
-    }
+    const eligibility = classify(row);
 
     acc[countryISO2] = {
       countrySlug,

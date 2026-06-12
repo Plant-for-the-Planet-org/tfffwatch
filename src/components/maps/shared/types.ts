@@ -1,52 +1,9 @@
 // Shared types for map components
+import { CountryForestRecord } from "@/domain/forest-record.types";
+import { Country } from "@/domain/country.types";
 
 // Dataset types
 export type DatasetType = "GFW" | "JRC";
-
-// Country data interface
-export interface CountryData {
-  iso2: string;
-  iso3: string;
-  name: string;
-  slug: string;
-  flagImgUrl: string;
-}
-
-// Base TFFF data interface
-export interface TFFFData {
-  year: string;
-  country: string;
-  "country-iso2": string;
-  "country-slug": string;
-  eligibility_combined: boolean;
-  intact_forest_ha: number;
-  base_reward_usd: number;
-  deforested_ha: number;
-  deforestation_deduction_usd: number;
-  degraded_forest_ha: number;
-  degradation_deduction_usd: number;
-  reward_after_deductions_usd: number;
-  iplc_reward_usd: number;
-  percentage_deforested: number;
-  percentage_degraded: number;
-  passes_criteria: boolean;
-  eligibility_deforestation_rate_below_half_percent: boolean;
-  eligibility_decreasing_trend_of_deforestation: boolean;
-}
-
-// GFW-specific TFFF data
-export interface GFWTFFFData extends TFFFData {
-  tree_cover_loss_ha: number;
-  tree_cover_gain_ha: number;
-  primary_forest_loss_ha: number;
-}
-
-// JRC-specific TFFF data
-export interface JRCTFFFData extends TFFFData {
-  forest_disturbance_ha: number;
-  forest_regrowth_ha: number;
-  land_cover_change_ha: number;
-}
 
 // Map viewport interface
 export interface MapViewport {
@@ -86,20 +43,20 @@ export interface LayerData {
 
 // World Map State
 export interface WorldMapState {
-  selectedCountry: CountryData | null;
+  selectedCountry: Country | null;
   selectedYear: string;
   selectedDataset: DatasetType;
   clickPosition: { x: number; y: number } | null;
   forestData: {
-    GFW: TFFFData[];
-    JRC: TFFFData[];
+    GFW: CountryForestRecord[];
+    JRC: CountryForestRecord[];
   };
   isLoading: boolean;
 }
 
 // Country Map State
 export interface CountryMapState {
-  country: CountryData;
+  country: Country;
   year: string;
   dataset: DatasetType;
   layerData: {
@@ -107,8 +64,8 @@ export interface CountryMapState {
     JRC: LayerData | null;
   };
   tfffData: {
-    GFW: TFFFData | null;
-    JRC: TFFFData | null;
+    GFW: CountryForestRecord | null;
+    JRC: CountryForestRecord | null;
   };
   isLoading: boolean;
 }
@@ -117,7 +74,7 @@ export interface CountryMapState {
 
 // WorldMap component props
 export interface WorldMapProps {
-  onCountryClick?: (country: CountryData) => void;
+  onCountryClick?: (country: Country) => void;
   selectedYear?: string;
   defaultSelectedCountry?: string;
   dataset?: DatasetType;
@@ -129,7 +86,7 @@ export interface WorldMapProps {
 
 // CountryMap component props
 export interface CountryMapProps {
-  country: CountryData;
+  country: Country;
   year: string;
   dataset?: DatasetType;
   showLayers?: boolean;
@@ -141,8 +98,8 @@ export interface CountryMapProps {
 
 // TFFFCard component props
 export interface TFFFCardProps {
-  country: CountryData;
-  data: TFFFData;
+  country: Country;
+  data: CountryForestRecord;
   dataset?: DatasetType;
   variant?: "popup" | "standalone";
   showCTA?: boolean;

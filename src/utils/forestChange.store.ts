@@ -1,14 +1,14 @@
 import { api, urls } from "./axios-helper";
 import { getCountryDetails } from "./country-helper";
 import { useForestCoverChangeData } from "./store";
-import { ForestCoverChange } from "./types";
+import type { CountryForestRecord } from "@/domain/forest-record.types";
 
-export let forestChangeData: ForestCoverChange[] = [];
+export let forestChangeData: CountryForestRecord[] = [];
 
 export async function fetchForestCoverChangeData(country?: string) {
-  let _results: ForestCoverChange[] = [];
+  let _results: CountryForestRecord[] = [];
   try {
-    _results = await api<ForestCoverChange[]>({
+    _results = await api<CountryForestRecord[]>({
       url: urls.forestChange,
       query: country ? { country: country } : {},
       method: "GET",
@@ -50,7 +50,7 @@ export async function fetchForestCoverChangeDataV2({
 
   try {
     console.log("API call with query:", query);
-    const _results = await api<ForestCoverChange[]>({
+    const _results = await api<CountryForestRecord[]>({
       url: urls.forestChange,
       query: query,
       method: "GET",
