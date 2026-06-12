@@ -1,5 +1,5 @@
-import EngagingNGOs from "@/components/sections/features/EngagingNGOs";
-import FriendsInGermany from "@/components/sections/features/FriendsInGermany";
+import EngagingNGOs from "@/components/sections/features/partners/EngagingNGOs";
+import FriendsInGermany from "@/components/sections/features/partners/FriendsInGermany";
 import SecondaryHero, {
   OverlayFriendsOfTheTFFF,
 } from "@/components/sections/hero/SecondaryHero";

@@ -1,10 +1,10 @@
-import InfoGrid from "@/components/sections/features/InfoGrid";
-import InvestmentTracker from "@/components/sections/features/InvestmentTracker";
+import InfoGrid from "@/components/sections/features/shared/InfoGrid";
+import InvestmentTracker from "@/components/sections/features/investment/InvestmentTracker";
 import PlansforthePlanetAnalysis from "@/components/sections/features/press/PlansforthePlanetAnalysis";
 import RecentNews from "@/components/sections/features/news/RecentNews";
 import RecentPolicyPapersComentary from "@/components/sections/features/policies/RecentPolicyPapersCommentary";
-import TFFFHero from "@/components/sections/features/TFFFHero";
-import WhatsAppInvite from "@/components/sections/features/WhatsAppInvite";
+import TFFFHero from "@/components/sections/features/tfff/TFFFHero";
+import WhatsAppInvite from "@/components/sections/features/shared/WhatsAppInvite";
 import { TFFFWorldMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
 

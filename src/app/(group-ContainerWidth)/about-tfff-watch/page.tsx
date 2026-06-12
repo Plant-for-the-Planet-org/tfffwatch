@@ -1,4 +1,4 @@
-import AboutTFFFWatch from "@/components/sections/features/AboutTFFFWatch";
+import AboutTFFFWatch from "@/components/sections/features/about/AboutTFFFWatch";
 import SecondaryHero, {
   OverlayAboutTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
