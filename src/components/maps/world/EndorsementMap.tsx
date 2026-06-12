@@ -10,7 +10,7 @@ import {
 } from "@vis.gl/react-maplibre";
 import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
 import { transformEndorsementData } from "@/utils/country-helper";
-import { getEndorsementColorKey } from "@/utils/map-colors";
+import { endorsementColor } from "@/domain/eligibility";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -120,7 +120,7 @@ export default function EndorsementMap({
           hasEndorsed,
           hasInvested,
           countrySlug: countryData?.countrySlug || "",
-          colorKey: getEndorsementColorKey(hasEndorsed),
+          colorKey: endorsementColor(hasEndorsed),
         },
       };
     });
@@ -325,14 +325,14 @@ export default function EndorsementMap({
           <div className="flex items-center">
             <div
               className="w-4 h-4 rounded-sm mr-2"
-              style={{ backgroundColor: getEndorsementColorKey(true) }}
+              style={{ backgroundColor: endorsementColor(true) }}
             />
             <span>Has Endorsed</span>
           </div>
           <div className="flex items-center">
             <div
               className="w-4 h-4 rounded-sm mr-2"
-              style={{ backgroundColor: getEndorsementColorKey(false) }}
+              style={{ backgroundColor: endorsementColor(false) }}
             />
             <span>Not Endorsed</span>
           </div>

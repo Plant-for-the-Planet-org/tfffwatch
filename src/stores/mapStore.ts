@@ -1,22 +1,22 @@
 import { create } from "zustand";
 import {
-  CountryData,
   CountryMapState,
   DatasetType,
   LayerData,
-  TFFFData,
   WorldMapState,
 } from "../components/maps/shared/types";
+import { Country } from "@/domain/country.types";
+import { CountryForestRecord } from "@/domain/forest-record.types";
 
 interface WorldMapStore extends WorldMapState {
-  setSelectedCountry: (country: CountryData | null) => void;
+  setSelectedCountry: (country: Country | null) => void;
   setSelectedYear: (year: string) => void;
   setSelectedDataset: (dataset: DatasetType) => void;
   setClickPosition: (position: { x: number; y: number } | null) => void;
-  setForestData: (dataset: DatasetType, data: TFFFData[]) => void;
+  setForestData: (dataset: DatasetType, data: CountryForestRecord[]) => void;
   setIsLoading: (loading: boolean) => void;
-  getCurrentForestData: () => TFFFData[];
-  getSelectedCountryData: () => TFFFData | null;
+  getCurrentForestData: () => CountryForestRecord[];
+  getSelectedCountryData: () => CountryForestRecord | null;
   datasetFetched: { GFW: boolean; JRC: boolean };
   markDatasetFetched: (dataset: DatasetType) => void;
   resetDatasetFetched: () => void;
@@ -74,14 +74,14 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
 }));
 
 interface CountryMapStore extends CountryMapState {
-  setCountry: (country: CountryData) => void;
+  setCountry: (country: Country) => void;
   setYear: (year: string) => void;
   setDataset: (dataset: DatasetType) => void;
   setLayerData: (dataset: DatasetType, data: LayerData | null) => void;
-  setTfffData: (dataset: DatasetType, data: TFFFData | null) => void;
+  setTfffData: (dataset: DatasetType, data: CountryForestRecord | null) => void;
   setIsLoading: (loading: boolean) => void;
   getCurrentLayerData: () => LayerData | null;
-  getCurrentTfffData: () => TFFFData | null;
+  getCurrentTfffData: () => CountryForestRecord | null;
 }
 
 export const useCountryMapStore = create<CountryMapStore>((set, get) => ({

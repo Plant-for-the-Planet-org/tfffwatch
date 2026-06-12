@@ -4,10 +4,12 @@ import { useWorldMapStore } from "@/stores/mapStore";
 import { api, urls } from "@/utils/axios-helper";
 import { useEffect, useState } from "react";
 import TFFFCard from "../shared/TFFFCard";
-import { CountryData, DatasetType, TFFFData } from "../shared/types";
+import { DatasetType } from "../shared/types";
+import { Country } from "@/domain/country.types";
+import { CountryForestRecord } from "@/domain/forest-record.types";
 
 interface CountryMapCardProps {
-  country: CountryData;
+  country: Country;
   dataset?: DatasetType;
 }
 
@@ -16,7 +18,7 @@ export default function CountryMapCard({
   dataset = "JRC",
 }: CountryMapCardProps) {
   const { selectedYear } = useWorldMapStore();
-  const [tfffData, setTfffData] = useState<TFFFData | null>(null);
+  const [tfffData, setTfffData] = useState<CountryForestRecord | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   // Use the dataset from props
@@ -29,7 +31,7 @@ export default function CountryMapCard({
 
       try {
         setIsLoading(true);
-        const data = await api<TFFFData[]>({
+        const data = await api<CountryForestRecord[]>({
           url: urls.forestChange,
           method: "GET",
           token: "",

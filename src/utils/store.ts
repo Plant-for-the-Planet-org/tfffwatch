@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ForestCoverChange } from "./types";
+import type { CountryForestRecord } from "@/domain/forest-record.types";
 
 type WorldMapStore = {
   isTFFF: boolean;
@@ -38,14 +38,14 @@ export const useWorldMap = create<WorldMapStore>((set) => ({
 }));
 
 type ForestCoverChangeStore = {
-  forestCoverChangeData: ForestCoverChange[];
-  forestCoverChangeDataByYear: ForestCoverChange[];
-  forestCoverChangeDataByCountry: ForestCoverChange[];
-  forestCoverChangeDataByCountryByYear: ForestCoverChange | null;
-  setForestCoverChangeData: (data: ForestCoverChange[]) => void;
-  setForestCoverChangeDataByYear: (data: ForestCoverChange[]) => void;
-  setForestCoverChangeDataByCountry: (data: ForestCoverChange[]) => void;
-  setForestCoverChangeDataByCountryByYear: (data: ForestCoverChange) => void;
+  forestCoverChangeData: CountryForestRecord[];
+  forestCoverChangeDataByYear: CountryForestRecord[];
+  forestCoverChangeDataByCountry: CountryForestRecord[];
+  forestCoverChangeDataByCountryByYear: CountryForestRecord | null;
+  setForestCoverChangeData: (data: CountryForestRecord[]) => void;
+  setForestCoverChangeDataByYear: (data: CountryForestRecord[]) => void;
+  setForestCoverChangeDataByCountry: (data: CountryForestRecord[]) => void;
+  setForestCoverChangeDataByCountryByYear: (data: CountryForestRecord) => void;
 };
 
 export const useForestCoverChangeData = create<ForestCoverChangeStore>(
