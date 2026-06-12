@@ -4,7 +4,7 @@ import { PageParams } from "@/app/(group-ContainerWidth)/[country]/[year]/page";
 import Br from "@/components/ui/Br";
 import { getCountryDetails } from "@/utils/country-helper";
 import { useParams } from "next/navigation";
-import AnnualPayoutAreaChart from "../charts/AnnualPayoutAreaChart";
+import AnnualPayoutAreaChart from "../../charts/AnnualPayoutAreaChart";
 
 export default function AnnualPayout() {
   const { country }: PageParams = useParams();
