@@ -1,7 +1,7 @@
 "use client";
 
 import { useWorldMapStore } from "@/stores/mapStore";
-import { api, urls } from "@/utils/axios-helper";
+import { api, urls } from "@/lib/http";
 import { useEffect, useState } from "react";
 import TFFFCard from "../shared/TFFFCard";
 import { DatasetType } from "../shared/types";

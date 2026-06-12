@@ -1,10 +1,10 @@
 import Br from "@/components/ui/Br";
 import ContentSection from "@/components/ui/ContentSection";
-import { formatDateAgo } from "@/utils/datetime-helper";
+import { formatDateAgo } from "@/lib/date";
 import { InvestmentTrackerForCountry } from "@/utils/types";
 import RichToHTML from "./RichToHTML";
 import ExpandableImage from "./ExpandableImage";
-import { hasContent, parseImageUrls } from "@/utils/content-helper";
+import { hasContent, parseImageUrls } from "@/lib/text";
 
 type Props = Partial<InvestmentTrackerForCountry> & {
   how_an_investment_could_work?: string;

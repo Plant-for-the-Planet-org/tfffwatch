@@ -1,8 +1,8 @@
 import PolicyCard from "@/components/sections/features/policies/PolicyCard";
 import Br from "@/components/ui/Br";
 import { ResponsiveContainer } from "@/components/ui/Container";
-import { api, urls } from "@/utils/axios-helper";
-import { formatDateFromExcelToData } from "@/utils/datetime-helper";
+import { api, urls } from "@/lib/http";
+import { formatDateFromExcelToData } from "@/lib/date";
 import { Policy } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
 import { Fragment } from "react";

@@ -1,7 +1,7 @@
 import Br from "@/components/ui/Br";
 import { IconButton } from "@/components/ui/Button";
-import { formatPublisherForCardBadge } from "@/utils/content-helper";
-import { formatDateForCardBadge } from "@/utils/datetime-helper";
+import { formatPublisherForCardBadge } from "@/lib/text";
+import { formatDateForCardBadge } from "@/lib/date";
 
 type Props = {
   title: string;

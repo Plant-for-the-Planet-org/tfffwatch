@@ -1,4 +1,4 @@
-import { toReadableAmount, toReadableAmountLong } from "@/utils/number-helper";
+import { toReadableAmount, toReadableAmountLong } from "@/lib/format";
 import { InvestmentTrackerCapitals } from "@/utils/types";
 import Image from "next/image";
 import { useMemo } from "react";

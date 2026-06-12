@@ -1,6 +1,6 @@
 "use client";
 
-import { api, urls } from "@/utils/axios-helper";
+import { api, urls } from "@/lib/http";
 import turfBbox from "@turf/bbox";
 import {
   bboxPolygon as turfBboxPolygon,
