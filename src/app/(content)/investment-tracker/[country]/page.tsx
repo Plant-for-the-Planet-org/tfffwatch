@@ -3,7 +3,7 @@ import InvestmentProgress from "@/components/sections/features/investment/Invest
 import InvestmentTracker from "@/components/sections/features/investment/InvestmentTracker";
 import InvestmentTrackerContent from "@/components/sections/features/investment/InvestmentTrackerContent";
 import Br from "@/components/ui/Br";
-import { api, urls } from "@/utils/axios-helper";
+import { api, urls } from "@/lib/http";
 import { PageError } from "@/utils/errors";
 import {
   InvestmentTrackerCapitals,

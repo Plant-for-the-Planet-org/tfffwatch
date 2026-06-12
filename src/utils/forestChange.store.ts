@@ -1,4 +1,4 @@
-import { api, urls } from "./axios-helper";
+import { api, urls } from "@/lib/http";
 import { getCountryDetails } from "./country-helper";
 import { useForestCoverChangeData } from "./store";
 import type { CountryForestRecord } from "@/domain/forest-record.types";
