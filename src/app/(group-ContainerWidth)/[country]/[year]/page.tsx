@@ -1,7 +1,7 @@
 import { DatasetType } from "@/components/maps/shared/types";
-import AnnualPayout from "@/components/sections/features/AnnualPayout";
-import CountrySingnatories from "@/components/sections/features/CountrySignatories";
-import ForestCoverChange from "@/components/sections/features/ForestCoverChange";
+import AnnualPayout from "@/components/sections/features/forest-cover/AnnualPayout";
+import CountrySingnatories from "@/components/sections/features/endorsement/CountrySignatories";
+import ForestCoverChange from "@/components/sections/features/forest-cover/ForestCoverChange";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
 import { getCountryDetails } from "@/utils/country-helper";

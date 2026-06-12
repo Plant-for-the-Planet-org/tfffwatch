@@ -1,5 +1,5 @@
 import Br from "@/components/ui/Br";
-import ForestCoverChangeAreaChart from "../charts/ForestCoverChangeAreaChart";
+import ForestCoverChangeAreaChart from "../../charts/ForestCoverChangeAreaChart";
 
 export default function ForestCoverChange() {
   return (

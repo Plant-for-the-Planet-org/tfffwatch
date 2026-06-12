@@ -1,5 +1,5 @@
 import Br from "@/components/ui/Br";
-import PotentialPayoutVsExistingConservationFundingBarChart from "../charts/PotentialPayoutVsExistingConservationFundingBarChart";
+import PotentialPayoutVsExistingConservationFundingBarChart from "../../charts/PotentialPayoutVsExistingConservationFundingBarChart";
 
 export default function PotentialPayoutVsExistingConservationFunding() {
   return (
