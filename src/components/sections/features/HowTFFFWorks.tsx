@@ -13,15 +13,15 @@ export default function HowTFFFWorks() {
           How the Tropical Forest Forever Facility would work
         </h2>
         <Br />
-        <p className="typo-p text-justify">
+        <p className="typo-p text-center">
           TFFF is a proposed global, permanent fund designed to support the
           long-term conservation of tropical forests. Spearheaded by the
           Government of Brazil, in dialogue with 11 other countries, the
-          initiative is scheduled to be formally launched at COP30 in Belém,
-          Brazil.
+          initiative was formally launched at the Belém Climate Summit ahead of
+          COP30 in November 2025.
         </p>
         <Br />
-        <p className="typo-p text-justify">
+        <p className="typo-p text-center">
           Unlike traditional conservation finance efforts that often rely on new
           donor pledges, the TFFF proposes an innovative approach, mobilizing
           investments from governments, sovereign wealth funds and institutional

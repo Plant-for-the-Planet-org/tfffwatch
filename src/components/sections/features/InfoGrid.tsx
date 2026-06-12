@@ -6,7 +6,7 @@ export default function InfoGrid() {
     // <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 xl:gap-5 outer-rounding outer-padding-3">
     <div className="border border-base-gray rounding-xl outer-rounding outer-padding-3">
       <div className="text-center">
-        <h2 className="font-bold typo-h2">What’s the TFFF?</h2>
+        <h2 className="font-bold typo-h2">What TFFF?</h2>
         <Br />
         <p className="mx-auto typo-p">
           The Tropical Forest Forever Facility (TFFF) is a proposed investment
