@@ -1,9 +1,9 @@
 "use client";
 
-import { PageParams } from "@/app/(group-ContainerWidth)/[country]/[year]/page";
-import { api, urls } from "@/utils/axios-helper";
+import { PageParams } from "@/app/(content)/[country]/[year]/page";
+import { api, urls } from "@/lib/http";
 import { getCountryDetails } from "@/utils/country-helper";
-import { toReadableAmount } from "@/utils/number-helper";
+import { toReadableAmount } from "@/lib/format";
 import { useForestCoverChangeData } from "@/utils/store";
 import { Spending } from "@/utils/types";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
