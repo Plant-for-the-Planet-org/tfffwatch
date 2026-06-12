@@ -12,13 +12,9 @@ export { default as MapContainer } from "./shared/MapContainer";
 export { default as DatasetTabs } from "./shared/DatasetTabsWrapper";
 
 // Types
-export type {
-  CountryData,
-  TFFFData,
-  DatasetType,
-  LayerData,
-  MapViewport,
-} from "./shared/types";
+export type { DatasetType, LayerData, MapViewport } from "./shared/types";
+export type { Country } from "@/domain/country.types";
+export type { CountryForestRecord } from "@/domain/forest-record.types";
 
 // Store hooks
 export { useWorldMapStore, useCountryMapStore } from "../../stores/mapStore";

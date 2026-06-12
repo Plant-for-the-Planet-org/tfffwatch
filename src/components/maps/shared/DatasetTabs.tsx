@@ -5,7 +5,8 @@ import { api, urls } from "@/utils/axios-helper";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
-import { DatasetType, TFFFData } from "./types";
+import { DatasetType } from "./types";
+import { CountryForestRecord } from "@/domain/forest-record.types";
 import Image from "next/image";
 import Link from "next/link";
 import PersistentTooltip from "@/components/ui/PersistentTooltip";
@@ -49,7 +50,7 @@ export default function DatasetTabs({
 
       try {
         setIsLoading(true);
-        const data = await api<TFFFData[]>({
+        const data = await api<CountryForestRecord[]>({
           url: urls.forestChangeAll,
           method: "GET",
           token: "",
