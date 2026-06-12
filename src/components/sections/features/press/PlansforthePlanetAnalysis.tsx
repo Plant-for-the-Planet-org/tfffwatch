@@ -1,6 +1,6 @@
 import Br from "@/components/ui/Br";
 import { ResponsiveContainer } from "@/components/ui/Container";
-import { urls } from "@/utils/axios-helper";
+import { urls } from "@/lib/http";
 import { News } from "@/utils/types";
 import { compareDesc } from "date-fns";
 import { XMLParser } from "fast-xml-parser";

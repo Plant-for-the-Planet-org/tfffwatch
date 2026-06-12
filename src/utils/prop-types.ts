@@ -1,5 +1,5 @@
 import { InvestmentTrackerForCountry } from "./types";
 
-export type InvesmentTrackerParams = {
+export type InvestmentTrackerParams = {
   country: string;
 } & Partial<InvestmentTrackerForCountry>;

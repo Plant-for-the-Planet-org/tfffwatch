@@ -1,7 +1,7 @@
 "use client";
 
 import { useWorldMapStore } from "@/stores/mapStore";
-import { api, urls } from "@/utils/axios-helper";
+import { api, urls } from "@/lib/http";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import { twMerge } from "tailwind-merge";

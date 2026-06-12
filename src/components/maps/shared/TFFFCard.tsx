@@ -2,7 +2,7 @@
 
 import Br from "@/components/ui/Br";
 import LinkWithParams from "@/components/ui/LinkWithParams";
-import { toReadable } from "@/utils/number-helper";
+import { toReadable } from "@/lib/format";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { TFFFCardProps } from "./types";

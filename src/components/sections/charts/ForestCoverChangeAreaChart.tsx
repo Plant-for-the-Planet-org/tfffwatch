@@ -1,6 +1,6 @@
 "use client";
 
-import { toReadable } from "@/utils/number-helper";
+import { toReadable } from "@/lib/format";
 import { useForestCoverChangeData } from "@/utils/store";
 import { useEffect, useMemo, useState } from "react";
 import {

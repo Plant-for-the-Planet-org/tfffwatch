@@ -1,13 +1,13 @@
 // "use client";
 
-import { toReadableAmount } from "@/utils/number-helper";
-import { InvesmentTrackerParams } from "@/utils/prop-types";
+import { toReadableAmount } from "@/lib/format";
+import { InvestmentTrackerParams } from "@/utils/prop-types";
 import { InvestmentTrackerCapitals } from "@/utils/types";
 import Link from "next/link";
 // import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-type Props = InvesmentTrackerParams & {
+type Props = InvestmentTrackerParams & {
   capitalsData: InvestmentTrackerCapitals[];
 };
 
