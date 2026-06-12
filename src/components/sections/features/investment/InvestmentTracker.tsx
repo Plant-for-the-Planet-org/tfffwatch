@@ -3,7 +3,7 @@
 import InvestmentGaugeChart from "@/components/sections/charts/InvestmentGaugeChart";
 import Br from "@/components/ui/Br";
 import { Button } from "@/components/ui/Button";
-import { api, urls } from "@/utils/axios-helper";
+import { api, urls } from "@/lib/http";
 import { InvestmentTrackerCapitals } from "@/utils/types";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";

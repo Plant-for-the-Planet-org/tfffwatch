@@ -1,14 +1,16 @@
 # lib/
 
-**Purpose:** Framework-agnostic utilities — the intended new home of `src/utils/`. Generic, domain-free helpers (formatting, http, date).
+**Purpose:** Framework-agnostic, domain-free utilities (formatting, http, date, text).
 
-**Here now:** nothing — scaffold only. `src/utils/` stays put this phase.
+**Here now:**
+- `http.ts` ← was `utils/axios-helper.ts` (the `api()` wrapper + `urls` registry).
+- `format.ts` ← was `utils/number-helper.ts` (`toReadable`, `toReadableAmount`, …).
+- `date.ts` ← was `utils/datetime-helper.ts`.
+- `text.ts` ← was `utils/content-helper.ts`.
 
-**Later (architecture phase — see `docs/refactor/02-directory-structure.md`):**
-- `format.ts` ← `utils/number-helper.ts`
-- `date.ts` ← `utils/datetime-helper.ts`
-- `http.ts` ← `utils/axios-helper.ts`
-- `utils.ts` ← `cn()` helper added with the shadcn/ui migration (UI phase)
-- Domain-specific helpers go to `src/domain/`, not here. (`map-colors.ts` already removed — its logic now lives in `domain/eligibility.ts`.)
+**Still in `src/utils/` (domain-flavored or pending):**
+- `country-helper.ts`, `slug-iso2.ts`, `country-mapping.json` → move to `src/domain/` (PR6).
+- `store.ts`, `forestChange.store.ts` → consolidate under `src/stores/` (PR3).
+- `errors.ts`, `prop-types.ts`, `types.ts`, `env.ts`, `download-map.ts` → re-home later.
 
-The `utils/`→`lib/` rename is deferred to the cleanup phase because it churns nearly every import path. Until then this dir stays empty.
+**Later:** `utils.ts` (`cn()`) lands with the shadcn/ui migration. Domain logic stays in `src/domain/`, not here.

@@ -1,6 +1,6 @@
 import PressReleaseCard from "@/components/sections/features/press/PressReleaseCard";
 import Br from "@/components/ui/Br";
-import { api, urls } from "@/utils/axios-helper";
+import { api, urls } from "@/lib/http";
 import { PressRelease } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
 import { Fragment } from "react";

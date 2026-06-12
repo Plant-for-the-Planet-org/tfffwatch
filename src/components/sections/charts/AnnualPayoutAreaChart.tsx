@@ -1,6 +1,6 @@
 "use client";
 
-import { toReadable } from "@/utils/number-helper";
+import { toReadable } from "@/lib/format";
 import { useForestCoverChangeData } from "@/utils/store";
 import { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
