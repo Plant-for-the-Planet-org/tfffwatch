@@ -4,8 +4,8 @@ import { useEffect, useState, useMemo } from "react";
 import Br from "@/components/ui/Br";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { useWorldMapStore } from "@/stores/mapStore";
-import { TFFFData } from "@/components/maps/shared/types";
-import { getJRCColorKey } from "@/utils/map-colors";
+import { CountryForestRecord } from "@/domain/forest-record.types";
+import { classify, eligibilityColor } from "@/domain/eligibility";
 
 // Custom tooltip component
 function CustomTooltip({
@@ -33,18 +33,6 @@ function CustomTooltip({
   return null;
 }
 
-// Helper function to calculate eligibility
-function getEligibility(item: TFFFData): string {
-  if (item.eligibility_deforestation_rate_below_half_percent === true) {
-    if (item.eligibility_decreasing_trend_of_deforestation === false) {
-      return "ALMOST_ELIGIBLE";
-    } else {
-      return "ELIGIBLE";
-    }
-  }
-  return "INELIGIBLE";
-}
-
 export default function CurrentRewardsChart() {
   const { selectedDataset, forestData } = useWorldMapStore();
   const [isLoading, setIsLoading] = useState(true);
@@ -61,7 +49,7 @@ export default function CurrentRewardsChart() {
 
     // Filter for 2024 data only
     const data2024 = datasetData.filter(
-      (item: TFFFData) => String(item.year) === "2024"
+      (item: CountryForestRecord) => String(item.year) === "2024"
     );
 
     if (data2024.length === 0) {
@@ -70,16 +58,16 @@ export default function CurrentRewardsChart() {
 
     // Filter only eligible and almost eligible countries
     const eligibleData = data2024.filter((item) => {
-      const eligibility = getEligibility(item);
+      const eligibility = classify(item);
       return eligibility === "ELIGIBLE" || eligibility === "ALMOST_ELIGIBLE";
     });
 
     // Group by eligibility
     const eligible = eligibleData.filter(
-      (item) => getEligibility(item) === "ELIGIBLE"
+      (item) => classify(item) === "ELIGIBLE"
     );
     const almostEligible = eligibleData.filter(
-      (item) => getEligibility(item) === "ALMOST_ELIGIBLE"
+      (item) => classify(item) === "ALMOST_ELIGIBLE"
     );
 
     // Sort each group by reward amount (descending) and take top 20
@@ -109,7 +97,7 @@ export default function CurrentRewardsChart() {
         name: item.country,
         iso2: item["country-iso2"],
         value: item.reward_after_deductions_usd,
-        color: getJRCColorKey("ELIGIBLE"),
+        color: eligibilityColor("ELIGIBLE"),
         eligibility: "Eligible",
       });
     });
@@ -120,7 +108,7 @@ export default function CurrentRewardsChart() {
         name: item.country,
         iso2: item["country-iso2"],
         value: item.reward_after_deductions_usd,
-        color: getJRCColorKey("ALMOST_ELIGIBLE"),
+        color: eligibilityColor("ALMOST_ELIGIBLE"),
         eligibility: "Almost Eligible",
       });
     });
@@ -144,14 +132,14 @@ export default function CurrentRewardsChart() {
     if (eligibleSum > 0) {
       legendGroups.push({
         name: "Eligible",
-        color: getJRCColorKey("ELIGIBLE"),
+        color: eligibilityColor("ELIGIBLE"),
         count: eligible.length,
       });
     }
     if (almostEligibleSum > 0) {
       legendGroups.push({
         name: "Almost Eligible",
-        color: getJRCColorKey("ALMOST_ELIGIBLE"),
+        color: eligibilityColor("ALMOST_ELIGIBLE"),
         count: almostEligible.length,
       });
     }
