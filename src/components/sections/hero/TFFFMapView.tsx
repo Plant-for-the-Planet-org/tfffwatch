@@ -17,7 +17,7 @@ import {
   WorldMapHeaderContent,
 } from "@/components/sections/hero/TFFFMapViewContent";
 import Br from "@/components/ui/Br";
-import { CountryDetails } from "@/utils/country-helper";
+import { CountryDetails } from "@/domain/country.types";
 import { env } from "@/utils/env";
 import { useForestCoverChangeData } from "@/utils/store";
 import { useParams, useSearchParams } from "next/navigation";
@@ -147,7 +147,7 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
 
   // Removed problematic navigation that was causing 404 redirects
 
-  // Convert props to CountryData format
+  // Convert props to Country format
   const countryData = {
     iso2: props.iso2,
     iso3: props.iso3,
