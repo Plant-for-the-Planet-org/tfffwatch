@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 type ContentSectionProps = {
@@ -16,13 +16,13 @@ export default function ContentSection({
 }: ContentSectionProps) {
   return (
     <div className={className}>
-      <Br />
+      <Spacer />
       <div>
         <SectionHeader icon={icon} title={title} />
-        <Br />
+        <Spacer />
         <div className="typo-p">{children}</div>
       </div>
-      <Br />
+      <Spacer />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { InvestmentTrackerForCountry } from "@/utils/types";
 import Image from "next/image";
 import { Fragment } from "react";
@@ -107,8 +107,8 @@ export default function InvestmentProgress({ investment_stage }: Props) {
         ))}
       </div>
       <div className="hidden lg:block">
-        <Br />
-        <Br />
+        <Spacer />
+        <Spacer />
       </div>
     </div>
   );

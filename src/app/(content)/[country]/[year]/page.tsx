@@ -3,7 +3,7 @@ import AnnualPayout from "@/components/sections/features/forest-cover/AnnualPayo
 import CountrySingnatories from "@/components/sections/features/endorsement/CountrySignatories";
 import ForestCoverChange from "@/components/sections/features/forest-cover/ForestCoverChange";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { getCountryDetails } from "@/domain/country";
 import { Metadata } from "next";
 import { humanize } from "underscore.string";
@@ -49,11 +49,11 @@ export default async function Page({ params, searchParams }: PageProps) {
         flagImgUrl={details.flagImgUrl}
         dataset={validDataset}
       />
-      <Br />
+      <Spacer />
       <ForestCoverChange />
-      <Br />
+      <Spacer />
       <AnnualPayout />
-      <Br />
+      <Spacer />
       <CountrySingnatories />
     </div>
   );

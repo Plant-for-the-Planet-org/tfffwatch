@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { ResponsiveContainer } from "@/components/ui/Container";
 import { api, urls } from "@/lib/http";
 import { News } from "@/utils/types";
@@ -30,10 +30,10 @@ export default async function RecentNews() {
   return (
     <ResponsiveContainer>
       <div className="bg-secondary-light outer-rounding outer-padding-3">
-        <Br />
+        <Spacer />
         <h2 className="text-center font-bold typo-h2">🌿 Recent News</h2>
-        <Br />
-        <Br />
+        <Spacer />
+        <Spacer />
         <div>
           <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
             {newsList.slice(0, 3).map((el) => (
@@ -55,8 +55,8 @@ export default async function RecentNews() {
             ))}
           </div>
         </div>
-        <Br />
-        <Br />
+        <Spacer />
+        <Spacer />
 
         <div className="flex justify-center">
           <Button type="link" external href="/news">
@@ -64,7 +64,7 @@ export default async function RecentNews() {
           </Button>
         </div>
 
-        <Br />
+        <Spacer />
       </div>
     </ResponsiveContainer>
   );

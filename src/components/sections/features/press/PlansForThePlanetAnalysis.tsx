@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { ResponsiveContainer } from "@/components/ui/Container";
 import { urls } from "@/lib/http";
 import { News } from "@/utils/types";
@@ -100,12 +100,12 @@ export default async function PlansForThePlanetAnalysis() {
   return (
     <ResponsiveContainer cn="">
       <div className="bg-secondary-light outer-rounding outer-padding-3">
-        <Br />
+        <Spacer />
         <h2 className="text-center font-bold typo-h2">
           🌳 Plans for the Planet Analysis
         </h2>
-        <Br />
-        <Br />
+        <Spacer />
+        <Spacer />
         <div>
           <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
             {articles.map((article) => (
@@ -122,10 +122,10 @@ export default async function PlansForThePlanetAnalysis() {
             ))}
           </div>
         </div>
-        <Br />
-        <Br />
+        <Spacer />
+        <Spacer />
         <NewsLetter />
-        <Br />
+        <Spacer />
       </div>
     </ResponsiveContainer>
   );

@@ -1,7 +1,7 @@
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { env } from "@/utils/env";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
@@ -44,21 +44,21 @@ export default function RootLayout({
         ></script>
       )}
 
-      <body className={`${openSans.variable} antialiased`}>
+      <body className={`${openSans.variable} font-sans antialiased`}>
         <Script
           defer
           src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.9.1/dist/cookieconsent.js"
         ></Script>
         <CookieConsentBanner />
         <Header />
-        <Br />
+        <Spacer />
         {children}
-        <Br />
+        <Spacer />
         <div className="website-container">
           <Footer />
         </div>
       </body>
-      <Br />
+      <Spacer />
     </html>
   );
 }

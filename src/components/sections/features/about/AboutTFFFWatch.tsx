@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { Button } from "@/components/ui/Button";
 import Hr from "@/components/ui/Hr";
 import Link from "next/link";
@@ -6,12 +6,12 @@ import Link from "next/link";
 export default function AboutTFFFWatch() {
   return (
     <div className="border border-base-gray rounding-xl padding-3">
-      <Br cn="hidden lg:block" />
+      <Spacer className="hidden lg:block" />
       <div className="extra-padding-x-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="shrink">
             <h2 className="font-bold typo-h2">Report errors or suggestions</h2>
-            <Br />
+            <Spacer />
             <div className="typo-p">
               <p>
                 TFFF Watch is currently in its public Beta phase. We welcome all
@@ -29,13 +29,13 @@ export default function AboutTFFFWatch() {
             Contact Us
           </Button>
         </div>
-        <Br />
+        <Spacer />
         <Hr />
-        <Br />
+        <Spacer />
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="shrink">
             <h2 className="font-bold typo-h2">Contribute</h2>
-            <Br />
+            <Spacer />
             <div className="typo-p">
               <p>
                 TFFF Watch is a project by Plant-for-the-Planet. Please contact
@@ -51,17 +51,17 @@ export default function AboutTFFFWatch() {
             Contact Us
           </Button>
         </div>
-        <Br />
+        <Spacer />
         <Hr />
-        <Br />
+        <Spacer />
         <div>
           <h2 className="font-bold typo-h2">Analysis Methodology</h2>
-          <Br />
+          <Spacer />
           <div className="typo-p">
             <h2 className="font-bold typo-h3">
               Tree cover loss estimate (GFW-based)
             </h2>
-            <Br />
+            <Spacer />
             <b>a. Baseline</b>
             <p>
               The baseline forest extent is calculated using the{" "}
@@ -91,7 +91,7 @@ export default function AboutTFFFWatch() {
               is a dynamically evolving baseline that reflects changes in forest
               extent over time.
             </p>
-            <Br />
+            <Spacer />
             <b>b. Deforestation</b>
             <p>
               Annual deforestation is assessed by identifying the total area of
@@ -101,7 +101,7 @@ export default function AboutTFFFWatch() {
               values are aggregated at the country level to quantify area lost
               annually and evaluate performance against TFFF criteria.
             </p>
-            <Br />
+            <Spacer />
             <b>c. Degradation</b>
             <p>
               Forest degradation is assessed using the Global Forest Watch
@@ -121,12 +121,12 @@ export default function AboutTFFFWatch() {
               with TFFF definitions, while all other causes of loss are assigned
               to deforestation.
             </p>
-            <Br />
+            <Spacer />
 
             <h2 className="font-bold typo-h3">
               Standard estimate (JRC + GFW-based)
             </h2>
-            <Br />
+            <Spacer />
             <b>a. Baseline</b>
             <p>
               The baseline is generated using two complementary datasets.
@@ -154,7 +154,7 @@ export default function AboutTFFFWatch() {
               baselines ensures full geographic coverage across all TFFF
               countries.
             </p>
-            <Br />
+            <Spacer />
             <b>b. Deforestation</b>
             <p>
               Annual deforestation in tropical regions is calculated by
@@ -164,7 +164,7 @@ export default function AboutTFFFWatch() {
               In subtropical regions, deforestation is calculated identically to
               the GFW-based method, as these areas rely on the Hansen dataset.
             </p>
-            <Br />
+            <Spacer />
             <b>c. Degradation</b>
             <p>
               Degradation is identified in tropical regions by intersecting the
@@ -176,9 +176,9 @@ export default function AboutTFFFWatch() {
               the Hansen-based fire loss data in the same manner as the Tree
               Cover Loss Estimate.
             </p>
-            <Br />
+            <Spacer />
 
-            <Br></Br>
+            <Spacer></Spacer>
             <b>Feedback</b>
             <p>
               We are continuing to refine our methodology and would welcome any
@@ -194,7 +194,7 @@ export default function AboutTFFFWatch() {
               .
             </p>
           </div>
-          <Br />
+          <Spacer />
           {/* <div className="text-center md:text-left">
             <Button
               href="https://docs.google.com/document/d/1-WlaepOLsm4P6F603NSfyc_ffaoWTeLTfG1hvJayfp4/edit?usp=sharing"
@@ -205,13 +205,13 @@ export default function AboutTFFFWatch() {
             </Button>
           </div> */}
         </div>
-        <Br />
+        <Spacer />
         <Hr />
-        <Br />
+        <Spacer />
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="shrink">
             <h2 className="font-bold typo-h2">Data Access</h2>
-            <Br />
+            <Spacer />
             <div className="typo-p">
               <p>
                 Access all country investment tracker and rainforest country
@@ -228,7 +228,7 @@ export default function AboutTFFFWatch() {
           </Button>
         </div>
       </div>
-      <Br cn="hidden lg:block" />
+      <Spacer className="hidden lg:block" />
     </div>
   );
 }
