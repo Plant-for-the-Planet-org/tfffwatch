@@ -1,6 +1,5 @@
 import Br from "@/components/ui/Br";
 import { IconButton } from "@/components/ui/Button";
-// import { formatPublisherForCardBadge } from "@/lib/text";
 import { formatDateForCardBadge } from "@/lib/date";
 
 type Props = {

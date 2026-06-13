@@ -1,49 +1,30 @@
 "use client";
 
-import { useWorldMapStore } from "@/stores/mapStore";
-import { transformAllForestCoverChangeData } from "@/utils/country-helper";
+import { useWorldMapStore } from "@/stores/map.store";
+import { transformAllForestCoverChangeData } from "@/domain/country";
 import { downloadGeoJsonAsSvg } from "@/utils/download-map";
 import { env } from "@/utils/env";
 import { eligibilityColor } from "@/domain/eligibility";
-import { useWorldMap } from "@/utils/store";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
-import * as turf from "@turf/turf";
-import { useWindowSize } from "@uidotdev/usehooks";
 import {
   Layer,
   Map,
-  MapRef,
   // NavigationControl,
   Source,
-  ViewStateChangeEvent,
 } from "@vis.gl/react-maplibre";
 import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useMemo } from "react";
 import countries from "../countries-optimized.geo.json";
 import { WorldMapProps } from "../shared/types";
 import WorldMapCard from "./WorldMapCard";
-import { ClickTooltip } from "@/components/sections/hero/TFFFMapView";
-
-export const GEOFENCE = turf.polygon([
-  [
-    [-180, 64],
-    [180, 64],
-    [180, -48],
-    [-180, -48],
-    [-180, 64],
-  ],
-]);
+import { ClickTooltip } from "../base/ClickTooltip";
+import { useMapEngine } from "../base/useMapEngine";
 
 export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
-  const { width } = useWindowSize();
-  const { setPoint, setCountry, setCountrySlug, setCountryISO2, setIsTFFF } =
-    useWorldMap();
-
-  // New store integration
   const {
     selectedDataset,
     selectedYear,
@@ -52,24 +33,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     setClickPosition,
   } = useWorldMapStore();
 
-  const mapRef = useRef<MapRef>(null);
-
-  const [viewState, setViewState] = useState({
-    latitude: 24,
-    longitude: 0,
-    zoom: 0.5,
-  });
-
-  useEffect(() => {
-    if (!width) return;
-    if (width > 1024) {
-      setViewState((prev) => ({ ...prev, zoom: 0.5 }));
-    } else if (width > 768) {
-      setViewState((prev) => ({ ...prev, zoom: 0 }));
-    } else {
-      setViewState({ latitude: 10, longitude: 10, zoom: 0 });
-    }
-  }, [width]);
+  const { mapRef, viewState, onMove, onLoad } = useMapEngine();
 
   const allCountries = useMemo(() => {
     const countriesData = countries as unknown as {
@@ -146,19 +110,6 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     };
   }, [selectedYear, forestData]);
 
-  const onMove = useCallback(({ viewState }: ViewStateChangeEvent) => {
-    if (viewState.zoom < 0) return;
-
-    const newCenter = [viewState.longitude, viewState.latitude];
-    if (turf.booleanPointInPolygon(newCenter, GEOFENCE)) {
-      setViewState({
-        zoom: viewState.zoom,
-        longitude: newCenter[0],
-        latitude: newCenter[1],
-      });
-    }
-  }, []);
-
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
     const features = map?.queryRenderedFeatures(event.point, {
@@ -171,39 +122,11 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
 
     // If clicked outside of any country, clear selection
     if (!features || features.length === 0 || !country || !countryISO2) {
-      // Clear old store (use empty values since it doesn't accept null)
-      setPoint({ x: 0, y: 0 });
-      setCountry("");
-      setCountrySlug("");
-      setCountryISO2("");
-      setIsTFFF(false);
-
-      // Clear new store
       setSelectedCountry(null);
       setClickPosition(null);
       return;
     }
 
-    // Update old store (for backward compatibility)
-    setPoint(point);
-    setCountry(country);
-    setCountrySlug(countrySlug);
-    setCountryISO2(countryISO2);
-
-    // Get current dataset data filtered by year
-    const { forestData } = useWorldMapStore.getState();
-    const currentDataAll = forestData[selectedDataset] || [];
-    const currentData = currentDataAll.filter(
-      (item) => String(item.year) === String(selectedYear)
-    );
-
-    const isTFFF = currentData.find(
-      (el) => el["country-iso2"] === countryISO2 || el.country === country
-    );
-    if (isTFFF) setIsTFFF(true);
-    else setIsTFFF(false);
-
-    // Update new store
     const countryData = {
       iso2: countryISO2,
       iso3: "", // We don't have ISO3 in the current data
@@ -245,12 +168,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
             renderWorldCopies={false}
             onMove={onMove}
             onClick={onClick}
-            onLoad={() => {
-              const map = mapRef.current?.getMap();
-              map?.addControl(
-                new maplibregl.AttributionControl({ compact: true })
-              );
-            }}
+            onLoad={onLoad}
           >
             <Source
               id="country"
@@ -287,7 +205,6 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
               />
             </Source>
 
-            {/* <NavigationControl position="bottom-right" showCompass={false} /> */}
           </Map>
         </div>
         <WorldMapCard />

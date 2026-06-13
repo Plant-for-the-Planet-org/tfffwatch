@@ -106,7 +106,6 @@ export default function CountryMap({
             dataset, // Include dataset in API call
           },
         });
-        console.log("Layers Data", result);
         setLayersData(result);
       } catch (error) {
         console.error("Error fetching layers:", error);
@@ -129,7 +128,6 @@ export default function CountryMap({
         // doubleClickZoom={true}
         attributionControl={false}
       >
-        {/* <NavigationControl /> */}
         {countryFeatureCollection && (
           <Source id="country" type="geojson" data={countryFeatureCollection}>
             <Layer

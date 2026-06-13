@@ -2,6 +2,7 @@ import countries, { alpha2ToAlpha3 } from "i18n-iso-countries";
 import { slugISO2 } from "./slug-iso2";
 import type { CountryForestRecord } from "@/domain/forest-record.types";
 import { classify } from "@/domain/eligibility";
+import { asIso2 } from "@/domain/brand";
 // eslint-disable-next-line
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 import countryMapping from "./country-mapping.json";
@@ -20,7 +21,6 @@ export function getCountryDetails({
   let iso2, iso3, name;
 
   const match = countryMapping.find((el) => el.countrySlug === slug);
-  // console.log(match, country, slug);
   if (match) {
     iso2 = match.countryIso2;
     name = match.country;
@@ -33,7 +33,7 @@ export function getCountryDetails({
   const flagImgUrl = `http://purecatamphetamine.github.io/country-flag-icons/3x2/${iso2}.svg`;
 
   const details = {
-    iso2: iso2!,
+    iso2: asIso2(iso2!),
     iso3: iso3!,
     name: name!,
     flagImgUrl,
@@ -50,7 +50,7 @@ export function getCountryDetailsBySlug(countrySlug: string): CountryDetails {
   const flagImgUrl = `http://purecatamphetamine.github.io/country-flag-icons/3x2/${iso2}.svg`;
 
   const details = {
-    iso2: iso2!,
+    iso2: asIso2(iso2!),
     iso3: iso3!,
     name: name!,
     flagImgUrl,

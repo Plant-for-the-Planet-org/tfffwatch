@@ -1,8 +1,8 @@
 import InfoGrid from "@/components/sections/features/shared/InfoGrid";
 import InvestmentTracker from "@/components/sections/features/investment/InvestmentTracker";
-import PlansforthePlanetAnalysis from "@/components/sections/features/press/PlansforthePlanetAnalysis";
+import PlansForThePlanetAnalysis from "@/components/sections/features/press/PlansForThePlanetAnalysis";
 import RecentNews from "@/components/sections/features/news/RecentNews";
-import RecentPolicyPapersComentary from "@/components/sections/features/policies/RecentPolicyPapersCommentary";
+import RecentCommentary from "@/components/sections/features/policies/RecentCommentary";
 import TFFFHero from "@/components/sections/features/tfff/TFFFHero";
 import WhatsAppInvite from "@/components/sections/features/shared/WhatsAppInvite";
 import { TFFFWorldMapView } from "@/components/sections/hero/TFFFMapView";
@@ -24,9 +24,9 @@ export default function Home() {
         <Br />
         <RecentNews />
         <Br />
-        <RecentPolicyPapersComentary />
+        <RecentCommentary />
         <Br />
-        <PlansforthePlanetAnalysis />
+        <PlansForThePlanetAnalysis />
         <Br />
         <WhatsAppInvite />
       </div>
