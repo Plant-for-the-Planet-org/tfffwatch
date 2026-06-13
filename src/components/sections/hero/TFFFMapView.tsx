@@ -17,7 +17,7 @@ import {
   CountryMapHeaderContent,
   WorldMapHeaderContent,
 } from "@/components/sections/hero/TFFFMapViewContent";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { CountryDetails } from "@/domain/country.types";
 import { asCountrySlug } from "@/domain/brand";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
@@ -79,14 +79,14 @@ export function TFFFWorldMapView() {
           </div>
         </div>
 
-        <Br />
+        <Spacer />
         <div className="relative z-10">
           <div className="bg-primary-light">
             <WorldMapHeaderContent />
           </div>
           <div className="bg-gradient-to-b from-primary-light to-transparent">
-            <Br />
-            <Br />
+            <Spacer />
+            <Spacer />
           </div>
         </div>
 
@@ -98,14 +98,14 @@ export function TFFFWorldMapView() {
           />
 
           <div className="mb-8 md:mb-0 md:absolute left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
-            <Br cn="md:hidden" />
+            <Spacer className="md:hidden" />
             {selectedDataset === "JRC" ? <LegendsForJRC /> : <LegendsForGFW />}
-            <Br />
+            <Spacer />
           </div>
         </div>
       </div>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <RewardsChart />
       {selectedDataset === "JRC" ? (
         <JRC10CountriesChart />
@@ -160,13 +160,13 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
         {/* Dataset Tabs */}
         <DatasetTabs />
       </div>
-      <Br />
+      <Spacer />
 
       <CountryMapViewContainer>
         <div className="h-full flex flex-col">
-          <Br />
+          <Spacer />
           <CountryMapHeaderContent year={props.year} />
-          <Br />
+          <Spacer />
 
           <div className="grow grid grid-cols-1 md:grid-cols-2">
             <div className="relative h-60 md:h-full">

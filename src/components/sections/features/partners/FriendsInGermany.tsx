@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import Image from "next/image";
 
 const persons = [
@@ -32,14 +32,14 @@ const persons = [
 export default function FriendsInGermany() {
   return (
     <div>
-      <Br />
+      <Spacer />
       <div className="text-center">
         <h2 className="font-bold typo-p">Friends of TFFF Germany</h2>
         <p className="typo-p">
           We call on the German government to invest into the TFFF
         </p>
       </div>
-      <Br />
+      <Spacer />
       <div className="flex gap-4 justify-center xl:justify-between flex-wrap">
         {persons.map((el, key) => (
           <div
@@ -64,7 +64,7 @@ export default function FriendsInGermany() {
           </div>
         ))}
       </div>
-      <Br />
+      <Spacer />
     </div>
   );
 }

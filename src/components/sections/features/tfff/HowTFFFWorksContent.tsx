@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import Hr from "@/components/ui/Hr";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +16,7 @@ export default function HowTFFFWorksContent() {
           />
           Purpose
         </h2>
-        <Br />
+        <Spacer />
         <div className="typo-p">
           <p>
             First introduced at COP28, the TFFF proposes raising $125 billion in
@@ -37,24 +37,24 @@ export default function HowTFFFWorksContent() {
             this shortfall by offering a long-term, performance-based funding
             model that rewards forest conservation.
           </p>
-          <Br />
+          <Spacer />
           <p>
             Under the proposed model, tropical forest countries can receive
             annual payments of $4 per hectare of preserved forest. However,
             payments are subject to deductions:
           </p>
-          <Br />
+          <Spacer />
           <ul className="typo-p list-disc ml-4.5">
             <li>$400-$800 are deducted per hectare deforested.</li>
             <li>$140 per hectare degraded.</li>
           </ul>
         </div>
       </div>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <Hr />
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div>
         <h2 className="font-bold typo-h2 flex items-center gap-2">
           <div className="shrink-0 rounded-full bg-black">
@@ -68,12 +68,12 @@ export default function HowTFFFWorksContent() {
           </div>
           Structure and Governance
         </h2>
-        <Br />
+        <Spacer />
         <div className="typo-p">
           <p>
             The TFFF is proposed to be structured as a two-arm facility.
           </p>
-          <Br />
+          <Spacer />
           <ol className="typo-p list-decimal ml-4.5">
             <li>
               The Tropical Forest Investment Fund (TFIF): will serve as the
@@ -88,7 +88,7 @@ export default function HowTFFFWorksContent() {
               countries (TFCs).
             </li>
           </ol>
-          <Br />
+          <Spacer />
           <p>
             Both these arms have different legal identities, governance
             structures, and operational mandates. The Facility and the TFIF will
@@ -104,11 +104,11 @@ export default function HowTFFFWorksContent() {
           </p> */}
         </div>
       </div>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <Hr />
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div>
         <h2 className="font-bold typo-h2 flex items-center gap-2">
           <Image
@@ -119,14 +119,14 @@ export default function HowTFFFWorksContent() {
           />
           Financing
         </h2>
-        <Br />
+        <Spacer />
         <div className="typo-p">
           <p>
             The TFFF is intended to operate as a blended finance model, with two
             parts: a <b>$25 billion sponsor tranche</b> and a{" "}
             <b>$100 billion senior debt tranche</b>.
           </p>
-          <Br />
+          <Spacer />
           <ul className="typo-p list-disc ml-4.5">
             <li>
               The <b>$25 billion sponsor tranche</b> will consist of long-term
@@ -144,11 +144,11 @@ export default function HowTFFFWorksContent() {
           </ul>
         </div>
       </div>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <Hr />
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div>
         <h2 className="font-bold typo-h2 flex items-center gap-2">
           <div className="shrink-0 rounded-full bg-black">
@@ -162,7 +162,7 @@ export default function HowTFFFWorksContent() {
           </div>
           Investment Strategy
         </h2>
-        <Br />
+        <Spacer />
         <div className="typo-p">
           <p>
             TFIF proposes to adopt an investment strategy that primarily seeks
@@ -183,11 +183,11 @@ export default function HowTFFFWorksContent() {
           </p>
         </div>
       </div>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <Hr />
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div>
         <h2 className="font-bold typo-h2 flex items-center gap-2">
           <div className="shrink-0 rounded-full bg-black">
@@ -201,7 +201,7 @@ export default function HowTFFFWorksContent() {
           </div>
           Expected Impact and Broader Significance
         </h2>
-        <Br />
+        <Spacer />
         <div className="typo-p">
           <p>
             The TFFF represents a major shift in how the global community
@@ -214,7 +214,7 @@ export default function HowTFFFWorksContent() {
             ecosystem services (PES) schemes that focus on specific management
             practices.
           </p>
-          <Br />
+          <Spacer />
           <p>
             The TFFF has the potential to become the largest single source of
             conservation finance in history. Its expected contributions to
@@ -224,11 +224,11 @@ export default function HowTFFFWorksContent() {
           </p>
         </div>
       </div>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <Hr />
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div className="bg-white padding-3 rounded-md text-center typo-p">
         <p>
           “

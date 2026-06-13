@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import YearSelect from "@/components/ui/YearSelect";
 
 type HeaderProps = {
@@ -9,7 +9,7 @@ export function WorldMapHeaderContent() {
   return (
     <div className="flex flex-col items-center">
       <h2 className="font-bold typo-h2">Estimated TFFF Payouts</h2>
-      <Br />
+      <Spacer />
       {/* <h3 className="flex gap-2 items-center flex-wrap">
         <span className="text-center font-bold">
           Forest loss in <i>Tropical Forest Forever Facility</i> countries in

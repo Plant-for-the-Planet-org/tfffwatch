@@ -1,7 +1,7 @@
 "use client";
 
 import { PageParams } from "@/app/(content)/[country]/[year]/page";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { getCountryDetails } from "@/domain/country";
 import { useParams } from "next/navigation";
 import AnnualPayoutAreaChart from "../../charts/AnnualPayoutAreaChart";
@@ -12,7 +12,7 @@ export default function AnnualPayout() {
 
   return (
     <div className="border border-base-gray rounding-xl padding-3">
-      <Br />
+      <Spacer />
       <div className="text-center">
         <h2 className="typo-h2">
           <b>Annual Payout for {details.name}</b>
@@ -21,9 +21,9 @@ export default function AnnualPayout() {
           <i>if TFFF already existed (in USD)</i>
         </p>
       </div>
-      <Br />
+      <Spacer />
       <AnnualPayoutAreaChart />
-      <Br />
+      <Spacer />
     </div>
   );
 }

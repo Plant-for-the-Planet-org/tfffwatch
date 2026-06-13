@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import Image from "next/image";
 import HowTFFFWorksFlowChart from "@/components/sections/features/tfff/HowTFFFWorksFlowChart";
 import HowTFFFWorksContent from "./HowTFFFWorksContent";
@@ -6,13 +6,13 @@ import HowTFFFWorksContent from "./HowTFFFWorksContent";
 export default function HowTFFFWorks() {
   return (
     <div className="bg-primary-light rounding-xl padding-3">
-      <Br cn="hidden lg:block" />
+      <Spacer className="hidden lg:block" />
 
       <div className="text-center extra-padding-x-4">
         <h2 className="font-bold typo-h2">
           How the Tropical Forest Forever Facility would work
         </h2>
-        <Br />
+        <Spacer />
         <p className="typo-p text-center">
           TFFF is a proposed global, permanent fund designed to support the
           long-term conservation of tropical forests. Spearheaded by the
@@ -20,7 +20,7 @@ export default function HowTFFFWorks() {
           initiative was formally launched at the Belém Climate Summit ahead of
           COP30 in November 2025.
         </p>
-        <Br />
+        <Spacer />
         <p className="typo-p text-center">
           Unlike traditional conservation finance efforts that often rely on new
           donor pledges, the TFFF proposes an innovative approach, mobilizing
@@ -29,18 +29,18 @@ export default function HowTFFFWorks() {
           annual payments for forest conservation.
         </p>
       </div>
-      <Br />
+      <Spacer />
 
       <HowTFFFWorksFlowChart />
       <div id="recipients-from-tfff"></div>
-      <Br />
+      <Spacer />
 
       <div className="bg-[#E7F8EE] border-2 border-dashed border-[#6FCE97] rounding-lg padding-3">
         <div className="text-center">
           <h2 className="font-bold typo-h2">Example recipient country </h2>
           <p className="typo-p">74 countries are potentially eligible </p>
         </div>
-        <Br />
+        <Spacer />
         <div className="flex gap-2 sm:gap-4 md:gap-8 xl:gap-16 justify-between overflow-auto">
           <div>
             <Image
@@ -67,8 +67,8 @@ export default function HowTFFFWorks() {
             />
           </div>
         </div>
-        <Br />
-        <Br />
+        <Spacer />
+        <Spacer />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex gap-3  md:items-center">
             <Image
@@ -144,10 +144,10 @@ export default function HowTFFFWorks() {
           </div>
         </div>
       </div>
-      <Br />
+      <Spacer />
 
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <HowTFFFWorksContent />
     </div>
   );

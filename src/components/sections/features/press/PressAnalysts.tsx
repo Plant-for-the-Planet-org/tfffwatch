@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,11 +24,11 @@ const persons = [
 export default function PressAnalysts() {
   return (
     <div className="bg-primary-light outer-rounding outer-padding-3">
-      <Br />
+      <Spacer />
       <h2 className="text-center font-bold typo-h2">TFFF Analysts</h2>
       <p className="text-center typo-p">‎ </p>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div className="flex gap-4 justify-center flex-wrap">
         {persons.map((el, key) => (
           <div
@@ -100,7 +100,7 @@ export default function PressAnalysts() {
           </div>
         ))}
       </div>
-      <Br />
+      <Spacer />
     </div>
   );
 }

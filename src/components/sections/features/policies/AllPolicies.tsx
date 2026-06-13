@@ -1,5 +1,5 @@
 import PolicyCard from "@/components/sections/features/policies/PolicyCard";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { ResponsiveContainer } from "@/components/ui/Container";
 import { getPolicyBriefs } from "@/content/policies";
 import { formatDateFromExcelToData } from "@/lib/date";
@@ -25,8 +25,8 @@ export default async function AllPolicies() {
 
   return (
     <ResponsiveContainer>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 xl:gap-5">
           {policyList.map((el) => (
@@ -43,8 +43,8 @@ export default async function AllPolicies() {
           ))}
         </div>
       </div>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
     </ResponsiveContainer>
   );
 }

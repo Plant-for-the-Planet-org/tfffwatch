@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import ContentSection from "@/components/ui/ContentSection";
 import { formatDateAgo } from "@/lib/date";
 import { InvestmentTrackerForCountry } from "@/utils/types";
@@ -22,7 +22,7 @@ export default function TrackerContent({
       <div className="text-end text-[#828282] italic">
         <p>Updated {formatDateAgo(last_updated!)}</p>
       </div>
-      <Br cn="hidden lg:block" />
+      <Spacer className="hidden lg:block" />
 
       <div className="extra-padding-x-4 flex flex-col divide-y divide-base-gray">
         {hasContent(status) && (
@@ -67,7 +67,7 @@ export default function TrackerContent({
           </ContentSection>
         )}
       </div>
-      <Br cn="hidden lg:block" />
+      <Spacer className="hidden lg:block" />
     </div>
   );
 }
