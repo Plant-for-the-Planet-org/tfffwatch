@@ -3,7 +3,7 @@ import AnnualPayout from "@/components/sections/features/forest-cover/AnnualPayo
 import CountrySingnatories from "@/components/sections/features/endorsement/CountrySignatories";
 import ForestCoverChange from "@/components/sections/features/forest-cover/ForestCoverChange";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import {
   getCountryDetails,
   getEndorsementData,
@@ -61,13 +61,13 @@ export default async function Page({ params, searchParams }: PageProps) {
         flagImgUrl={details.flagImgUrl}
         dataset={validDataset}
       />
-      <Br />
+      <Spacer />
       <ForestCoverChange />
-      <Br />
+      <Spacer />
       <AnnualPayout />
       {isSignatory !== null && (
         <>
-          <Br />
+          <Spacer />
           <CountrySingnatories isSignatory={isSignatory} />
         </>
       )}

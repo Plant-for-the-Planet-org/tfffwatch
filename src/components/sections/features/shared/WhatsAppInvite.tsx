@@ -1,12 +1,12 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 
 export default async function WhatsAppInvite() {
   return (
     <div className="bg-primary-light outer-rounding outer-padding-3">
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div className="flex flex-col items-center">
         <Image
           height={100}
@@ -15,14 +15,14 @@ export default async function WhatsAppInvite() {
           src="/assets/WhatsApp.png"
           alt="WhatsApp Icon"
         />
-        <Br />
+        <Spacer />
         <h2 className="text-center font-bold typo-h2">Join the Conversation</h2>
-        <Br />
+        <Spacer />
         <p className="text-center typo-p">
           Stay in the loop with latest on TFFF Updates and policy news - right
           in your pocket
         </p>
-        <Br />
+        <Spacer />
         <Button
           type="link"
           external
@@ -31,8 +31,8 @@ export default async function WhatsAppInvite() {
           Join Our WhatsApp Group
         </Button>
       </div>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
     </div>
   );
 }

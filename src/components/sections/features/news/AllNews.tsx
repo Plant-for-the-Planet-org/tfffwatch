@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { ResponsiveContainer } from "@/components/ui/Container";
 import { getNews } from "@/content/news";
 import { News } from "@/utils/types";
@@ -24,8 +24,8 @@ export default async function AllNews() {
 
   return (
     <ResponsiveContainer>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 xl:gap-5">
           {newsList.slice(0, 12).map((el) => (
@@ -47,8 +47,8 @@ export default async function AllNews() {
           ))}
         </div>
       </div>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
     </ResponsiveContainer>
   );
 }

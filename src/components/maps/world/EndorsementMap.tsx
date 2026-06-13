@@ -10,7 +10,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import countries from "../countries-optimized.geo.json";
 import { useMapEngine } from "../base/useMapEngine";
 import { urls } from "@/lib/http";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 
 // Types
 interface CountryProperties {
@@ -197,8 +197,8 @@ export default function EndorsementMap({
         </div>
       )}
 
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div className="relative z-10">
         <div className="bg-primary-light">
           <div className="flex flex-col items-center">
@@ -211,8 +211,8 @@ export default function EndorsementMap({
           </div>
         </div>
         <div className="bg-gradient-to-b from-primary-light to-transparent">
-          <Br />
-          <Br />
+          <Spacer />
+          <Spacer />
         </div>
       </div>
 

@@ -3,7 +3,7 @@ import InterestedInDivingDeeper from "@/components/sections/features/tfff/Intere
 import SecondaryHero, {
   OverlayTheTFFFIdea,
 } from "@/components/sections/hero/SecondaryHero";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,9 +16,9 @@ export default function Page() {
     <div>
       <div>
         <SecondaryHero OverlayComponent={<OverlayTheTFFFIdea />} />
-        <Br />
+        <Spacer />
         <HowTFFFWorks />
-        <Br />
+        <Spacer />
         <InterestedInDivingDeeper />
       </div>
     </div>
