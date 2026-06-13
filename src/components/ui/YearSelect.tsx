@@ -1,7 +1,6 @@
 "use client";
 
-import { useWorldMap } from "@/utils/store";
-import { useWorldMapStore } from "@/stores/mapStore";
+import { useWorldMapStore } from "@/stores/map.store";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -17,7 +16,6 @@ function YearSelectContent({ initialValue, onChange }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { setYear } = useWorldMap();
   const { setSelectedYear } = useWorldMapStore();
 
   const [selectedId, setSelectedId] = useState(0);
@@ -43,29 +41,14 @@ function YearSelectContent({ initialValue, onChange }: Props) {
     if (!initialValue) {
       const selected = options[0];
       setSelectedId(selected.id);
-      setYear(selected.value);
       setSelectedYear(selected.value);
       return;
     }
 
     const selected = options.find((el) => el.value === initialValue)!;
     setSelectedId(selected.id);
-    setYear(selected.value);
     setSelectedYear(selected.value);
-  }, [initialValue, options, setYear, setSelectedYear]);
-
-  // useEffect(() => {
-  //   // wil come back later
-  //   // setYear(options.find((el) => el.id === selectedId)!.value);
-  //   // if (!initialValue) return;
-
-  //   console.log("change back?");
-  //   const selected = options.find((el) => el.value === initialValue)!;
-
-  //   console.log(selected);
-  //   setSelectedId(selected.id);
-  //   setYear(selected.value);
-  // }, [initialValue, options, setYear, selectedId]);
+  }, [initialValue, options, setSelectedYear]);
 
   return (
     <Menu>
@@ -97,7 +80,6 @@ function YearSelectContent({ initialValue, onChange }: Props) {
               className="block w-full py-2 px-2 hover:font-bold cursor-default text-center"
               onClick={() => {
                 setSelectedId(el.id);
-                setYear(el.value);
                 setSelectedYear(el.value);
 
                 // Update URL path with new year (e.g., /brazil/2024 -> /brazil/2023)

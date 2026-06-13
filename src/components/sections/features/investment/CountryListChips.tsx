@@ -4,7 +4,6 @@ import { toReadableAmount } from "@/lib/format";
 import { InvestmentTrackerParams } from "@/utils/prop-types";
 import { InvestmentTrackerCapitals } from "@/utils/types";
 import Link from "next/link";
-// import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 type Props = InvestmentTrackerParams & {
@@ -259,11 +258,9 @@ export default function CountryListChips({ country, capitalsData }: Props) {
     if (b.pledgedCapital === null) return -1;
     return b.pledgedCapital - a.pledgedCapital;
   });
-  // console.log(countryList);
 
   return (
     <div className="w-full relative">
-      {/* <div className="w-16 absolute inset-y-0 left-0 bg-white/30 backdrop-blur-sm"></div> */}
       <p className="typo-p font-bold mb-2 text-center xl:text-left">
         Sovereigns
       </p>
@@ -357,7 +354,6 @@ export default function CountryListChips({ country, capitalsData }: Props) {
         ))}
       </div>
 
-      {/* <div className="w-16 absolute inset-y-0 right-0 pointer-events-none bg-gradient-to-r from-white/0 to-white/100"></div> */}
     </div>
   );
 }

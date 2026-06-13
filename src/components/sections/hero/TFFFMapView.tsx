@@ -7,6 +7,7 @@ import {
   WorldMap,
 } from "@/components/maps";
 import CountryMapCard from "@/components/maps/country/CountryMapCard";
+import { ClickTooltip } from "@/components/maps/base/ClickTooltip";
 import {
   CountryMapLegends,
   LegendsForGFW,
@@ -18,8 +19,8 @@ import {
 } from "@/components/sections/hero/TFFFMapViewContent";
 import Br from "@/components/ui/Br";
 import { CountryDetails } from "@/domain/country.types";
-import { env } from "@/utils/env";
-import { useForestCoverChangeData } from "@/utils/store";
+import { asCountrySlug } from "@/domain/brand";
+import { useForestCoverChangeData } from "@/stores/forest-cover.store";
 import { useParams, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import RewardsChart from "../charts/RewardsChart";
@@ -28,7 +29,6 @@ import {
   GFWTop10CountriesChart,
   JRC10CountriesChart,
 } from "../charts/Top10BarChart";
-import Image from "next/image";
 import HeaderCountry from "@/components/HeaderCountry";
 
 export function TFFFWorldMapView() {
@@ -131,11 +131,6 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
 
   useEffect(() => {
     if (props.name && props.iso2) {
-      console.log("Fetching data for:", {
-        country: props.name,
-        iso2: props.iso2,
-        source: selectedDataset,
-      });
       // Fetch country-specific data with the selected dataset
       fetchForestCoverChangeDataV2({
         country: props.name,
@@ -152,7 +147,7 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
     iso2: props.iso2,
     iso3: props.iso3,
     name: props.name,
-    slug: country as string,
+    slug: asCountrySlug(country as string),
     flagImgUrl: props.flagImgUrl,
   };
 
@@ -212,39 +207,8 @@ function WorldMapViewContainer({ children }: { children: React.ReactNode }) {
 function CountryMapViewContainer({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-primary-light outer-rounding outer-padding-3 h-[90vh] md:h-[85vh] lg:h-[80vh] xl:h-[75vh] min-h-fit">
-      {/* <div className="bg-primary-light outer-rounding outer-padding-3 max-h-full"> */}
       {children}
     </div>
   );
 }
 
-export function VersionChip() {
-  const mapVersion = env.mapVersion;
-  return <div className="z-20 text-xs">{mapVersion}</div>;
-}
-
-export function ClickTooltip() {
-  return (
-    <div className="relative group">
-      <button
-        className="bg-white rounded-lg p-1 cursor-pointer overflow-clip"
-        onClick={() => {}}
-      >
-        <Image
-          className="-translate-x-0.5"
-          width={32}
-          height={32}
-          src="/assets/finger-tap.gif"
-          alt=""
-        />
-      </button>
-
-      {/* Tooltip */}
-      <div className="absolute right-full mr-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
-        <div className="bg-background text-base-text text-sm px-3 py-2 rounded-full whitespace-nowrap shadow-lg">
-          Click on a country for more data
-        </div>
-      </div>
-    </div>
-  );
-}

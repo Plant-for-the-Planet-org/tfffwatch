@@ -1,7 +1,7 @@
 import CountryListChips from "@/components/sections/features/investment/CountryListChips";
 import InvestmentProgress from "@/components/sections/features/investment/InvestmentProgress";
 import InvestmentTracker from "@/components/sections/features/investment/InvestmentTracker";
-import InvestmentTrackerContent from "@/components/sections/features/investment/InvestmentTrackerContent";
+import TrackerContent from "@/components/sections/features/investment/TrackerContent";
 import Br from "@/components/ui/Br";
 import { api, urls } from "@/lib/http";
 import { PageError } from "@/utils/errors";
@@ -51,7 +51,6 @@ export async function generateMetadata({
 
   const countryContentInMetadata = capitalize(country);
   // countryContentInMetadata = countryContentInMetadata.replaceAll("_", " ");
-  // console.log("METADATA: ", { countryContentInMetadata });
 
   return {
     title: `${countryContentInMetadata} Investment Tracker · TFFF Watch`,
@@ -87,7 +86,6 @@ the current analysis.`;
       nextOptions: { revalidate: 1800 }, // same 30 min window
     });
     richData = res[0];
-    console.log(`[page.tsx] Fetched Rich Data for ${country}`);
 
     const capitalsDataResults = await api<InvestmentTrackerForCountry[]>({
       url: urls.investmentTrackerCapitals,
@@ -116,7 +114,7 @@ the current analysis.`;
             <Br />
           </>
         )}
-        <InvestmentTrackerContent
+        <TrackerContent
           last_updated={richData?.last_updated}
           status={richData?.status ?? ""}
           background={richData?.background ?? ""}

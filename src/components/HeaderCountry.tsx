@@ -1,6 +1,6 @@
 "use client";
 
-import { getCountryDetails } from "@/utils/country-helper";
+import { getCountryDetails } from "@/domain/country";
 import { useParams, usePathname } from "next/navigation";
 import Br from "./ui/Br";
 

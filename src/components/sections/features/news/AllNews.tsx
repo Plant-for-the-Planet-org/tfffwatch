@@ -1,6 +1,6 @@
 import Br from "@/components/ui/Br";
 import { ResponsiveContainer } from "@/components/ui/Container";
-import { api, urls } from "@/lib/http";
+import { getNews } from "@/content/news";
 import { News } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
 import { Fragment } from "react";
@@ -10,11 +10,7 @@ export default async function AllNews() {
   let newsList: News[] = [];
 
   try {
-    newsList = await api<News[]>({
-      url: urls.news,
-      method: "GET",
-      token: "", // Add token if required
-    });
+    newsList = await getNews();
 
     newsList.sort((a, b) =>
       compareDesc(

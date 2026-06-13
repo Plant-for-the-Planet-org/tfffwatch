@@ -23,7 +23,6 @@ export async function GET(req: Request) {
   const path = `/investment-tracker/${encodeURIComponent(country)}`;
   try {
     revalidatePath(path);
-    console.log(`[revalidate] triggered for ${path}`);
     return NextResponse.json({ ok: true, revalidated: path });
   } catch (err) {
     console.error("Revalidate failed:", err);

@@ -22,6 +22,8 @@ export const urls = {
     "https://automate.plant-for-the-planet.org/webhook/uncached/investment-tracker-capitals",
   investmentTrackerSum:
     "https://automate.plant-for-the-planet.org/webhook/uncached/investment-tracker-sum",
+  endorsementCountries:
+    "https://automate.plant-for-the-planet.org/webhook/uncached/endorsement-countries",
   layersProxyAPI: "/api/layers",
 };
 
@@ -69,7 +71,6 @@ export async function api<T = unknown>({
     const queryString = query
       ? `?${new URLSearchParams(query as Record<string, string>).toString()}`
       : "";
-    // console.log({ queryString });
 
     // Replace URL parameters
     let finalUrl = url;
@@ -88,7 +89,6 @@ export async function api<T = unknown>({
         next: nextOptions,
       });
 
-      // console.log(`${finalUrl}${queryString}`);
       if (!res.ok) {
         throw {
           message: `API request failed: ${res.status}`,
