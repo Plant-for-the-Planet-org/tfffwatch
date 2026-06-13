@@ -2,7 +2,7 @@ import AboutTFFFWatch from "@/components/sections/features/about/AboutTFFFWatch"
 import SecondaryHero, {
   OverlayAboutTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function Page() {
     // <div className="extra-padding-x-4">
     <div>
       <SecondaryHero OverlayComponent={<OverlayAboutTFFFWatch />} />
-      <Br />
+      <Spacer />
       <AboutTFFFWatch />
     </div>
   );

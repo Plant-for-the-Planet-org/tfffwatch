@@ -1,5 +1,5 @@
 import PressReleaseCard from "@/components/sections/features/press/PressReleaseCard";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { getPressReleases } from "@/content/press";
 import { PressRelease } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
@@ -23,10 +23,10 @@ export default async function PressReleases() {
 
   return (
     <div className="bg-secondary-light outer-rounding outer-padding-3">
-      <Br />
+      <Spacer />
       <h2 className="text-center font-bold typo-h2">📝 Press Release</h2>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div>
         <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
           {pressReleaseList.slice(0, 3).map((el) => (
@@ -48,7 +48,7 @@ export default async function PressReleases() {
           ))}
         </div>
       </div>
-      <Br />
+      <Spacer />
     </div>
   );
 }

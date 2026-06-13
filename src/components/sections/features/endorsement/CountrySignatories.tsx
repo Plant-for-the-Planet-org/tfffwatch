@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Dialog } from "@/components/ui/Dialog";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import EndorsementMap from "@/components/maps/world/EndorsementMap";
 import Image from "next/image";
 import Link from "next/link";
@@ -38,7 +38,7 @@ export default function CountrySignatories() {
               </Link>
             </p>
           </h2>
-          <Br cn="sm:none" />
+          <Spacer className="sm:none" />
           <Button
             type="button"
             cn="min-w-40"

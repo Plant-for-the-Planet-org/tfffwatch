@@ -3,13 +3,13 @@ import Hr from "@/components/ui/Hr";
 import Image from "next/image";
 import HeaderCountry from "./HeaderCountry";
 import HeaderLinks from "./HeaderLinks";
-import Br from "./ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import LinkWithParams from "./ui/LinkWithParams";
 
 export default function Header() {
   return (
     <header className="sticky top-0 z-30 bg-white/75 backdrop-blur-lg">
-      <Br cn="h-3 md:h-2 xl:h-3" />
+      <Spacer className="h-3 md:h-2 xl:h-3" />
       <div className="website-container padding-x-3">
         <div className="flex justify-between items-center ">
           <Logo />
@@ -27,7 +27,7 @@ export default function Header() {
           <HeaderCountry />
         </div>
       </div>
-      <Br cn="h-3 md:h-2 xl:h-3" />
+      <Spacer className="h-3 md:h-2 xl:h-3" />
       <Hr />
     </header>
   );

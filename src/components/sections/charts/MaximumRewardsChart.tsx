@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { useWorldMapStore } from "@/stores/map.store";
 import { buildRewardsDonut } from "./transforms/rewards-donut";
 import { DonutChart } from "./primitives/DonutChart";
@@ -35,7 +35,7 @@ export default function MaximumRewardsChart() {
             If countries ended deforestation and forest degradation entirely
           </p>
         </div>
-        <Br />
+        <Spacer />
         <div className="flex items-center justify-center h-64">
           <p className="text-foreground"></p>
         </div>
@@ -51,12 +51,12 @@ export default function MaximumRewardsChart() {
           If countries ended deforestation and forest degradation entirely
         </p>
       </div>
-      <Br />
+      <Spacer />
       <DonutChart
         data={chartData.countries}
         centerLabel={`$${(chartData.sum / 1000000000).toFixed(1)}bn`}
       />
-      <Br />
+      <Spacer />
     </div>
   );
 }

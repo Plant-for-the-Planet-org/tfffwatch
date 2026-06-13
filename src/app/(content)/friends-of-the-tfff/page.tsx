@@ -3,7 +3,7 @@ import FriendsInGermany from "@/components/sections/features/partners/FriendsInG
 import SecondaryHero, {
   OverlayFriendsOfTheTFFF,
 } from "@/components/sections/hero/SecondaryHero";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -22,11 +22,11 @@ export default function Page() {
     // <div className="extra-padding-x-4">
     <div>
       <SecondaryHero OverlayComponent={<OverlayFriendsOfTheTFFF />} />
-      <Br />
+      <Spacer />
       <EngagingNGOs />
-      <Br />
+      <Spacer />
       <FriendsInGermany />
-      <Br />
+      <Spacer />
     </div>
   );
 }
