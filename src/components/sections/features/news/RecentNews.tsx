@@ -35,10 +35,7 @@ export default async function RecentNews() {
         <Br />
         <Br />
         <div>
-          {/* <div className="flex max-w-full lg:grid lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 overflow-x-scroll overscroll-x-auto scrollbar-transparent"> */}
-          {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 place-items-center place-content-center-safe"> */}
           <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
-            {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5"> */}
             {newsList.slice(0, 3).map((el) => (
               <Fragment key={el.id}>
                 <NewsCard

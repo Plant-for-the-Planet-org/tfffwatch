@@ -1,7 +1,7 @@
 import PolicyCard from "@/components/sections/features/policies/PolicyCard";
 import Br from "@/components/ui/Br";
 import { ResponsiveContainer } from "@/components/ui/Container";
-import { api, urls } from "@/lib/http";
+import { getPolicyBriefs } from "@/content/policies";
 import { formatDateFromExcelToData } from "@/lib/date";
 import { Policy } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
@@ -11,11 +11,7 @@ export default async function AllPolicies() {
   let policyList: Policy[] = [];
 
   try {
-    policyList = await api<Policy[]>({
-      url: urls.policyBriefs,
-      method: "GET",
-      token: "", // Add token if required
-    });
+    policyList = await getPolicyBriefs();
 
     policyList.sort((a, b) =>
       compareDesc(

@@ -81,16 +81,6 @@ export function LegendsForGFW() {
     </div>
   );
 }
-export function LegendForSponsorCapitalProviders() {
-  return (
-    <div className="text-center">
-      <p className="typo-p mb-2">Sponsor Capital Providers</p>
-
-      <div className="rounded-full h-2 w-full bg-[#2F80ED]"></div>
-    </div>
-  );
-}
-
 export function CountryMapLegends() {
   return (
     <div className="flex typo-p">

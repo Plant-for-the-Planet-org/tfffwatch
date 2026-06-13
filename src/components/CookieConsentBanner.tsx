@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import * as CookieConsent from "vanilla-cookieconsent";
 import "vanilla-cookieconsent/dist/cookieconsent.css";
-import { en } from "./cookieconsent-languages";
+import { en } from "@/config/cookieconsent-languages";
 
 declare global {
   interface Window {

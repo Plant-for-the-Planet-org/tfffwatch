@@ -1,6 +1,4 @@
-// import Br from "@/components/ui/Br";
 import Image from "next/image";
-// import HowTFFFWorksFlowChartArrows from "./FlowChartArrorw";
 
 export default function HowTFFFWorksFlowChart() {
   return (

@@ -11,13 +11,8 @@ import { Button } from "@/components/ui/Button";
 export default function CountrySignatories() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleCountryClick = (country: {
-    iso2: string;
-    slug: string;
-    name: string;
-  }) => {
+  const handleCountryClick = () => {
     // You can add navigation or other actions when a country is clicked
-    console.log("Selected country:", country);
   };
 
   return (
@@ -65,18 +60,6 @@ export default function CountrySignatories() {
             <EndorsementMap onCountryClick={handleCountryClick} />
           </div>
         </Dialog>
-
-        {/* <ContentSection
-          icon="/assets/investment-endorsement.svg"
-          title="Signatory of the TFFF Declaration"
-          className="mb-4"
-        >
-          <RichToHTML content="See all signatories" />
-          <Br />
-          <div className="h-[500px] bg-primary-light w-full rounded-lg overflow-hidden">
-            <EndorsementMap onCountryClick={handleCountryClick} />
-          </div>
-        </ContentSection> */}
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import CountrySingnatories from "@/components/sections/features/endorsement/Coun
 import ForestCoverChange from "@/components/sections/features/forest-cover/ForestCoverChange";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
-import { getCountryDetails } from "@/utils/country-helper";
+import { getCountryDetails } from "@/domain/country";
 import { Metadata } from "next";
 import { humanize } from "underscore.string";
 
@@ -51,8 +51,6 @@ export default async function Page({ params, searchParams }: PageProps) {
       />
       <Br />
       <ForestCoverChange />
-      {/* <Br /> */}
-      {/* <PotentialPayoutVsExistingConservationFunding /> */}
       <Br />
       <AnnualPayout />
       <Br />

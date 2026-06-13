@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div>
-      {/* <div className="extra-padding-x-4"> */}
       <div>
         <SecondaryHero OverlayComponent={<OverlayTheTFFFIdea />} />
         <Br />

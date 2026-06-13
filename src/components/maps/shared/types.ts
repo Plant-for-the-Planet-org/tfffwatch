@@ -2,8 +2,9 @@
 import { CountryForestRecord } from "@/domain/forest-record.types";
 import { Country } from "@/domain/country.types";
 
-// Dataset types
-export type DatasetType = "GFW" | "JRC";
+// Dataset types — canonical definition in src/domain; re-exported here for existing importers.
+import type { DatasetType } from "@/domain/dataset";
+export type { DatasetType };
 
 // Map viewport interface
 export interface MapViewport {
