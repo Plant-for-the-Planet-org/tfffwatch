@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,7 +24,7 @@ const persons = [
 export default function PressContacts() {
   return (
     <div className="bg-secondary-light outer-rounding outer-padding-3">
-      <Br />
+      <Spacer />
       <h2 className="text-center font-bold typo-h2">Press Contact</h2>
       <p className="text-center typo-p">
         <a
@@ -34,8 +34,8 @@ export default function PressContacts() {
           media@plant-for-the-planet.org
         </a>
       </p>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div className="flex gap-4 justify-center flex-wrap">
         {persons.map((el, key) => (
           <div
@@ -107,7 +107,7 @@ export default function PressContacts() {
           </div>
         ))}
       </div>
-      <Br />
+      <Spacer />
     </div>
   );
 }

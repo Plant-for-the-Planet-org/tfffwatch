@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import Image from "next/image";
 
 const NGOs = [
@@ -15,14 +15,14 @@ const NGOs = [
 export default function EngagingNGOs() {
   return (
     <div className="bg-secondary-light rounding-xl padding-3">
-      <Br />
+      <Spacer />
       <div className="text-center">
         <h2 className="font-bold typo-p">Constructively Enganging NGOs</h2>
         <p className="typo-p">
           Over 100 organisations support the establishment of the TFFF
         </p>
       </div>
-      <Br />
+      <Spacer />
       <div className="flex gap-4 justify-center flex-wrap">
         {NGOs.map((el, key) => (
           <div
@@ -38,7 +38,7 @@ export default function EngagingNGOs() {
           </div>
         ))}
       </div>
-      <Br />
+      <Spacer />
     </div>
   );
 }

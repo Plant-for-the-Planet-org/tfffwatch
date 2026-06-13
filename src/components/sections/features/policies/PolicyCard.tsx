@@ -1,4 +1,4 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { IconButton } from "@/components/ui/Button";
 import { formatPublisherForCardBadge } from "@/lib/text";
 import { formatDateForCardBadge } from "@/lib/date";
@@ -59,7 +59,7 @@ export default function PolicyCard(props: Props) {
     //       </a>
     //     </div>
     //   </div>
-    //   <Br cn="hidden md:block" />
+    //   <Spacer className="hidden md:block" />
     //   {/* </div> */}
     // </div>
     <div className="group flex-1/3 grow-0 shrink p-3 bg-white border border-primary-medium-light rounding-xl">
@@ -98,7 +98,7 @@ export default function PolicyCard(props: Props) {
         <h3 className="mb-2 font-bold text-base">{props.title}</h3>
         <p className="text-sm xl:text-base">{props.summary}</p>
       </a>
-      <Br cn="hidden md:block" />
+      <Spacer className="hidden md:block" />
     </div>
   );
 }

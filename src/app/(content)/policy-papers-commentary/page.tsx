@@ -2,7 +2,7 @@ import AllPolicies from "@/components/sections/features/policies/AllPolicies";
 import SecondaryHero, {
   OverlayPoliciesTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,9 +16,9 @@ export default function Page() {
     <div>
       <div>
         <SecondaryHero OverlayComponent={<OverlayPoliciesTFFFWatch />} />
-        <Br />
+        <Spacer />
         <AllPolicies />
-        <Br />
+        <Spacer />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import InvestmentGaugeChart from "@/components/sections/charts/InvestmentGaugeChart";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { Button } from "@/components/ui/Button";
 import { api, urls } from "@/lib/http";
 import { InvestmentTrackerCapitals } from "@/utils/types";
@@ -31,12 +31,12 @@ export default function InvestmentTracker() {
 
   return (
     <div className="bg-secondary-light outer-rounding outer-padding-3">
-      <Br />
+      <Spacer />
       <div className="grid lg:grid-cols-2">
         <div className="mx-auto flex flex-col items-center lg:block extra-padding-x-4">
           <ConditionalPadding />
           <h2 className="font-bold typo-h2">Investment Tracker</h2>
-          <Br />
+          <Spacer />
           <p className="typo-p">
             The TFFF requires $25 billion in sponsor capital from governments
             and foundations. It is to serve as the core of the TFFF’s
@@ -44,7 +44,7 @@ export default function InvestmentTracker() {
             capital is intended to leverage $100 billion in private investments.
             We track sponsor capital investments only.
           </p>
-          <Br />
+          <Spacer />
           <div className="hidden lg:block">
             <CTAButton />
           </div>
@@ -58,11 +58,11 @@ export default function InvestmentTracker() {
           />
         </div>
       </div>
-      <Br />
+      <Spacer />
       <div className="text-center lg:hidden">
         <CTAButton />
       </div>
-      <Br />
+      <Spacer />
     </div>
   );
 }
@@ -84,7 +84,7 @@ function ConditionalPadding() {
   if (!path.includes("investment-tracker")) return null;
   return (
     <div className="hidden md:block mt-1">
-      <Br />
+      <Spacer />
     </div>
   );
 }

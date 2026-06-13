@@ -1,6 +1,6 @@
 "use client";
 
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import LinkWithParams from "@/components/ui/LinkWithParams";
 import { toReadable } from "@/lib/format";
 import Image from "next/image";
@@ -80,7 +80,7 @@ export default function TFFFCard({
           </div>
         </p>
       </div>
-      <Br />
+      <Spacer />
       <div className={twMerge("p-2 px-4 sm:px-2 md:p-0", contentClassName)}>
         <div className="flex justify-between items-center">
           <span>
@@ -91,7 +91,7 @@ export default function TFFFCard({
             <b>${toReadable(data.base_reward_usd) ?? "?"}</b>
           </span>
         </div>
-        <Br cn="md:hidden" />
+        <Spacer className="md:hidden" />
         <div className="flex justify-between items-center">
           <span>
             Discount for <b>{toReadable(data.deforested_ha) ?? "?"} ha</b>{" "}
@@ -102,7 +102,7 @@ export default function TFFFCard({
             <b>-${toReadable(data.deforestation_deduction_usd) ?? "?"}</b>
           </span>
         </div>
-        <Br cn="md:hidden" />
+        <Spacer className="md:hidden" />
         <div className="flex justify-between items-center">
           <span>
             Discount for <b>{toReadable(data.degraded_forest_ha) ?? "?"} ha</b>{" "}
@@ -113,7 +113,7 @@ export default function TFFFCard({
           </span>
         </div>
       </div>
-      <Br />
+      <Spacer />
       <div
         className={twMerge(
           "p-2 px-4 sm:px-2 md:p-3 md:-mx-3 lg:-mx-4 xl:-mx-5 lg:p-4 xl:p-5 xl:py-4",
@@ -152,7 +152,7 @@ export default function TFFFCard({
 
       {showCTA && (
         <>
-          <Br cn="hidden md:block" />
+          <Spacer className="hidden md:block" />
           <LinkWithParams
             href={`/${country?.slug || slugify(country.name)}/${data?.year}`}
             preserveParams={["dataset"]}

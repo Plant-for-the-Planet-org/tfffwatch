@@ -6,28 +6,28 @@ import RecentCommentary from "@/components/sections/features/policies/RecentComm
 import TFFFHero from "@/components/sections/features/tfff/TFFFHero";
 import WhatsAppInvite from "@/components/sections/features/shared/WhatsAppInvite";
 import { TFFFWorldMapView } from "@/components/sections/hero/TFFFMapView";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 
 export default function Home() {
   return (
     <div>
       <TFFFHero />
       <div className="website-container">
-        <Br />
+        <Spacer />
         <InvestmentTracker />
-        <Br />
+        <Spacer />
         <div id="estimated-payouts">
           <TFFFWorldMapView />
         </div>
-        <Br />
+        <Spacer />
         <InfoGrid />
-        <Br />
+        <Spacer />
         <RecentNews />
-        <Br />
+        <Spacer />
         <RecentCommentary />
-        <Br />
+        <Spacer />
         <PlansForThePlanetAnalysis />
-        <Br />
+        <Spacer />
         <WhatsAppInvite />
       </div>
     </div>

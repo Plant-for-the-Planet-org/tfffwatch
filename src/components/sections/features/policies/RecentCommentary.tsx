@@ -1,5 +1,5 @@
 import PolicyCard from "@/components/sections/features/policies/PolicyCard";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { Button } from "@/components/ui/Button";
 import { ResponsiveContainer } from "@/components/ui/Container";
 import { api, urls } from "@/lib/http";
@@ -31,12 +31,12 @@ export default async function RecentCommentary() {
   return (
     <ResponsiveContainer>
       <div className="bg-primary-light outer-rounding outer-padding-3">
-        <Br />
+        <Spacer />
         <h2 className="text-center font-bold typo-h2">
           📰 Recent Policy Papers & Commentary
         </h2>
-        <Br />
-        <Br />
+        <Spacer />
+        <Spacer />
         <div>
           <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
             {policyList.slice(0, 3).map((el) => (
@@ -53,14 +53,14 @@ export default async function RecentCommentary() {
             ))}
           </div>
         </div>
-        <Br />
-        <Br />
+        <Spacer />
+        <Spacer />
         <div className="flex justify-center">
           <Button type="link" external href="/policy-papers-commentary">
             See All
           </Button>
         </div>
-        <Br />
+        <Spacer />
       </div>
     </ResponsiveContainer>
   );
