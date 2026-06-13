@@ -10,7 +10,7 @@ type Props = Partial<InvestmentTrackerForCountry> & {
   how_an_investment_could_work?: string;
 };
 
-export default function InvestmentTrackerContent({
+export default function TrackerContent({
   last_updated,
   status,
   key_developments,

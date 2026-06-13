@@ -72,7 +72,7 @@ function mapSubstackToNews(item: SubstackRSSItem): News {
   };
 }
 
-export default async function PlansforthePlanetAnalysis() {
+export default async function PlansForThePlanetAnalysis() {
   let articles: News[] = [];
 
   try {
@@ -107,8 +107,6 @@ export default async function PlansforthePlanetAnalysis() {
         <Br />
         <Br />
         <div>
-          {/* <div className="flex max-w-full lg:grid lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 overflow-x-scroll overscroll-x-auto scrollbar-transparent"> */}
-          {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 place-items-center place-content-center-safe"> */}
           <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
             {articles.map((article) => (
               <Fragment key={article.id}>
@@ -126,13 +124,6 @@ export default async function PlansforthePlanetAnalysis() {
         </div>
         <Br />
         <Br />
-        {/* <Br />
-        <div className="flex justify-center">
-          <Button type="link" external>
-            See All
-          </Button>
-        </div>
-        <Br /> */}
         <NewsLetter />
         <Br />
       </div>

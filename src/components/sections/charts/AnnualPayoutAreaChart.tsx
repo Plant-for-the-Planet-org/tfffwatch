@@ -1,7 +1,7 @@
 "use client";
 
 import { toReadable } from "@/lib/format";
-import { useForestCoverChangeData } from "@/utils/store";
+import { useForestCoverChangeData } from "@/stores/forest-cover.store";
 import { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
@@ -21,10 +21,6 @@ export default function AnnualPayoutAreaChart() {
   const [chartData, setChartData] = useState<ChartData[]>([]);
 
   useEffect(() => {
-    console.log(
-      "AnnualPayoutAreaChart data:",
-      forestCoverChangeDataByCountry?.length
-    );
     if (!forestCoverChangeDataByCountry?.length) return;
 
     const _chartData = forestCoverChangeDataByCountry
@@ -37,7 +33,6 @@ export default function AnnualPayoutAreaChart() {
             : el.reward_after_deductions_usd,
       }));
 
-    console.log("Annual payout chart data:", _chartData);
     setChartData(_chartData);
   }, [forestCoverChangeDataByCountry]);
 

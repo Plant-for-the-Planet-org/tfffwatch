@@ -2,7 +2,7 @@
 
 import { PageParams } from "@/app/(content)/[country]/[year]/page";
 import Br from "@/components/ui/Br";
-import { getCountryDetails } from "@/utils/country-helper";
+import { getCountryDetails } from "@/domain/country";
 import { useParams } from "next/navigation";
 import AnnualPayoutAreaChart from "../../charts/AnnualPayoutAreaChart";
 

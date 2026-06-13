@@ -8,7 +8,7 @@ import {
   getCountryDetails,
   getEndorsementData,
   isSignatoryCountry,
-} from "@/utils/country-helper";
+} from "@/domain/country";
 import { Metadata } from "next";
 import { humanize } from "underscore.string";
 
@@ -63,8 +63,6 @@ export default async function Page({ params, searchParams }: PageProps) {
       />
       <Br />
       <ForestCoverChange />
-      {/* <Br /> */}
-      {/* <PotentialPayoutVsExistingConservationFunding /> */}
       <Br />
       <AnnualPayout />
       {isSignatory !== null && (

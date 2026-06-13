@@ -1,7 +1,7 @@
 "use client";
 
 import { toReadable } from "@/lib/format";
-import { useForestCoverChangeData } from "@/utils/store";
+import { useForestCoverChangeData } from "@/stores/forest-cover.store";
 import { useEffect, useMemo, useState } from "react";
 import {
   Area,
