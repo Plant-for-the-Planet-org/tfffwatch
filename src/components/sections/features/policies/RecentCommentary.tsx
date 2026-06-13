@@ -8,7 +8,7 @@ import { Policy } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
 import { Fragment } from "react";
 
-export default async function RecentPolicyPapersComentary() {
+export default async function RecentCommentary() {
   let policyList: Policy[] = [];
 
   try {
@@ -38,10 +38,7 @@ export default async function RecentPolicyPapersComentary() {
         <Br />
         <Br />
         <div>
-          {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 overflow-x-scroll overscroll-x-auto"> */}
-          {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 place-items-center place-content-center-safe"> */}
           <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
-            {/* <div className="flex gap-3 md:gap-4 xl:gap-5"> */}
             {policyList.slice(0, 3).map((el) => (
               <Fragment key={el.id}>
                 <PolicyCard

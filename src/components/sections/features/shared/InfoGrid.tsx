@@ -24,8 +24,6 @@ export default function InfoGrid() {
           </Button>
         </div>
       </div>
-      {/* <WhatsTheTFFF />
-      <WhatsTFFFWatch /> */}
     </div>
   );
 }

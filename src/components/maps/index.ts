@@ -17,4 +17,4 @@ export type { Country } from "@/domain/country.types";
 export type { CountryForestRecord } from "@/domain/forest-record.types";
 
 // Store hooks
-export { useWorldMapStore, useCountryMapStore } from "../../stores/mapStore";
+export { useWorldMapStore } from "../../stores/map.store";

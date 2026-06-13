@@ -1,6 +1,5 @@
 import Br from "@/components/ui/Br";
 import YearSelect from "@/components/ui/YearSelect";
-// import { YearSelect } from "@/components/ui/Select";
 
 type HeaderProps = {
   year: string;

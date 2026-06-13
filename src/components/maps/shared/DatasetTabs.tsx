@@ -1,6 +1,6 @@
 "use client";
 
-import { useWorldMapStore } from "@/stores/mapStore";
+import { useWorldMapStore } from "@/stores/map.store";
 import { api, urls } from "@/lib/http";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect } from "react";

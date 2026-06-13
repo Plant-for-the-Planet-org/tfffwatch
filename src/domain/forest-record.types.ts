@@ -1,11 +1,13 @@
 // Canonical forest-data record for one country, one year, one dataset.
 // Single source of truth replacing the former duplicate shapes
 // `TFFFData` (maps/shared/types.ts) and `ForestCoverChange` (utils/types.ts).
+import type { Iso2, CountrySlug, Year } from "./brand";
+
 export interface CountryForestRecord {
-  year: string;
+  year: Year;
   country: string;
-  "country-iso2": string;
-  "country-slug": string;
+  "country-iso2": Iso2;
+  "country-slug": CountrySlug;
   eligibility_combined: boolean;
   intact_forest_ha: number;
   base_reward_usd: number;
