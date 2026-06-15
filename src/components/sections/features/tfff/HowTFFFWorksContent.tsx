@@ -186,47 +186,6 @@ export default function HowTFFFWorksContent() {
       <Hr />
       <Spacer />
       <Spacer />
-      <div>
-        <h2 className="font-bold typo-h2 flex items-center gap-2">
-          <div className="shrink-0 rounded-full bg-black">
-            <Image
-              className="h-4 w-4 m-2"
-              width={32}
-              height={32}
-              src="/assets/howtfffworks-impact-significance.svg"
-              alt="Expected Impact and Broader Significance"
-            />
-          </div>
-          Expected Impact and Broader Significance
-        </h2>
-        <Spacer />
-        <div className="typo-p">
-          <p>
-            The TFFF represents a major shift in how the global community
-            approaches financing for forest conservation. Its
-            simplicity—offering a flat payment per hectare for preserved
-            forests—and its strong penalty mechanism (with a 100:1 ratio for
-            deforestation losses) provide clear and transparent incentives for
-            forest countries. This contrasts with more complex mechanisms like
-            REDD+, which rely on intricate carbon accounting, or payment for
-            ecosystem services (PES) schemes that focus on specific management
-            practices.
-          </p>
-          <Spacer />
-          <p>
-            The TFFF has the potential to become the largest single source of
-            conservation finance in history. Its expected contributions to
-            global climate stability, biodiversity protection, and improved
-            livelihoods for forest-dependent communities mark it as a
-            potentially transformative model.
-          </p>
-        </div>
-      </div>
-      <Spacer />
-      <Spacer />
-      <Hr />
-      <Spacer />
-      <Spacer />
       <div className="bg-white padding-3 rounded-md text-center typo-p">
         <p>
           “
