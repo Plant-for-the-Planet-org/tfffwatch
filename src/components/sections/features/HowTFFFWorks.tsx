@@ -14,11 +14,11 @@ export default function HowTFFFWorks() {
         </h2>
         <Br />
         <p className="typo-p text-center">
-          TFFF is a proposed global, permanent fund designed to support the
-          long-term conservation of tropical forests. Spearheaded by the
-          Government of Brazil, in dialogue with 11 other countries, the
-          initiative was formally launched at the Belém Climate Summit ahead of
-          COP30 in November 2025.
+          TFFF is a global, permanent fund designed to support the long-term
+          conservation of tropical forests. Spearheaded by the Government of
+          Brazil, in dialogue with 11 other countries, the initiative was
+          formally launched at the Belém Climate Summit ahead of COP30 in
+          November 2025.
         </p>
         <Br />
         <p className="typo-p text-center">
