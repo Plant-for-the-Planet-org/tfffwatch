@@ -70,7 +70,7 @@ export default function HowTFFFWorksContent() {
         </h2>
         <Spacer />
         <div className="typo-p">
-          <p>The TFFF is proposed to be structured as a two-arm facility.</p>
+          <p>The TFFF is structured as a two-arm facility.</p>
           <Spacer />
           <ol className="typo-p list-decimal ml-4.5">
             <li>
