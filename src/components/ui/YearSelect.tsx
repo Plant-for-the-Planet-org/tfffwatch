@@ -4,7 +4,7 @@ import { useWorldMapStore } from "@/stores/map.store";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 type Props = {
@@ -16,10 +16,10 @@ function YearSelectContent({ initialValue, onChange }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { setSelectedYear } = useWorldMapStore();
+  const { setSelectedYear, selectedDataset } = useWorldMapStore();
 
   const [selectedId, setSelectedId] = useState(0);
-  const [options] = useState<
+  const [allOptions] = useState<
     { id: number; value: string; label: string; additionalLabels?: string[] }[]
   >([
     { id: 0, value: "2024", label: "2024" },
@@ -37,6 +37,46 @@ function YearSelectContent({ initialValue, onChange }: Props) {
     // },
   ]);
 
+  // MMU data only goes back to 2021; other datasets back to 2018.
+  const minYear = selectedDataset === "MMU" ? 2021 : 2018;
+  const options = useMemo(
+    () => allOptions.filter((el) => +el.value >= minYear),
+    [allOptions, minYear]
+  );
+
+  // When switching to a dataset with a narrower year range (e.g. MMU),
+  // snap an out-of-range selected year to the latest valid year + sync URL.
+  useEffect(() => {
+    const current = allOptions.find((el) => el.id === selectedId);
+    if (current && +current.value < minYear) {
+      const snapped = options[0];
+      setSelectedId(snapped.id);
+      setSelectedYear(snapped.value);
+
+      const pathSegments = pathname.split("/");
+      const yearIndex = pathSegments.findIndex((segment) =>
+        /^\d{4}$/.test(segment)
+      );
+      if (yearIndex !== -1) {
+        pathSegments[yearIndex] = snapped.value;
+        const newPath = pathSegments.join("/");
+        const queryString = searchParams.toString();
+        router.push(queryString ? `${newPath}?${queryString}` : newPath, {
+          scroll: false,
+        });
+      }
+    }
+  }, [
+    minYear,
+    options,
+    allOptions,
+    selectedId,
+    setSelectedYear,
+    pathname,
+    router,
+    searchParams,
+  ]);
+
   useEffect(() => {
     if (!initialValue) {
       const selected = options[0];
@@ -45,7 +85,10 @@ function YearSelectContent({ initialValue, onChange }: Props) {
       return;
     }
 
-    const selected = options.find((el) => el.value === initialValue)!;
+    // Fall back to the latest valid year if initialValue is out of range
+    // for the current dataset (e.g. a pre-2021 year while MMU is active).
+    const selected =
+      options.find((el) => el.value === initialValue) ?? options[0];
     setSelectedId(selected.id);
     setSelectedYear(selected.value);
   }, [initialValue, options, setSelectedYear]);
