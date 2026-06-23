@@ -28,9 +28,9 @@ const investingCountries = [
   "Luxembourg",
   /* "Asian_Infrastructure_Investment_Bank", */ "AIIB",
   /* "European_Bank_for_Reconstruction_and_Development", */ "EBRD",
-  // "Philanthropies",
   "Minderoo_Foundation",
   "The_Nature_Conservancy",
+  // "Philanthropies",
   "Others",
 ];
 
@@ -115,8 +115,7 @@ the current analysis.`;
         <Br />
         <CountryListChips country={country} capitalsData={capitalsData} />
         <Br />
-        {country === investingCountries.at(-1) ||
-        country === investingCountries.at(-2) ? (
+        {country === investingCountries.at(-1) ? (
           <></>
         ) : (
           <>
