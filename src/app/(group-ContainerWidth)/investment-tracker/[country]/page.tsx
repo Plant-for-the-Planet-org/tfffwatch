@@ -28,7 +28,9 @@ const investingCountries = [
   "Luxembourg",
   /* "Asian_Infrastructure_Investment_Bank", */ "AIIB",
   /* "European_Bank_for_Reconstruction_and_Development", */ "EBRD",
-  "Philanthropies",
+  // "Philanthropies",
+  "Minderoo_Foundation",
+  "The_Nature_Conservancy",
   "Others",
 ];
 
@@ -61,6 +63,12 @@ export async function generateMetadata({
 
 export default async function Page({ params }: PageProps) {
   const { country } = await params;
+  console.log(`[page.tsx] Country: ${country}`);
+
+  console.log(
+    investingCountries.map((el) => el.toLowerCase()),
+    country.toLowerCase(),
+  );
 
   if (
     !investingCountries.find((el) => el.toLowerCase() === country.toLowerCase())

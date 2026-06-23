@@ -210,9 +210,29 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       pledgedCapital: null,
       investedCapital: null,
     },
+    // {
+    //   slug: "Philanthropies",
+    //   label: "Philanthropies",
+    //   iso2: "",
+    //   emoji: "🤝",
+    //   noFlag: true,
+    //   selected: false,
+    //   pledgedCapital: null,
+    //   investedCapital: null,
+    // },
     {
-      slug: "Philanthropies",
-      label: "Philanthropies",
+      slug: "Minderoo_Foundation",
+      label: "Minderoo Foundation",
+      iso2: "",
+      emoji: "🤝",
+      noFlag: true,
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
+    {
+      slug: "The_Nature_Conservancy",
+      label: "The Nature Conservancy",
       iso2: "",
       emoji: "🤝",
       noFlag: true,
@@ -239,7 +259,9 @@ export default function CountryListChips({ country, capitalsData }: Props) {
   }
 
   countryList.forEach((el) => {
-    const found = capitalsData.find((cap) => cap.country === el.label);
+    const found = capitalsData.find(
+      (cap) => cap.country === el.label || cap.country === el.slug,
+    );
     el.pledgedCapital = found?.pledged_capital ?? null;
     el.investedCapital = found?.invested_capital ?? null;
   });
@@ -250,7 +272,9 @@ export default function CountryListChips({ country, capitalsData }: Props) {
   });
 
   banksOthersList.forEach((el) => {
-    const found = capitalsData.find((cap) => cap.country === el.label);
+    const found = capitalsData.find(
+      (cap) => cap.country === el.label || cap.country === el.slug,
+    );
     el.pledgedCapital = found?.pledged_capital ?? null;
     el.investedCapital = found?.invested_capital ?? null;
   });
