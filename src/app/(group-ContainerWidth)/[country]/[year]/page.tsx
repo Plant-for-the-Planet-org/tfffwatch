@@ -37,7 +37,12 @@ export default async function Page({ params, searchParams }: PageProps) {
   const details = getCountryDetails({ country, slug });
 
   // Validate dataset parameter - default to JRC if not specified or invalid
-  const validDataset: DatasetType = dataset === "GFW" ? "GFW" : "JRC";
+  const validDataset: DatasetType =
+    dataset === "GFW_20P" || dataset === "GFW_30P"
+      ? dataset
+      : dataset === "JRC"
+        ? "JRC"
+        : "JRC";
 
   return (
     <div>
