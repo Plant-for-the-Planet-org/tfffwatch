@@ -63,12 +63,6 @@ export async function generateMetadata({
 
 export default async function Page({ params }: PageProps) {
   const { country } = await params;
-  console.log(`[page.tsx] Country: ${country}`);
-
-  console.log(
-    investingCountries.map((el) => el.toLowerCase()),
-    country.toLowerCase(),
-  );
 
   if (
     !investingCountries.find((el) => el.toLowerCase() === country.toLowerCase())
