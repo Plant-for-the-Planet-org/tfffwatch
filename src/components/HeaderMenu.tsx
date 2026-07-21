@@ -14,8 +14,14 @@ export default function HeaderMenu() {
     // { id: 2, href: "investment-tracker", label: "Investment Tracker" },
     { id: 2, href: "investment-tracker/Norway", label: "Investment Tracker" },
     // { id: 3, href: "friends-of-the-tfff", label: "Friends of the TFFF" },
-    { id: 4, href: "about-tfff-watch", label: "About TFFF Watch" },
-    { id: 5, href: "press", label: "Press" },
+    {
+      id: 4,
+      external: true,
+      href: "https://plansfortheplanet.substack.com",
+      label: "News",
+    },
+    { id: 5, href: "about-tfff-watch", label: "About TFFF Watch" },
+    { id: 6, href: "press", label: "Press" },
   ]);
 
   return (
@@ -44,16 +50,18 @@ export default function HeaderMenu() {
             {options.map((el, key) => (
               <MenuItem key={el.id} as="div">
                 <LinkWithParams
-                  href={`/${el.href}`}
+                  href={el?.external ? el?.href : `/${el.href}`}
                   className={twMerge(
                     "block w-full typo-p py-4",
                     key === 0 && "pt-0",
-                    key === options.length - 1 && "pb-0"
+                    key === options.length - 1 && "pb-0",
                   )}
                   preserveParams={["dataset"]}
                   onClick={() => {
                     close();
                   }}
+                  target={el?.external ? "_blank" : undefined}
+                  rel={el?.external ? "noopener noreferrer" : undefined}
                 >
                   <span>{el.label}</span>
                 </LinkWithParams>
