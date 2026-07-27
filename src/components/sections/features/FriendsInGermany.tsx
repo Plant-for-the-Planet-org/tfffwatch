@@ -5,27 +5,27 @@ const persons = [
   {
     name: "Dr. Pilar Angelica",
     role: "Professor (CICY)",
-    src: "profile-01.png",
+    src: "https://www-cdn.plant-for-the-planet.org/wp-content/uploads/2025/03/team-hs-placeholder.jpg",
   },
   {
     name: "Ricardo Romero",
     role: "Former Program Manager",
-    src: "profile-01.png",
+    src: "https://www-cdn.plant-for-the-planet.org/wp-content/uploads/2025/03/team-hs-placeholder.jpg",
   },
   {
     name: "Prof. Stuart Pimm",
     role: "Doris Duke Professor",
-    src: "profile-01.png",
+    src: "https://www-cdn.plant-for-the-planet.org/wp-content/uploads/2025/03/team-hs-placeholder.jpg",
   },
   {
     name: "Teresa Muthoni",
     role: "Africa Project Manager",
-    src: "profile-01.png",
+    src: "https://www-cdn.plant-for-the-planet.org/wp-content/uploads/2025/03/team-hs-placeholder.jpg",
   },
   {
     name: "Dr. Peter Borchardt",
     role: "Restoration Specialist",
-    src: "profile-01.png",
+    src: "https://www-cdn.plant-for-the-planet.org/wp-content/uploads/2025/03/team-hs-placeholder.jpg",
   },
 ];
 
@@ -51,8 +51,8 @@ export default function FriendsInGermany() {
                 className="h-full w-full object-cover object-center transition-transform duration-300 ease-in-out group-hover:scale-110"
                 width={16 * 9}
                 height={16 * 9}
-                src={`/assets/persons/${el.src}`}
-                alt={el.src}
+                src={el.src}
+                alt={el.name}
               />
             </div>
             <div className="text-center typo-p">
