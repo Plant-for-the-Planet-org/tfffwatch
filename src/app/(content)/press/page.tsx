@@ -10,6 +10,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Press · TFFF Watch",
   description: "Access press releases and contact us for press inquiries.",
+  alternates: {
+    canonical: "/press",
+  },
 };
 
 export default function Page() {

@@ -4,6 +4,14 @@ import SecondaryHero, {
   OverlayFriendsOfTheTFFF,
 } from "@/components/sections/hero/SecondaryHero";
 import { Spacer } from "@/components/ui/layout";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Friends of the TFFF · TFFF Watch",
+  alternates: {
+    canonical: "/friends-of-the-tfff",
+  },
+};
 
 export default function Page() {
   return (

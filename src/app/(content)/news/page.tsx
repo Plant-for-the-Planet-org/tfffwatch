@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "News · TFFF Watch",
   description:
     "Key news articles published about the Tropical Forest Forever Facility (TFFF)",
+  alternates: {
+    canonical: "/news",
+  },
 };
 
 export default function Page() {

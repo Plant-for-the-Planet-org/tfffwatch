@@ -252,7 +252,12 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
             );
           }}
         >
-          <Image width={24} height={24} src="/assets/download-map.svg" alt="" />
+          <Image
+            width={24}
+            height={24}
+            src="/assets/download-map.svg"
+            alt="Download map"
+          />
         </button>
       </div>
     </>

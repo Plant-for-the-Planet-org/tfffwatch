@@ -9,6 +9,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "TFFF Explained · TFFF Watch",
   description: "How does the Tropical Forest Forever Facility work?",
+  alternates: {
+    canonical: "/the-tfff-explained",
+  },
 };
 
 export default function Page() {
