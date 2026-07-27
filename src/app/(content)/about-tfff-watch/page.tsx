@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "About TFFF Watch · Forever Starts Now",
   description:
     "How we use satellite data to model deforestation rates and estimate TFFF reward payments.",
+  alternates: {
+    canonical: "/about-tfff-watch",
+  },
 };
 
 export default function Page() {

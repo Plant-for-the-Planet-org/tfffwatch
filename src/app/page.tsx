@@ -7,6 +7,18 @@ import TFFFHero from "@/components/sections/features/tfff/TFFFHero";
 import WhatsAppInvite from "@/components/sections/features/shared/WhatsAppInvite";
 import { TFFFWorldMapView } from "@/components/sections/hero/TFFFMapView";
 import { Spacer } from "@/components/ui/layout";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "TFFF Watch",
+    url: "/",
+  },
+};
 
 export default function Home() {
   return (

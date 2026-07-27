@@ -7,6 +7,7 @@ import { Spacer } from "@/components/ui/layout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  title: "Friends of the TFFF · TFFF Watch",
   robots: {
     index: false,
     follow: false,

@@ -6,9 +6,12 @@ import { Spacer } from "@/components/ui/layout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Policy Papers & Commentary  · TFFF Watch",
+  title: "Policy Papers & Commentary · TFFF Watch",
   description:
     "Key policy briefs or open letters published about the Tropical Forest Forever Facility (TFFF)",
+  alternates: {
+    canonical: "/policy-papers-commentary",
+  },
 };
 
 export default function Page() {

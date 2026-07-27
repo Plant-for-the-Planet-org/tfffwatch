@@ -18,7 +18,7 @@ export default function TFFFHero() {
                   />
                 </div>
                 <div>
-                  <h2 className="font-bold typo-h2">The TFFF</h2>
+                  <h1 className="font-bold typo-h2">The TFFF</h1>
                   <p className="typo-p">
                     or Tropical Forest Forever Facility, is an investment fund.
                     The fund’s profits reward countries for protecting their
