@@ -37,15 +37,13 @@ export function Logo() {
   return (
     <div>
       <LinkWithParams href="/" preserveParams={["dataset"]}>
-        <h1>
-          <Image
-            className=" h-[24px] w-[160px] lg:h-[48px] lg:w-[256px]"
-            width={256}
-            height={32}
-            src="/assets/tfffwatch-header-logo.svg"
-            alt="TFFF Watch"
-          />
-        </h1>
+        <Image
+          className=" h-[24px] w-[160px] lg:h-[48px] lg:w-[256px]"
+          width={256}
+          height={32}
+          src="/assets/tfffwatch-header-logo.svg"
+          alt="TFFF Watch"
+        />
       </LinkWithParams>
     </div>
   );

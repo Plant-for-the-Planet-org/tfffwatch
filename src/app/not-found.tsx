@@ -13,6 +13,7 @@ export default function NotFound() {
           <Spacer />
           <Spacer />
           <Spacer />
+          {/* Decorative: the "Page Not Found" heading below carries the meaning. */}
           <Image
             className="p-4"
             width={352}

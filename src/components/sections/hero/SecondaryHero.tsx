@@ -29,7 +29,7 @@ export default function SecondaryHero(props: Props) {
 export function OverlayTheTFFFIdea() {
   return (
     <div className="absolute inset-0 flex justify-center items-center">
-      <h2 className="font-bold text-white typo-h1">The TFFF, Explained</h2>
+      <h1 className="font-bold text-white typo-h1">The TFFF, Explained</h1>
     </div>
   );
 }
@@ -37,7 +37,7 @@ export function OverlayTheTFFFIdea() {
 export function OverlayFriendsOfTheTFFF() {
   return (
     <div className="absolute inset-0 flex justify-center items-center">
-      <h2 className="font-bold text-white typo-h1">Friends of the TFFF</h2>
+      <h1 className="font-bold text-white typo-h1">Friends of the TFFF</h1>
     </div>
   );
 }
@@ -45,7 +45,7 @@ export function OverlayFriendsOfTheTFFF() {
 export function OverlayAboutTFFFWatch() {
   return (
     <div className="absolute inset-0 flex justify-center items-center">
-      <h2 className="font-bold text-white typo-h1">About TFFF Watch</h2>
+      <h1 className="font-bold text-white typo-h1">About TFFF Watch</h1>
     </div>
   );
 }
@@ -53,23 +53,23 @@ export function OverlayAboutTFFFWatch() {
 export function OverlayPressTFFFWatch() {
   return (
     <div className="absolute inset-0 flex justify-center items-center">
-      <h2 className="font-bold text-white typo-h1">Press</h2>
+      <h1 className="font-bold text-white typo-h1">Press</h1>
     </div>
   );
 }
 export function OverlayNewsTFFFWatch() {
   return (
     <div className="absolute inset-0 flex justify-center items-center">
-      <h2 className="font-bold text-white typo-h1">TFFF News</h2>
+      <h1 className="font-bold text-white typo-h1">TFFF News</h1>
     </div>
   );
 }
 export function OverlayPoliciesTFFFWatch() {
   return (
     <div className="absolute inset-0 flex justify-center items-center">
-      <h2 className="font-bold text-white typo-h1">
+      <h1 className="font-bold text-white typo-h1">
         Policy Papers & Commentary
-      </h2>
+      </h1>
     </div>
   );
 }

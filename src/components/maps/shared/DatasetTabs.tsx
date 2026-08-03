@@ -150,7 +150,7 @@ export default function DatasetTabs({
                 width={16}
                 height={16}
                 src={"/assets/tooltip-info-icon.svg"}
-                alt=""
+                alt="About these datasets"
               />
             </button>
           }

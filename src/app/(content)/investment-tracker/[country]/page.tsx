@@ -9,30 +9,14 @@ import {
   InvestmentTrackerCapitals,
   InvestmentTrackerForCountry,
 } from "@/utils/types";
+import { investingCountries } from "@/domain/investing-countries";
+import JsonLd from "@/lib/json-ld";
+import {
+  buildBreadcrumbSchema,
+  buildTrackerDatasetSchema,
+} from "@/lib/structured-data";
 import { Metadata } from "next";
 import { capitalize } from "underscore.string";
-
-const investingCountries = [
-  "Germany",
-  "Norway",
-  "France",
-  "UK",
-  "UAE",
-  // "Singapore",
-  "EU",
-  "Brazil",
-  "China",
-  "Indonesia",
-  "Portugal",
-  "Netherlands",
-  "Luxembourg",
-  /* "Asian_Infrastructure_Investment_Bank", */ "AIIB",
-  /* "European_Bank_for_Reconstruction_and_Development", */ "EBRD",
-  "Minderoo_Foundation",
-  "The_Nature_Conservancy",
-  // "Philanthropies",
-  "Others",
-];
 
 // https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 export async function generateStaticParams() {
@@ -57,6 +41,9 @@ export async function generateMetadata({
   return {
     title: `${countryContentInMetadata} Investment Tracker · TFFF Watch`,
     description: `Is ${countryContentInMetadata} contributing to the Tropical Forest Forever Facility?`,
+    alternates: {
+      canonical: `/investment-tracker/${country}`,
+    },
   };
 }
 
@@ -100,9 +87,23 @@ the current analysis.`;
   }
 
   if (!richData) return null;
+
+  const countryName = capitalize(country);
+  const path = `/investment-tracker/${country}`;
+  const datasetSchema = buildTrackerDatasetSchema({ countryName, path });
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Investment Tracker", path: "/investment-tracker" },
+    { name: countryName, path },
+  ]);
+
   return (
     <div>
+      <JsonLd data={[datasetSchema, breadcrumbSchema]} />
       <div>
+        <h1 className="sr-only">
+          {capitalize(country)} Investment Tracker
+        </h1>
         <InvestmentTracker />
         <Spacer />
         <CountryListChips country={country} capitalsData={capitalsData} />

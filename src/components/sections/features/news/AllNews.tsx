@@ -1,6 +1,8 @@
 import { Spacer } from "@/components/ui/layout";
 import { ResponsiveContainer } from "@/components/ui/Container";
 import { getNews } from "@/content/news";
+import JsonLd from "@/lib/json-ld";
+import { buildNewsListSchema } from "@/lib/structured-data";
 import { News } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
 import { Fragment } from "react";
@@ -22,13 +24,16 @@ export default async function AllNews() {
     console.error("Error fetching news:", error);
   }
 
+  const visibleNews = newsList.slice(0, 12);
+
   return (
     <ResponsiveContainer>
+      <JsonLd data={buildNewsListSchema(visibleNews)} />
       <Spacer />
       <Spacer />
       <div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 xl:gap-5">
-          {newsList.slice(0, 12).map((el) => (
+          {visibleNews.map((el) => (
             <Fragment key={el.id}>
               <NewsCard
                 title={el.title!}
