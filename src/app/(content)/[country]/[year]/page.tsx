@@ -1,6 +1,7 @@
 import { DatasetType } from "@/components/maps/shared/types";
 import AnnualPayout from "@/components/sections/features/forest-cover/AnnualPayout";
 import CountrySingnatories from "@/components/sections/features/endorsement/CountrySignatories";
+import CountryPayoutSummary from "@/components/sections/features/forest-cover/CountryPayoutSummary";
 import ForestCoverChange from "@/components/sections/features/forest-cover/ForestCoverChange";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import { Spacer } from "@/components/ui/layout";
@@ -63,6 +64,13 @@ export default async function Page({ params, searchParams }: PageProps) {
     <div>
       <JsonLd data={[datasetSchema, breadcrumbSchema]} />
       <h1 className="sr-only">{details.name} · TFFF Payout Estimate</h1>
+      <CountryPayoutSummary
+        countryName={details.name}
+        iso2={details.iso2}
+        year={year}
+        dataset={validDataset}
+      />
+      <Spacer />
       <TFFFCountryMapView
         year={year}
         name={details.name}

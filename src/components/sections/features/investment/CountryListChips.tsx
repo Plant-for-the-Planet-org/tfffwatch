@@ -320,6 +320,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
             ) : (
               <>
                 {el?.iso2 && (
+                  // Decorative: the country label is rendered as text alongside.
                   <img
                     className="w-6 h-4 p-0.5"
                     alt=""
@@ -362,6 +363,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
             ) : (
               <>
                 {el?.iso2 && (
+                  // Decorative: the country label is rendered as text alongside.
                   <img
                     className="w-6 h-4 p-0.5"
                     alt=""
