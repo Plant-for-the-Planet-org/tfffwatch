@@ -22,6 +22,7 @@ export default function HeaderCountry() {
     <div>
       <Spacer />
       <p className="flex gap-2 items-center">
+        {/* Decorative: the country name is stated in the adjacent <b>. */}
         <img className="w-6 h-4 p-0.5" alt="" src={details.flagImgUrl} />
         <b>{details.name}</b>
       </p>

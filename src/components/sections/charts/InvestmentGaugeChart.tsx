@@ -126,7 +126,7 @@ const CustomLabel = (props: CustomLabelWithDataProps) => {
                       width={14}
                       height={14}
                       src={"/assets/tooltip-info-icon-2.svg"}
-                      alt=""
+                      alt="About the 2026 target"
                     />
                     <div className="hidden group-hover:block absolute z-50 -top-16 left-4">
                       <div className="bg-white border border-primary-light w-48 p-2 px-4 rounded-xl">

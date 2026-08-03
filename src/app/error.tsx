@@ -29,6 +29,7 @@ export default function Error({
           <Spacer />
           <Spacer />
           <Spacer />
+          {/* Decorative: the error message heading below carries the meaning. */}
           <Image
             className="p-4"
             width={352}
