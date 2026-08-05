@@ -43,6 +43,9 @@ export type InvestmentTrackerForCountry = {
   invested_capital: number;
   background: string;
   status: string;
+  key_developments: string;
+  financial_details: string;
+  images_post_financial_details: string;
   responsibile_government_office: string;
   endorsements: string;
   CSOs: string;

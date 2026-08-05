@@ -84,6 +84,14 @@ export function formatPublisherForCardBadge(
   return text;
 }
 
+export function parseImageUrls(text: string | null | undefined): string[] {
+  if (!text) return [];
+  return text
+    .split(",")
+    .map((url) => url.trim())
+    .filter(Boolean);
+}
+
 export const hasContent = (
   content: string | JSONContent | null | undefined
 ): boolean => {

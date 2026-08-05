@@ -120,7 +120,12 @@ the current analysis.`;
         <InvestmentTrackerContent
           last_updated={richData?.last_updated}
           status={richData?.status ?? ""}
+          key_developments={richData?.key_developments ?? ""}
           background={richData?.background ?? ""}
+          financial_details={richData?.financial_details ?? ""}
+          images_post_financial_details={
+            richData?.images_post_financial_details ?? ""
+          }
           endorsements={richData?.endorsements ?? ""}
           CSOs={richData?.CSOs ?? ""}
           how_an_investment_could_work={

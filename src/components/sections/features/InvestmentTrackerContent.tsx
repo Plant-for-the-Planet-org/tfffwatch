@@ -3,7 +3,8 @@ import ContentSection from "@/components/ui/ContentSection";
 import { formatDateAgo } from "@/utils/datetime-helper";
 import { InvestmentTrackerForCountry } from "@/utils/types";
 import RichToHTML from "./RichToHTML";
-import { hasContent } from "@/utils/content-helper";
+import ExpandableImage from "./ExpandableImage";
+import { hasContent, parseImageUrls } from "@/utils/content-helper";
 
 type Props = Partial<InvestmentTrackerForCountry> & {
   how_an_investment_could_work?: string;
@@ -12,11 +13,15 @@ type Props = Partial<InvestmentTrackerForCountry> & {
 export default function InvestmentTrackerContent({
   last_updated,
   status,
+  key_developments,
   background,
+  financial_details,
+  images_post_financial_details,
   endorsements,
   CSOs,
   responsibile_government_office,
 }: Props) {
+  const financialDetailsImages = parseImageUrls(images_post_financial_details);
   return (
     <div className="border border-base-gray rounded-xl padding-3">
       <div className="text-end text-[#828282] italic">
@@ -28,6 +33,12 @@ export default function InvestmentTrackerContent({
         {hasContent(status) && (
           <ContentSection icon="/assets/investment-status.svg" title="Status">
             <RichToHTML content={status!} />
+          </ContentSection>
+        )}
+
+        {hasContent(key_developments) && (
+          <ContentSection title="Key Developments">
+            <RichToHTML content={key_developments!} />
           </ContentSection>
         )}
 
@@ -46,6 +57,23 @@ export default function InvestmentTrackerContent({
             title="Other engagements for tropical forests"
           >
             <RichToHTML content={background!} />
+          </ContentSection>
+        )}
+
+        {hasContent(financial_details) && (
+          <ContentSection title="Financial Details">
+            <RichToHTML content={financial_details!} />
+            {financialDetailsImages.length > 0 && (
+              <div className="flex flex-col items-center gap-4 mt-4">
+                {financialDetailsImages.map((url, index) => (
+                  <ExpandableImage
+                    key={url + index}
+                    src={url}
+                    className="w-full max-w-2xl"
+                  />
+                ))}
+              </div>
+            )}
           </ContentSection>
         )}
 

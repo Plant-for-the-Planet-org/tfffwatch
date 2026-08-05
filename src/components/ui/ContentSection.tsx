@@ -2,7 +2,7 @@ import Br from "@/components/ui/Br";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 type ContentSectionProps = {
-  icon: string;
+  icon?: string;
   title: string;
   children: React.ReactNode;
   className?: string;
