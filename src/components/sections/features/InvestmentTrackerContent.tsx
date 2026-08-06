@@ -37,7 +37,10 @@ export default function InvestmentTrackerContent({
         )}
 
         {hasContent(key_developments) && (
-          <ContentSection title="Key Developments">
+          <ContentSection
+            icon="/assets/investment-key-developments.svg"
+            title="Key Developments"
+          >
             <RichToHTML content={key_developments!} />
           </ContentSection>
         )}
@@ -61,7 +64,10 @@ export default function InvestmentTrackerContent({
         )}
 
         {hasContent(financial_details) && (
-          <ContentSection title="Financial Details">
+          <ContentSection
+            icon="/assets/investment-finance-details.svg"
+            title="Financial Details"
+          >
             <RichToHTML content={financial_details!} />
             {financialDetailsImages.length > 0 && (
               <div className="flex flex-col items-center gap-4 mt-4">
