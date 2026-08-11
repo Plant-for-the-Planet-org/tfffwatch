@@ -18,7 +18,6 @@ export default function InvestmentTrackerContent({
   financial_details,
   images_post_financial_details,
   endorsements,
-  CSOs,
   responsibile_government_office,
 }: Props) {
   const financialDetailsImages = parseImageUrls(images_post_financial_details);
@@ -92,6 +91,7 @@ export default function InvestmentTrackerContent({
           </ContentSection>
         )}
 
+        {/* CSO section disabled, do not show on site. Keep for possible future re-enable.
         {hasContent(CSOs) && (
           <ContentSection
             icon="/assets/investment-csos.svg"
@@ -100,6 +100,7 @@ export default function InvestmentTrackerContent({
             <RichToHTML content={CSOs!} />
           </ContentSection>
         )}
+        */}
       </div>
       <Br cn="hidden lg:block" />
     </div>

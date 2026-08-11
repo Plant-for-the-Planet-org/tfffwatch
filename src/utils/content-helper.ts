@@ -86,9 +86,11 @@ export function formatPublisherForCardBadge(
 
 export function parseImageUrls(text: string | null | undefined): string[] {
   if (!text) return [];
+  // Split only on commas that precede the start of the next URL, since a
+  // single URL (e.g. Substack's CDN fetch URLs) can itself contain commas.
   return text
-    .split(",")
-    .map((url) => url.trim())
+    .split(/,(?=\s*https?:\/\/)/)
+    .map((url) => url.trim().replace(/,+$/, ""))
     .filter(Boolean);
 }
 
