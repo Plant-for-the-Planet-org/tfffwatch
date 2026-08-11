@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "www-cdn.plant-for-the-planet.org",
       },
+      {
+        protocol: "https",
+        hostname: "substackcdn.com",
+      },
     ],
   },
 };
