@@ -173,6 +173,42 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       pledgedCapital: null,
       investedCapital: null,
     },
+    {
+      slug: "Spain",
+      label: "Spain",
+      iso2: "ES",
+      emoji: "🇪🇸",
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
+    {
+      slug: "Canada",
+      label: "Canada",
+      iso2: "CA",
+      emoji: "🇨🇦",
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
+    {
+      slug: "Japan",
+      label: "Japan",
+      iso2: "JP",
+      emoji: "🇯🇵",
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
+    {
+      slug: "South Korea",
+      label: "South Korea",
+      iso2: "KR",
+      emoji: "🇰🇷",
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
   ];
 
   const banksOthersList: ChipItemType[] = [
