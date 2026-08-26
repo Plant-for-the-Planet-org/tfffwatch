@@ -29,7 +29,7 @@ const investingCountries = [
   "Spain",
   "Canada",
   "Japan",
-  "South Korea",
+  "South_Korea",
   /* "Asian_Infrastructure_Investment_Bank", */ "AIIB",
   /* "European_Bank_for_Reconstruction_and_Development", */ "EBRD",
   "Minderoo_Foundation",

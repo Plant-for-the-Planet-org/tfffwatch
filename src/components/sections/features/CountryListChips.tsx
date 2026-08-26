@@ -201,7 +201,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       investedCapital: null,
     },
     {
-      slug: "South Korea",
+      slug: "South_Korea",
       label: "South Korea",
       iso2: "KR",
       emoji: "🇰🇷",
