@@ -1,7 +1,7 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { IconButton } from "@/components/ui/Button";
-import { formatPublisherForCardBadge } from "@/utils/content-helper";
-import { formatDateForCardBadge } from "@/utils/datetime-helper";
+import { formatPublisherForCardBadge } from "@/lib/text";
+import { formatDateForCardBadge } from "@/lib/date";
 
 type Props = {
   title: string;
@@ -50,7 +50,7 @@ export default function NewsCard(props: Props) {
         <h3 className="mb-2 font-bold text-base">{props.title}</h3>
         <p className="text-sm xl:text-base">{props.summary}</p>
       </a>
-      <Br cn="hidden md:block" />
+      <Spacer className="hidden md:block" />
     </div>
   );
 }

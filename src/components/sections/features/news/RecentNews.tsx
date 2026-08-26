@@ -1,6 +1,6 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { ResponsiveContainer } from "@/components/ui/Container";
-import { api, urls } from "@/utils/axios-helper";
+import { api, urls } from "@/lib/http";
 import { News } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
 import { Fragment } from "react";
@@ -30,15 +30,12 @@ export default async function RecentNews() {
   return (
     <ResponsiveContainer>
       <div className="bg-secondary-light outer-rounding outer-padding-3">
-        <Br />
+        <Spacer />
         <h2 className="text-center font-bold typo-h2">🌿 Recent News</h2>
-        <Br />
-        <Br />
+        <Spacer />
+        <Spacer />
         <div>
-          {/* <div className="flex max-w-full lg:grid lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 overflow-x-scroll overscroll-x-auto scrollbar-transparent"> */}
-          {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 place-items-center place-content-center-safe"> */}
           <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
-            {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5"> */}
             {newsList.slice(0, 3).map((el) => (
               <Fragment key={el.id}>
                 <NewsCard
@@ -58,8 +55,8 @@ export default async function RecentNews() {
             ))}
           </div>
         </div>
-        <Br />
-        <Br />
+        <Spacer />
+        <Spacer />
 
         <div className="flex justify-center">
           <Button type="link" external href="/news">
@@ -67,7 +64,7 @@ export default async function RecentNews() {
           </Button>
         </div>
 
-        <Br />
+        <Spacer />
       </div>
     </ResponsiveContainer>
   );

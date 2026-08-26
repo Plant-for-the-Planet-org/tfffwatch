@@ -1,8 +1,8 @@
 import PolicyCard from "@/components/sections/features/policies/PolicyCard";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { ResponsiveContainer } from "@/components/ui/Container";
-import { api, urls } from "@/utils/axios-helper";
-import { formatDateFromExcelToData } from "@/utils/datetime-helper";
+import { getPolicyBriefs } from "@/content/policies";
+import { formatDateFromExcelToData } from "@/lib/date";
 import { Policy } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
 import { Fragment } from "react";
@@ -11,11 +11,7 @@ export default async function AllPolicies() {
   let policyList: Policy[] = [];
 
   try {
-    policyList = await api<Policy[]>({
-      url: urls.policyBriefs,
-      method: "GET",
-      token: "", // Add token if required
-    });
+    policyList = await getPolicyBriefs();
 
     policyList.sort((a, b) =>
       compareDesc(
@@ -29,8 +25,8 @@ export default async function AllPolicies() {
 
   return (
     <ResponsiveContainer>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 xl:gap-5">
           {policyList.map((el) => (
@@ -47,8 +43,8 @@ export default async function AllPolicies() {
           ))}
         </div>
       </div>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
     </ResponsiveContainer>
   );
 }
