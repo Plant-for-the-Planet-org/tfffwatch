@@ -53,15 +53,6 @@ export default function TrackerContent({
           </ContentSection>
         )}
 
-        {hasContent(background) && (
-          <ContentSection
-            icon="/assets/investment-background.svg"
-            title="Other engagements for tropical forests"
-          >
-            <RichToHTML content={background!} />
-          </ContentSection>
-        )}
-
         {hasContent(financial_details) && (
           <ContentSection
             icon="/assets/investment-finance-details.svg"
@@ -79,6 +70,15 @@ export default function TrackerContent({
                 ))}
               </div>
             )}
+          </ContentSection>
+        )}
+
+        {hasContent(background) && (
+          <ContentSection
+            icon="/assets/investment-background.svg"
+            title="Other engagements for tropical forests"
+          >
+            <RichToHTML content={background!} />
           </ContentSection>
         )}
 
