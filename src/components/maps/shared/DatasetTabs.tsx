@@ -54,7 +54,8 @@ export default function DatasetTabs({
           method: "GET",
           token: "",
           query: {
-            source: dataset,
+            source:
+              dataset === "GFW_20P" || dataset === "GFW_30P" ? "GFW" : dataset,
             // Do NOT include year - fetch all years at once
           },
         });
@@ -68,7 +69,7 @@ export default function DatasetTabs({
         setIsLoading(false);
       }
     },
-    [datasetFetched, setForestData, setIsLoading, markDatasetFetched]
+    [datasetFetched, setForestData, setIsLoading, markDatasetFetched],
   );
 
   // Set selected dataset immediately on mount and when URL changes
@@ -87,17 +88,22 @@ export default function DatasetTabs({
       description: "",
     },
     {
-      key: "GFW",
-      label: "Tree-cover-change Estimate (GFW)",
+      key: "GFW_20P",
+      label: "20% Canopy Cover Estimate (GFW)",
+      description: "",
+    },
+    {
+      key: "GFW_30P",
+      label: "30% Canopy Cover Estimate (GFW)",
       description: "",
     },
   ];
 
   const baseTabClasses =
-    "px-1 py-1 sm:px-2 sm:py-2 md:px-4 md:py-2 text-sm font-regular rounded-lg transition-colors duration-200 cursor-pointer outline-none";
+    "px-1 py-1 sm:px-2 sm:py-2 md:px-4 md:py-2 text-[10px] sm:text-sm font-regular rounded-lg transition-colors duration-200 cursor-pointer outline-none";
   const defaultActiveClasses = "bg-white font-medium text-[#333333] shadow-sm";
   const defaultInactiveClasses =
-    "bg-transparent text-[#828282] hover:bg-[#E4F6EB]/50";
+    "bg-white/33 text-[#828282] hover:bg-[#E4F6EB]/50";
   const disabledClasses = "opacity-50 cursor-not-allowed";
 
   const handleTabClick = useCallback(
@@ -108,14 +114,14 @@ export default function DatasetTabs({
         router.push(`?${params.toString()}`, { scroll: false });
       }
     },
-    [disabled, router, searchParams]
+    [disabled, router, searchParams],
   );
 
   return (
     <div
       className={twMerge(
         "flex gap-1 p-1 bg-[#E4F6EB] rounded-xl border border-primary-light",
-        tabsClassName
+        tabsClassName,
       )}
     >
       {datasets.map(({ key, label, description }) => {
@@ -132,7 +138,7 @@ export default function DatasetTabs({
               isActive
                 ? twMerge(defaultActiveClasses, activeTabClassName)
                 : twMerge(defaultInactiveClasses, inactiveTabClassName),
-              disabled && disabledClasses
+              disabled && disabledClasses,
             )}
           >
             {label}

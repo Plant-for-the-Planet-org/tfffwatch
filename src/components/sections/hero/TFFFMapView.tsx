@@ -6,6 +6,7 @@ import {
   useWorldMapStore,
   WorldMap,
 } from "@/components/maps";
+import { DatasetType } from "@/components/maps/shared/types";
 import CountryMapCard from "@/components/maps/country/CountryMapCard";
 import {
   CountryMapLegends,
@@ -51,13 +52,14 @@ export function TFFFWorldMapView() {
 
   useEffect(() => {
     const _yearWise = forestCoverChangeData.filter(
-      (el) => el.year == selectedYear
+      (el) => el.year == selectedYear,
     );
     setForestCoverChangeDataByYear(_yearWise);
 
-    // Update new store with forest data for both datasets initially
+    // Update new store with forest data for all three datasets initially
     // This provides immediate data for map rendering, specific data will be fetched by DatasetTabs
-    setForestData("GFW", _yearWise);
+    setForestData("GFW_20P", _yearWise);
+    setForestData("GFW_30P", _yearWise);
     setForestData("JRC", _yearWise); // Use as fallback until JRC-specific data is fetched
   }, [
     forestCoverChangeData,
@@ -118,7 +120,7 @@ export function TFFFWorldMapView() {
 
 type TFFFCountryMapViewProps = CountryDetails & {
   year: string;
-  dataset?: "GFW" | "JRC";
+  dataset?: DatasetType;
 };
 
 function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
@@ -126,8 +128,8 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
   const searchParams = useSearchParams();
 
   // Get dataset from URL params, fallback to props or default
-  const selectedDataset =
-    (searchParams.get("dataset") as "GFW" | "JRC") || props.dataset || "JRC";
+  const selectedDataset: DatasetType =
+    (searchParams.get("dataset") as DatasetType) || props.dataset || "JRC";
 
   useEffect(() => {
     if (props.name && props.iso2) {
@@ -140,7 +142,10 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
       fetchForestCoverChangeDataV2({
         country: props.name,
         iso2: props.iso2,
-        source: selectedDataset,
+        source:
+          selectedDataset === "GFW_20P" || selectedDataset === "GFW_30P"
+            ? "GFW"
+            : selectedDataset,
       });
     }
   }, [props.name, props.iso2, selectedDataset]);
