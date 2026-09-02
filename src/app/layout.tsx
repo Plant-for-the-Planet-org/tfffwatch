@@ -39,7 +39,7 @@ export default function RootLayout({
       {env.enableUmami && (
         <script
           defer
-          src="https://umami-xgos4ssg4g4cg00k0cgo48cw.gopher.startplanting.org/script.js"
+          src="https://umami-xgos4ssg4g4cg00k0cgo48cw.insights.startplanting.org/script.js"
           data-website-id="8faac63b-1749-4ffc-8752-63beb881f643"
         ></script>
       )}
