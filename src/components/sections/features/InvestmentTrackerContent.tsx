@@ -14,7 +14,7 @@ export default function InvestmentTrackerContent({
   last_updated,
   status,
   key_developments,
-  background,
+  // background,
   financial_details,
   images_post_financial_details,
   endorsements,
@@ -73,14 +73,14 @@ export default function InvestmentTrackerContent({
           </ContentSection>
         )}
 
-        {hasContent(background) && (
+        {/* {hasContent(background) && (
           <ContentSection
             icon="/assets/investment-background.svg"
             title="Other engagements for tropical forests"
           >
             <RichToHTML content={background!} />
           </ContentSection>
-        )}
+        )} */}
 
         {hasContent(endorsements) && (
           <ContentSection
