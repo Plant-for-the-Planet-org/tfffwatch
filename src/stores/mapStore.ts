@@ -17,7 +17,7 @@ interface WorldMapStore extends WorldMapState {
   setIsLoading: (loading: boolean) => void;
   getCurrentForestData: () => TFFFData[];
   getSelectedCountryData: () => TFFFData | null;
-  datasetFetched: { GFW: boolean; JRC: boolean };
+  datasetFetched: { JRC: boolean; GFW_20P: boolean; GFW_30P: boolean };
   markDatasetFetched: (dataset: DatasetType) => void;
   resetDatasetFetched: () => void;
 }
@@ -27,9 +27,13 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
   selectedYear: "2024",
   selectedDataset: "JRC",
   clickPosition: null,
-  forestData: { GFW: [], JRC: [] },
+  forestData: {
+    JRC: [],
+    GFW_20P: [],
+    GFW_30P: [],
+  },
   isLoading: false,
-  datasetFetched: { GFW: false, JRC: false },
+  datasetFetched: { JRC: false, GFW_20P: false, GFW_30P: false },
 
   setSelectedCountry: (country) => set({ selectedCountry: country }),
   setSelectedYear: (year) =>
@@ -53,7 +57,7 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
     })),
   resetDatasetFetched: () =>
     set({
-      datasetFetched: { GFW: false, JRC: false },
+      datasetFetched: { JRC: false, GFW_20P: false, GFW_30P: false },
     }),
 
   getCurrentForestData: () => {
@@ -67,7 +71,7 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
 
     return (
       currentData.find(
-        (data) => data["country-iso2"] === state.selectedCountry?.iso2
+        (data) => data["country-iso2"] === state.selectedCountry?.iso2,
       ) || null
     );
   },
@@ -87,9 +91,9 @@ interface CountryMapStore extends CountryMapState {
 export const useCountryMapStore = create<CountryMapStore>((set, get) => ({
   country: { iso2: "", iso3: "", name: "", slug: "", flagImgUrl: "" },
   year: "2024",
-  dataset: "GFW",
-  layerData: { GFW: null, JRC: null },
-  tfffData: { GFW: null, JRC: null },
+  dataset: "GFW_20P",
+  layerData: { JRC: null, GFW_20P: null, GFW_30P: null },
+  tfffData: { JRC: null, GFW_20P: null, GFW_30P: null },
   isLoading: false,
 
   setCountry: (country) => set({ country }),

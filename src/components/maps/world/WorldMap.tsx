@@ -86,7 +86,8 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
         ...country.properties,
         colorKey: "#E1EBE5", // Blank/neutral color
         JRCColorKey: "#E1EBE5",
-        GFWColorKey: "#E1EBE5",
+        GFW_20PColorKey: "#E1EBE5",
+        GFW_30PColorKey: "#E1EBE5",
         countrySlug: "",
       },
     }));
@@ -95,9 +96,17 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     const jrcDataAll = forestData.JRC || [];
     const jrcData = jrcDataAll.filter((item) => item.year == selectedYear);
 
-    // Filter GFW data by selected year
-    const gfwDataAll = forestData.GFW || [];
-    const gfwData = gfwDataAll.filter((item) => item.year == selectedYear);
+    // Filter GFW_20P data by selected year
+    const gfw20pDataAll = forestData.GFW_20P || [];
+    const gfw20pData = gfw20pDataAll.filter(
+      (item) => item.year == selectedYear,
+    );
+
+    // Filter GFW_30P data by selected year
+    const gfw30pDataAll = forestData.GFW_30P || [];
+    const gfw30pData = gfw30pDataAll.filter(
+      (item) => item.year == selectedYear,
+    );
 
     // Update JRC colors if we have JRC data
     let featuresWithColors = blankFeatures;
@@ -120,21 +129,41 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
       });
     }
 
-    // Update GFW colors if we have GFW data
-    if (gfwData.length > 0) {
-      const transformedGFW = transformAllForestCoverChangeData(gfwData);
+    // Update GFW_20P colors if we have GFW_20P data
+    if (gfw20pData.length > 0) {
+      const transformedGFW20P = transformAllForestCoverChangeData(gfw20pData);
       featuresWithColors = featuresWithColors.map((country) => {
         const countrySlug = country.properties.countrySlug as string;
         const countyISO2 = country.properties.iso_a2 as string;
-        const gfwEligibility = transformedGFW[countyISO2]?.eligibility;
-        const gfwColorKey = getGFWColorKey(gfwEligibility || "NA");
+        const gfw20PEligibility = transformedGFW20P[countyISO2]?.eligibility;
+        const gfw20PColorKey = getGFWColorKey(gfw20PEligibility || "NA");
 
         return {
           ...country,
           properties: {
             ...country.properties,
             countrySlug,
-            GFWColorKey: gfwColorKey,
+            GFW_20PColorKey: gfw20PColorKey,
+          },
+        };
+      });
+    }
+
+    // Update GFW_30P colors if we have GFW_30P data
+    if (gfw30pData.length > 0) {
+      const transformedGFW30P = transformAllForestCoverChangeData(gfw30pData);
+      featuresWithColors = featuresWithColors.map((country) => {
+        const countrySlug = country.properties.countrySlug as string;
+        const countyISO2 = country.properties.iso_a2 as string;
+        const gfw30PEligibility = transformedGFW30P[countyISO2]?.eligibility;
+        const gfw30PColorKey = getGFWColorKey(gfw30PEligibility || "NA");
+
+        return {
+          ...country,
+          properties: {
+            ...country.properties,
+            countrySlug,
+            GFW_30PColorKey: gfw30PColorKey,
           },
         };
       });
@@ -162,7 +191,11 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
     const features = map?.queryRenderedFeatures(event.point, {
-      layers: ["country-fill-jrc", "country-fill-gfw"],
+      layers: [
+        "country-fill-jrc",
+        "country-fill-gfw_20p",
+        "country-fill-gfw_30p",
+      ],
     });
     const { point } = event;
     const country = features?.[0]?.properties?.name_long;
@@ -194,11 +227,11 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     const { forestData } = useWorldMapStore.getState();
     const currentDataAll = forestData[selectedDataset] || [];
     const currentData = currentDataAll.filter(
-      (item) => String(item.year) === String(selectedYear)
+      (item) => String(item.year) === String(selectedYear),
     );
 
     const isTFFF = currentData.find(
-      (el) => el["country-iso2"] === countryISO2 || el.country === country
+      (el) => el["country-iso2"] === countryISO2 || el.country === country,
     );
     if (isTFFF) setIsTFFF(true);
     else setIsTFFF(false);
@@ -248,7 +281,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
             onLoad={() => {
               const map = mapRef.current?.getMap();
               map?.addControl(
-                new maplibregl.AttributionControl({ compact: true })
+                new maplibregl.AttributionControl({ compact: true }),
               );
             }}
           >
@@ -268,13 +301,22 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                   "fill-opacity": selectedDataset === "JRC" ? 1 : 0,
                 }}
               />
-              {/* GFW Layer */}
+              {/* GFW_20P Layer */}
               <Layer
-                id="country-fill-gfw"
+                id="country-fill-gfw_20p"
                 type="fill"
                 paint={{
-                  "fill-color": ["get", "GFWColorKey"],
-                  "fill-opacity": selectedDataset === "GFW" ? 1 : 0,
+                  "fill-color": ["get", "GFW_20PColorKey"],
+                  "fill-opacity": selectedDataset === "GFW_20P" ? 1 : 0,
+                }}
+              />
+              {/* GFW_30P Layer */}
+              <Layer
+                id="country-fill-gfw_30p"
+                type="fill"
+                paint={{
+                  "fill-color": ["get", "GFW_30PColorKey"],
+                  "fill-opacity": selectedDataset === "GFW_30P" ? 1 : 0,
                 }}
               />
               <Layer
@@ -318,7 +360,9 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                   colorKey:
                     selectedDataset === "JRC"
                       ? feature.properties.JRCColorKey
-                      : feature.properties.GFWColorKey,
+                      : selectedDataset === "GFW_20P"
+                        ? feature.properties.GFW_20PColorKey
+                        : feature.properties.GFW_30PColorKey,
                 },
               })),
             };
@@ -331,7 +375,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                 filename: `tfff-world-map-${selectedDataset}-${selectedYear}.svg`,
                 backgroundColor: "#F0FAF4",
                 strokeWidth: 1,
-              }
+              },
             );
           }}
         >

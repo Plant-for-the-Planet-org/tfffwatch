@@ -1,7 +1,7 @@
 // Shared types for map components
 
 // Dataset types
-export type DatasetType = "GFW" | "JRC";
+export type DatasetType = "JRC" | "GFW_20P" | "GFW_30P";
 
 // Country data interface
 export interface CountryData {
@@ -91,8 +91,9 @@ export interface WorldMapState {
   selectedDataset: DatasetType;
   clickPosition: { x: number; y: number } | null;
   forestData: {
-    GFW: TFFFData[];
     JRC: TFFFData[];
+    GFW_20P: TFFFData[];
+    GFW_30P: TFFFData[];
   };
   isLoading: boolean;
 }
@@ -103,12 +104,14 @@ export interface CountryMapState {
   year: string;
   dataset: DatasetType;
   layerData: {
-    GFW: LayerData | null;
     JRC: LayerData | null;
+    GFW_20P: LayerData | null;
+    GFW_30P: LayerData | null;
   };
   tfffData: {
-    GFW: TFFFData | null;
     JRC: TFFFData | null;
+    GFW_20P: TFFFData | null;
+    GFW_30P: TFFFData | null;
   };
   isLoading: boolean;
 }

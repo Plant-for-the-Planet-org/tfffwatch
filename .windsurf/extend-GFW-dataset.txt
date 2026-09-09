@@ -1,0 +1,12 @@
+I now want to replace the GFW Dataset with 2 New Dataset.
+They will be replacement of the existing GFW Dataset.
+New Datasets are "20% Canopy Cover Estimate (GFW)" & "30% Canopy Cover Estimate (GFW)" for short you can use "GFW_20P" & "GFW_30P" as Differentiating Keys.
+
+There will be a 3 Tabs in DatasetTabs.
+There will be 3 Separate Data Fetching.
+  For Now I want to work on the Frontend & I do not have the API ready yet, so both of these dataset will be using existing GFW Dataset Query Params for Data-Fetching - but later they will be updated.
+There will be 3 Different Query Params in the URL based on which Application should load right Dataset.
+Both app/page.tsx & app/.../[country]/[year]/page.tsx will use this updated feature.
+
+NO UI should be updated. Just Add the Functionality.
+Correctly Implement the Feature with Mantaining Full TypeSafety. Fix all the Errors that might come in place.

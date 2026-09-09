@@ -28,7 +28,7 @@ function getCountryGeoJSON(iso2: string): FeatureCollection {
   return {
     type: "FeatureCollection",
     features: countriesData.features.filter(
-      (f) => (f.properties as GeoJsonProperties)?.iso_a2 === iso2
+      (f) => (f.properties as GeoJsonProperties)?.iso_a2 === iso2,
     ),
   } as FeatureCollection;
 }
@@ -36,7 +36,7 @@ function getCountryGeoJSON(iso2: string): FeatureCollection {
 export default function CountryMap({
   country,
   year,
-  dataset = "GFW",
+  dataset = "GFW_20P",
   showLayers = true,
 }: CountryMapProps) {
   const { width = 0 } = useWindowSize();
@@ -47,7 +47,7 @@ export default function CountryMap({
   const mapRef = useRef<MapRef>(null);
 
   const [countryFeatureCollection] = useState<FeatureCollection>(
-    getCountryGeoJSON(country.iso2)
+    getCountryGeoJSON(country.iso2),
   );
 
   function repositionMap() {
@@ -68,16 +68,16 @@ export default function CountryMap({
   }
 
   function getInvertedCountryMask(
-    country: FeatureCollection
+    country: FeatureCollection,
   ): FeatureCollection {
     const world = turfBboxPolygon([-180, -90, 180, 90]);
     const polygonFeatures = country.features.filter(
       (
-        feature
+        feature,
       ): feature is Feature<Polygon | MultiPolygon, GeoJsonProperties> =>
         feature.geometry &&
         (feature.geometry.type === "Polygon" ||
-          feature.geometry.type === "MultiPolygon")
+          feature.geometry.type === "MultiPolygon"),
     );
 
     const fc: Feature<Polygon | MultiPolygon, GeoJsonProperties>[] = [
@@ -151,60 +151,62 @@ export default function CountryMap({
           </Source>
         )}
 
-        {showLayers && layersData && dataset === "GFW" && (
-          <>
-            {/* GFW Mode: Forest layer (bottom) */}
-            <Source
-              key={`current-forest-${dataset}`}
-              id="current-forest-source"
-              type="raster"
-              tiles={[layersData.currentForestLayer?.tileUrl]}
-              tileSize={256}
-            >
-              <Layer
-                id="current-forest-layer"
+        {showLayers &&
+          layersData &&
+          (dataset === "GFW_20P" || dataset === "GFW_30P") && (
+            <>
+              {/* GFW Mode: Forest layer (bottom) */}
+              <Source
+                key={`current-forest-${dataset}`}
+                id="current-forest-source"
                 type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
+                tiles={[layersData.currentForestLayer?.tileUrl]}
+                tileSize={256}
+              >
+                <Layer
+                  id="current-forest-layer"
+                  type="raster"
+                  paint={{
+                    "raster-opacity": 0.8,
+                  }}
+                />
+              </Source>
 
-            {/* GFW Mode: Deforestation layer (middle) */}
-            <Source
-              key={`loss-in-year-${dataset}`}
-              id="loss-in-year-source"
-              type="raster"
-              tiles={[layersData.lossInYearLayer?.tileUrl]}
-              tileSize={256}
-            >
-              <Layer
-                id="loss-in-year-layer"
+              {/* GFW Mode: Deforestation layer (middle) */}
+              <Source
+                key={`loss-in-year-${dataset}`}
+                id="loss-in-year-source"
                 type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
+                tiles={[layersData.lossInYearLayer?.tileUrl]}
+                tileSize={256}
+              >
+                <Layer
+                  id="loss-in-year-layer"
+                  type="raster"
+                  paint={{
+                    "raster-opacity": 0.8,
+                  }}
+                />
+              </Source>
 
-            {/* GFW Mode: Fire loss layer (top) */}
-            <Source
-              key={`fire-loss-${dataset}`}
-              id="fire-loss-source"
-              type="raster"
-              tiles={[layersData.fireLossLayer?.tileUrl]}
-              tileSize={256}
-            >
-              <Layer
-                id="fire-loss-layer"
+              {/* GFW Mode: Fire loss layer (top) */}
+              <Source
+                key={`fire-loss-${dataset}`}
+                id="fire-loss-source"
                 type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-          </>
-        )}
+                tiles={[layersData.fireLossLayer?.tileUrl]}
+                tileSize={256}
+              >
+                <Layer
+                  id="fire-loss-layer"
+                  type="raster"
+                  paint={{
+                    "raster-opacity": 0.8,
+                  }}
+                />
+              </Source>
+            </>
+          )}
 
         {showLayers && layersData && dataset === "JRC" && (
           <>
