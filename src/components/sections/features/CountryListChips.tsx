@@ -22,6 +22,16 @@ type ChipItemType = {
   investedCapital: number | null;
 };
 
+function chipStatusClasses(item: ChipItemType) {
+  if (item.investedCapital) {
+    return "border border-primary bg-primary-light";
+  }
+  if (item.pledgedCapital) {
+    return "border border-[#90BDF2] bg-secondary-light";
+  }
+  return "border border-[#C5CDD8] bg-[#F5F7FA]";
+}
+
 export default function CountryListChips({ country, capitalsData }: Props) {
   // const scrollContainerRef = useRef<HTMLDivElement>(null);
   // const [isDragging, setIsDragging] = useState(false);
@@ -341,9 +351,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
           <Link
             className={twMerge(
               "rounded-full px-5 py-1.5 text-nowrap",
-              el?.pledgedCapital
-                ? "border border-primary bg-primary-light"
-                : "border border-secondary bg-secondary-light",
+              chipStatusClasses(el),
               el?.selected
                 ? "border border-base-text bg-base-text text-white"
                 : "",
@@ -383,9 +391,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
           <Link
             className={twMerge(
               "rounded-full px-5 py-1.5 text-nowrap",
-              el?.pledgedCapital
-                ? "border border-primary bg-primary-light"
-                : "border border-secondary bg-secondary-light",
+              chipStatusClasses(el),
               el?.selected
                 ? "border border-base-text bg-base-text text-white"
                 : "",
