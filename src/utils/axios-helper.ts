@@ -22,6 +22,8 @@ export const urls = {
     "https://automate.plant-for-the-planet.org/webhook/uncached/investment-tracker-capitals",
   investmentTrackerSum:
     "https://automate.plant-for-the-planet.org/webhook/uncached/investment-tracker-sum",
+  endorsementCountries:
+    "https://automate.plant-for-the-planet.org/webhook/uncached/endorsement-countries",
   layersProxyAPI: "/api/layers",
 };
 
