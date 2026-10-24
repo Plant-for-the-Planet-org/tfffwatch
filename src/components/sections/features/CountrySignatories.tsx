@@ -8,7 +8,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
-export default function CountrySignatories() {
+export default function CountrySignatories({
+  isSignatory,
+}: {
+  isSignatory: boolean;
+}) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleCountryClick = (country: {
@@ -28,11 +32,19 @@ export default function CountrySignatories() {
             <Image
               width={32}
               height={32}
-              src={"/assets/investment-endorsement.svg"}
-              alt={"Signatory of the TFFF Declaration"}
+              src={
+                isSignatory
+                  ? "/assets/signatory-yes.svg"
+                  : "/assets/signatory-no.svg"
+              }
+              alt={
+                isSignatory
+                  ? "Signatory of the TFFF Declaration"
+                  : "Not a signatory of the TFFF Declaration"
+              }
             />
             <p>
-              Signatory of the{" "}
+              {isSignatory ? "Signatory of the" : "Not a signatory of the"}{" "}
               <Link
                 href="https://tfff.earth/wp-content/uploads/2025/11/Declaration-on-the-Launch-of-the-TFFF.pdf"
                 className="underline"

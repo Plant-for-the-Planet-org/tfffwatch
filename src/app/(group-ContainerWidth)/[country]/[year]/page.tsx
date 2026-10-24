@@ -43,10 +43,10 @@ export default async function Page({ params, searchParams }: PageProps) {
   // Validate dataset parameter - default to JRC if not specified or invalid
   const validDataset: DatasetType = dataset === "GFW" ? "GFW" : "JRC";
 
-  let showSignatories = false;
+  let isSignatory: boolean | null = null;
   try {
     const endorsementData = await getEndorsementData();
-    showSignatories = isSignatoryCountry(endorsementData, details.iso2);
+    isSignatory = isSignatoryCountry(endorsementData, details.iso2);
   } catch (error) {
     console.error("Error fetching endorsement data:", error);
   }
@@ -67,10 +67,10 @@ export default async function Page({ params, searchParams }: PageProps) {
       {/* <PotentialPayoutVsExistingConservationFunding /> */}
       <Br />
       <AnnualPayout />
-      {showSignatories && (
+      {isSignatory !== null && (
         <>
           <Br />
-          <CountrySingnatories />
+          <CountrySingnatories isSignatory={isSignatory} />
         </>
       )}
     </div>
