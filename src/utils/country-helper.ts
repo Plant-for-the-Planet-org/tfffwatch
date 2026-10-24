@@ -143,5 +143,5 @@ export function isSignatoryCountry(
   iso2: string
 ): boolean {
   const countryData = endorsementData[iso2];
-  return Boolean(countryData?.hasEndorsed || countryData?.hasInvested);
+  return Boolean(countryData?.hasEndorsed);
 }
