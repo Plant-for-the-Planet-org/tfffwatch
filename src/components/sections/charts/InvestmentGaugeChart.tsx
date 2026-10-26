@@ -177,7 +177,7 @@ const CustomLabel = (props: CustomLabelWithDataProps) => {
       <text
         className="hidden sm:block"
         x={x}
-        y={y}
+        y={y + (labelData.id === "pledged" ? -8 : 0)}
         textAnchor={textAnchor}
         fill="#111827"
         fontSize={12}
@@ -190,7 +190,7 @@ const CustomLabel = (props: CustomLabelWithDataProps) => {
               {toReadableAmountLong(
                 labelData.actualValue,
                 true,
-                true
+                true,
               ).toLowerCase()}
             </tspan>
             <tspan x={x} dy={12} fontWeight="400" fontSize={11}>
@@ -244,11 +244,11 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
   const { pieData, labelData } = useMemo(() => {
     const totalInvested = chartData.reduce(
       (sum, row) => sum + (row?.invested_capital || 0),
-      0
+      0,
     );
     const totalPledged = chartData.reduce(
       (sum, row) => sum + (row?.pledged_capital || 0),
-      0
+      0,
     );
 
     const data: PieData[] = [];
