@@ -6,7 +6,7 @@ import { asIso2 } from "@/domain/brand";
 // eslint-disable-next-line
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 import countryMapping from "./country-mapping.json";
-import { urls } from "./axios-helper";
+import { urls } from "@/lib/http";
 import type { CountryDetails } from "@/domain/country.types";
 
 // Re-exported for existing importers; canonical definition lives in domain/.
