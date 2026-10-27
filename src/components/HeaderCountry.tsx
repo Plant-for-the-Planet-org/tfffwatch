@@ -1,8 +1,8 @@
 "use client";
 
-import { getCountryDetails } from "@/utils/country-helper";
+import { getCountryDetails } from "@/domain/country";
 import { useParams, usePathname } from "next/navigation";
-import Br from "./ui/Br";
+import { Spacer } from "@/components/ui/layout";
 
 export type PageParams = {
   country: string;
@@ -20,7 +20,7 @@ export default function HeaderCountry() {
   if (!country) return null;
   return (
     <div>
-      <Br />
+      <Spacer />
       <p className="flex gap-2 items-center">
         <img className="w-6 h-4 p-0.5" alt="" src={details.flagImgUrl} />
         <b>{details.name}</b>

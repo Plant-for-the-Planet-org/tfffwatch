@@ -1,33 +1,33 @@
-import InfoGrid from "@/components/sections/features/InfoGrid";
-import InvestmentTracker from "@/components/sections/features/InvestmentTracker";
-import PlansforthePlanetAnalysis from "@/components/sections/features/press/PlansforthePlanetAnalysis";
+import InfoGrid from "@/components/sections/features/shared/InfoGrid";
+import InvestmentTracker from "@/components/sections/features/investment/InvestmentTracker";
+import PlansForThePlanetAnalysis from "@/components/sections/features/press/PlansForThePlanetAnalysis";
 import RecentNews from "@/components/sections/features/news/RecentNews";
-import RecentPolicyPapersComentary from "@/components/sections/features/policies/RecentPolicyPapersCommentary";
-import TFFFHero from "@/components/sections/features/TFFFHero";
-import WhatsAppInvite from "@/components/sections/features/WhatsAppInvite";
+import RecentCommentary from "@/components/sections/features/policies/RecentCommentary";
+import TFFFHero from "@/components/sections/features/tfff/TFFFHero";
+import WhatsAppInvite from "@/components/sections/features/shared/WhatsAppInvite";
 import { TFFFWorldMapView } from "@/components/sections/hero/TFFFMapView";
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 
 export default function Home() {
   return (
     <div>
       <TFFFHero />
       <div className="website-container">
-        <Br />
+        <Spacer />
         <InvestmentTracker />
-        <Br />
+        <Spacer />
         <div id="estimated-payouts">
           <TFFFWorldMapView />
         </div>
-        <Br />
+        <Spacer />
         <InfoGrid />
-        <Br />
+        <Spacer />
         <RecentNews />
-        <Br />
-        <RecentPolicyPapersComentary />
-        <Br />
-        <PlansforthePlanetAnalysis />
-        <Br />
+        <Spacer />
+        <RecentCommentary />
+        <Spacer />
+        <PlansForThePlanetAnalysis />
+        <Spacer />
         <WhatsAppInvite />
       </div>
     </div>

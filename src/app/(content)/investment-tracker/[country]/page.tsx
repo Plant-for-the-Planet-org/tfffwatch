@@ -1,0 +1,144 @@
+import CountryListChips from "@/components/sections/features/investment/CountryListChips";
+import InvestmentProgress from "@/components/sections/features/investment/InvestmentProgress";
+import InvestmentTracker from "@/components/sections/features/investment/InvestmentTracker";
+import TrackerContent from "@/components/sections/features/investment/TrackerContent";
+import { Spacer } from "@/components/ui/layout";
+import { api, urls } from "@/lib/http";
+import { PageError } from "@/utils/errors";
+import {
+  InvestmentTrackerCapitals,
+  InvestmentTrackerForCountry,
+} from "@/utils/types";
+import { Metadata } from "next";
+import { capitalize } from "underscore.string";
+
+const investingCountries = [
+  "Germany",
+  "Norway",
+  "France",
+  "UK",
+  "UAE",
+  // "Singapore",
+  "EU",
+  "Brazil",
+  "China",
+  "Indonesia",
+  "Portugal",
+  "Netherlands",
+  "Luxembourg",
+  "Spain",
+  "Canada",
+  "Japan",
+  "South_Korea",
+  /* "Asian_Infrastructure_Investment_Bank", */ "AIIB",
+  /* "European_Bank_for_Reconstruction_and_Development", */ "EBRD",
+  "Minderoo_Foundation",
+  "The_Nature_Conservancy",
+  // "Philanthropies",
+  "Others",
+];
+
+// https://nextjs.org/docs/app/api-reference/functions/generate-static-params
+export async function generateStaticParams() {
+  return investingCountries.map((el) => ({ country: el }));
+}
+
+type PageProps = {
+  params: Promise<{
+    country: string;
+  }>;
+};
+
+// https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { country } = await params;
+
+  const countryContentInMetadata = capitalize(country);
+  // countryContentInMetadata = countryContentInMetadata.replaceAll("_", " ");
+
+  return {
+    title: `${countryContentInMetadata} Investment Tracker · TFFF Watch`,
+    description: `Is ${countryContentInMetadata} contributing to the Tropical Forest Forever Facility?`,
+  };
+}
+
+export default async function Page({ params }: PageProps) {
+  const { country } = await params;
+
+  if (
+    !investingCountries.find((el) => el.toLowerCase() === country.toLowerCase())
+  ) {
+    const err = `We do not have investment data for ${country}. The data might not be available yet, or the country hasn’t been included in
+the current analysis.`;
+    throw new PageError("Country data not found", {
+      code: "404",
+      details: err,
+    });
+  }
+
+  let capitalsData: InvestmentTrackerCapitals[] = [];
+  let richData: InvestmentTrackerForCountry | null = null;
+
+  try {
+    // const countryQueryValue = country.replaceAll("_", " ");
+
+    const res = await api<InvestmentTrackerForCountry[]>({
+      url: urls.investmentTrackerRich,
+      query: { country: country },
+      method: "GET",
+      token: "",
+      nextOptions: { revalidate: 1800 }, // same 30 min window
+    });
+    richData = res[0];
+
+    const capitalsDataResults = await api<InvestmentTrackerForCountry[]>({
+      url: urls.investmentTrackerCapitals,
+      method: "GET",
+      token: "",
+    });
+    capitalsData = capitalsDataResults;
+  } catch (error) {
+    console.error("Error fetching Investments:", error);
+  }
+
+  if (!richData) return null;
+  return (
+    <div>
+      <div>
+        <InvestmentTracker />
+        <Spacer />
+        <CountryListChips country={country} capitalsData={capitalsData} />
+        <Spacer />
+        {country === investingCountries.at(-1) ? (
+          <></>
+        ) : (
+          <>
+            <InvestmentProgress investment_stage={richData.investment_stage} />
+            <Spacer />
+          </>
+        )}
+        <TrackerContent
+          last_updated={richData?.last_updated}
+          status={richData?.status ?? ""}
+          key_developments={richData?.key_developments ?? ""}
+          background={richData?.background ?? ""}
+          financial_details={richData?.financial_details ?? ""}
+          images_post_financial_details={
+            richData?.images_post_financial_details ?? ""
+          }
+          endorsements={richData?.endorsements ?? ""}
+          CSOs={richData?.CSOs ?? ""}
+          how_an_investment_could_work={
+            richData?.How_an_investment_could_work ?? ""
+          }
+          responsibile_government_office={
+            richData?.responsibile_government_office ?? ""
+          }
+        />
+        <Spacer />
+      </div>
+    </div>
+  );
+}

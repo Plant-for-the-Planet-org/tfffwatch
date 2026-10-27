@@ -1,29 +1,7 @@
-import { api, urls } from "./axios-helper";
-import { getCountryDetails } from "./country-helper";
-import { useForestCoverChangeData } from "./store";
-import { ForestCoverChange } from "./types";
-
-export let forestChangeData: ForestCoverChange[] = [];
-
-export async function fetchForestCoverChangeData(country?: string) {
-  let _results: ForestCoverChange[] = [];
-  try {
-    _results = await api<ForestCoverChange[]>({
-      url: urls.forestChange,
-      query: country ? { country: country } : {},
-      method: "GET",
-      token: "",
-    });
-    forestChangeData = _results;
-    useForestCoverChangeData
-      .getState()
-      .setForestCoverChangeDataByCountry(_results);
-
-    return _results;
-  } catch (error) {
-    console.error("Error fetching fetchForestCoverChangeData:", error);
-  }
-}
+import { api, urls } from "@/lib/http";
+import { getCountryDetails } from "@/domain/country";
+import { useForestCoverChangeData } from "@/stores/forest-cover.store";
+import type { CountryForestRecord } from "@/domain/forest-record.types";
 
 export async function fetchForestCoverChangeDataV2({
   country,
@@ -49,15 +27,13 @@ export async function fetchForestCoverChangeDataV2({
   query["source"] = source;
 
   try {
-    console.log("API call with query:", query);
-    const _results = await api<ForestCoverChange[]>({
+    const _results = await api<CountryForestRecord[]>({
       url: urls.forestChange,
       query: query,
       method: "GET",
       token: "",
     });
 
-    console.log("API response:", _results?.length, "records");
 
     if (country && year) {
       // For specific country and year, still set the country data for charts
