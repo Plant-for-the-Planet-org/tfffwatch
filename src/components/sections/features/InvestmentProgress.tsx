@@ -41,14 +41,14 @@ export default function InvestmentProgress({ investment_stage }: Props) {
     },
     {
       stage: 6,
-      label: "Partial Capital invested",
-      display: ["Partial Capital", "invested"],
+      label: "Partial capital invested",
+      display: ["Partial capital", "invested"],
       success: false,
     },
     {
       stage: 7,
-      label: "Full Capital invested",
-      display: ["Full Capital", "invested"],
+      label: "Full capital invested",
+      display: ["Full capital", "invested"],
       success: false,
     },
   ];
@@ -69,7 +69,7 @@ export default function InvestmentProgress({ investment_stage }: Props) {
               className={twMerge(
                 "shrink-0 w-6 h-6 rounded-full border border-base-text relative",
                 // el.success && "bg-primary border-primary-light"
-                el.success && "border-primary-light"
+                el.success && "border-primary-light",
                 // key === 0 && "ml-6",
                 // key === nodes.length - 1 && "mr-6"
               )}
@@ -85,7 +85,7 @@ export default function InvestmentProgress({ investment_stage }: Props) {
                 <div
                   className={twMerge(
                     "w-3xs sm:w-sm lg:w-[128px] lg:w-[160px] lg:text-center typo-p",
-                    el.success && "font-bold"
+                    el.success && "font-bold",
                   )}
                 >
                   <div className="hidden lg:block lg:text-sm lg:text-base">
