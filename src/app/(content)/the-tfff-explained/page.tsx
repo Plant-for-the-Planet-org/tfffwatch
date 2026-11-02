@@ -4,11 +4,16 @@ import SecondaryHero, {
   OverlayTheTFFFIdea,
 } from "@/components/sections/hero/SecondaryHero";
 import { Spacer } from "@/components/ui/layout";
+import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "TFFF Explained · TFFF Watch",
   description: "How does the Tropical Forest Forever Facility work?",
+  alternates: {
+    canonical: "/the-tfff-explained",
+  },
+  openGraph: pageOpenGraph("/the-tfff-explained"),
 };
 
 export default function Page() {

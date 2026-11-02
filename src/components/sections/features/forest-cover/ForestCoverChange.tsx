@@ -1,5 +1,5 @@
 import { Spacer } from "@/components/ui/layout";
-import ForestCoverChangeAreaChart from "../../charts/ForestCoverChangeAreaChart";
+import { LazyForestCoverChangeAreaChart as ForestCoverChangeAreaChart } from "../../charts/lazy";
 
 export default function ForestCoverChange() {
   return (

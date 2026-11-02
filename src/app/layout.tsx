@@ -2,6 +2,8 @@ import CookieConsentBanner from "@/components/CookieConsentBanner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Spacer } from "@/components/ui/layout";
+import JsonLd from "@/lib/json-ld";
+import { siteStructuredData } from "@/lib/structured-data";
 import { env } from "@/utils/env";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
@@ -20,9 +22,17 @@ const openSans = Open_Sans({
 // });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tfffwatch.org"),
   title: "TFFF Watch · Forever Starts Now",
   description:
     "We track investment negotiations and use satellite analysis to show how much rainforest countries would receive from the TFFF.",
+  openGraph: {
+    type: "website",
+    siteName: "TFFF Watch",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
   other: {
     "cookie-policy":
       "We use necessary cookies and optional functionality cookies for newsletter features",
@@ -36,15 +46,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {env.enableUmami && (
-        <script
-          defer
-          src="https://insights.startplanting.org/script.js"
-          data-website-id="8faac63b-1749-4ffc-8752-63beb881f643"
-        ></script>
-      )}
+      {/* Scripts must sit in <head> or <body>: a direct <html> child is
+          invalid and triggers a hydration error. */}
+      <head>
+        {env.enableUmami && (
+          <script
+            defer
+            src="https://insights.startplanting.org/script.js"
+            data-website-id="8faac63b-1749-4ffc-8752-63beb881f643"
+          ></script>
+        )}
+      </head>
 
       <body className={`${openSans.variable} font-sans antialiased`}>
+        <JsonLd data={siteStructuredData} />
         <Script
           defer
           src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.9.1/dist/cookieconsent.js"
@@ -57,8 +72,8 @@ export default function RootLayout({
         <div className="website-container">
           <Footer />
         </div>
+        <Spacer />
       </body>
-      <Spacer />
     </html>
   );
 }

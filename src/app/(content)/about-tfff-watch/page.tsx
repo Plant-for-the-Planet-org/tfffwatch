@@ -3,12 +3,17 @@ import SecondaryHero, {
   OverlayAboutTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
 import { Spacer } from "@/components/ui/layout";
+import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About TFFF Watch · Forever Starts Now",
   description:
     "How we use satellite data to model deforestation rates and estimate TFFF reward payments.",
+  alternates: {
+    canonical: "/about-tfff-watch",
+  },
+  openGraph: pageOpenGraph("/about-tfff-watch"),
 };
 
 export default function Page() {

@@ -38,13 +38,15 @@ export default function TFFFHero() {
                     alt="TF"
                   />
                 </div>
-                <div>
-                  <h2 className="font-bold typo-h2">TFFF Watch</h2>
-                  <p className="typo-p">
+                {/* The page H1: the site name plus its one-line purpose, so the
+                    headline carries the primary keywords. Spans keep the look. */}
+                <h1>
+                  <span className="block font-bold typo-h2">TFFF Watch</span>
+                  <span className="block typo-p">
                     is an independent platform tracking investments into the
                     TFFF and estimates future payouts to rainforest countries
-                  </p>
-                </div>
+                  </span>
+                </h1>
               </div>
             </div>
           </div>
