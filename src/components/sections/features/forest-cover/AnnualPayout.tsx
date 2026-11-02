@@ -4,7 +4,7 @@ import { PageParams } from "@/app/(content)/[country]/[year]/page";
 import { Spacer } from "@/components/ui/layout";
 import { getCountryDetails } from "@/domain/country";
 import { useParams } from "next/navigation";
-import AnnualPayoutAreaChart from "../../charts/AnnualPayoutAreaChart";
+import { LazyAnnualPayoutAreaChart as AnnualPayoutAreaChart } from "../../charts/lazy";
 
 export default function AnnualPayout() {
   const { country }: PageParams = useParams();

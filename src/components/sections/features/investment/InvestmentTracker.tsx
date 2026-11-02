@@ -1,6 +1,6 @@
 "use client";
 
-import InvestmentGaugeChart from "@/components/sections/charts/InvestmentGaugeChart";
+import { LazyInvestmentGaugeChart as InvestmentGaugeChart } from "@/components/sections/charts/lazy";
 import { Spacer } from "@/components/ui/layout";
 import { Button } from "@/components/ui/Button";
 import { api, urls } from "@/lib/http";

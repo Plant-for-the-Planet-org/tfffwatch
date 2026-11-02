@@ -15,6 +15,7 @@ import {
   buildBreadcrumbSchema,
   buildTrackerDatasetSchema,
 } from "@/lib/structured-data";
+import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 import { capitalize } from "underscore.string";
 
@@ -44,6 +45,7 @@ export async function generateMetadata({
     alternates: {
       canonical: `/investment-tracker/${country}`,
     },
+    openGraph: pageOpenGraph(`/investment-tracker/${country}`),
   };
 }
 

@@ -18,7 +18,7 @@ export default function TFFFHero() {
                   />
                 </div>
                 <div>
-                  <h1 className="font-bold typo-h2">The TFFF</h1>
+                  <h2 className="font-bold typo-h2">The TFFF</h2>
                   <p className="typo-p">
                     or Tropical Forest Forever Facility, is an investment fund.
                     The fund’s profits reward countries for protecting their
@@ -38,13 +38,15 @@ export default function TFFFHero() {
                     alt="TF"
                   />
                 </div>
-                <div>
-                  <h2 className="font-bold typo-h2">TFFF Watch</h2>
-                  <p className="typo-p">
+                {/* The page H1: the site name plus its one-line purpose, so the
+                    headline carries the primary keywords. Spans keep the look. */}
+                <h1>
+                  <span className="block font-bold typo-h2">TFFF Watch</span>
+                  <span className="block typo-p">
                     is an independent platform tracking investments into the
                     TFFF and estimates future payouts to rainforest countries
-                  </p>
-                </div>
+                  </span>
+                </h1>
               </div>
             </div>
           </div>

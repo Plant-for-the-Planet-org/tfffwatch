@@ -3,6 +3,7 @@ import SecondaryHero, {
   OverlayAboutTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
 import { Spacer } from "@/components/ui/layout";
+import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/about-tfff-watch",
   },
+  openGraph: pageOpenGraph("/about-tfff-watch"),
 };
 
 export default function Page() {

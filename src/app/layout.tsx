@@ -46,13 +46,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {env.enableUmami && (
-        <script
-          defer
-          src="https://insights.startplanting.org/script.js"
-          data-website-id="8faac63b-1749-4ffc-8752-63beb881f643"
-        ></script>
-      )}
+      {/* Scripts must sit in <head> or <body>: a direct <html> child is
+          invalid and triggers a hydration error. */}
+      <head>
+        {env.enableUmami && (
+          <script
+            defer
+            src="https://insights.startplanting.org/script.js"
+            data-website-id="8faac63b-1749-4ffc-8752-63beb881f643"
+          ></script>
+        )}
+      </head>
 
       <body className={`${openSans.variable} font-sans antialiased`}>
         <JsonLd data={siteStructuredData} />
@@ -68,8 +72,8 @@ export default function RootLayout({
         <div className="website-container">
           <Footer />
         </div>
+        <Spacer />
       </body>
-      <Spacer />
     </html>
   );
 }

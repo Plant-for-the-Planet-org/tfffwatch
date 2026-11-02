@@ -5,6 +5,7 @@ import SecondaryHero, {
   OverlayPressTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
 import { Spacer } from "@/components/ui/layout";
+import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/press",
   },
+  openGraph: pageOpenGraph("/press"),
 };
 
 export default function Page() {

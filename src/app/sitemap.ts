@@ -1,12 +1,11 @@
+import countryMapping from "@/domain/country-mapping.json";
 import { investingCountries } from "@/domain/investing-countries";
 import type { MetadataRoute } from "next";
 
 const BASE_URL = "https://tfffwatch.org";
 
 // Indexable static routes (excludes the /investment-tracker index, which
-// redirects, the noindex /friends-of-the-tfff page, and the dynamic
-// /[country]/[year] payout pages, whose year values are not enumerable at
-// build time).
+// redirects, and the noindex /friends-of-the-tfff page).
 const STATIC_ROUTES = [
   "",
   "/the-tfff-explained",
@@ -15,6 +14,11 @@ const STATIC_ROUTES = [
   "/about-tfff-watch",
   "/policy-papers-commentary",
 ];
+
+// Payout pages are listed for the latest data year only: it is the year the
+// site opens on (see the map store default and YearSelect), and older years
+// are the same page with older figures. Bump this when a new year of data lands.
+const PAYOUT_SITEMAP_YEAR = "2024";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -31,5 +35,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
-  return [...staticEntries, ...trackerEntries];
+  // Same slug list the /[country]/[year] route resolves against.
+  const payoutEntries: MetadataRoute.Sitemap = countryMapping.map(
+    ({ countrySlug }) => ({
+      url: `${BASE_URL}/${countrySlug}/${PAYOUT_SITEMAP_YEAR}`,
+      lastModified,
+    })
+  );
+
+  return [...staticEntries, ...trackerEntries, ...payoutEntries];
 }

@@ -15,6 +15,7 @@ import {
   buildBreadcrumbSchema,
   buildPayoutDatasetSchema,
 } from "@/lib/structured-data";
+import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 import { humanize } from "underscore.string";
 
@@ -39,6 +40,7 @@ export async function generateMetadata({
     alternates: {
       canonical: `/${country}/${year}`,
     },
+    openGraph: pageOpenGraph(`/${country}/${year}`),
   };
 }
 
