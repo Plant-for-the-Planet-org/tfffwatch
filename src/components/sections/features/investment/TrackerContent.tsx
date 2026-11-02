@@ -3,7 +3,8 @@ import ContentSection from "@/components/ui/ContentSection";
 import { formatDateAgo } from "@/lib/date";
 import { InvestmentTrackerForCountry } from "@/utils/types";
 import RichToHTML from "./RichToHTML";
-import { hasContent } from "@/lib/text";
+import ExpandableImage from "./ExpandableImage";
+import { hasContent, parseImageUrls } from "@/lib/text";
 
 type Props = Partial<InvestmentTrackerForCountry> & {
   how_an_investment_could_work?: string;
@@ -12,11 +13,14 @@ type Props = Partial<InvestmentTrackerForCountry> & {
 export default function TrackerContent({
   last_updated,
   status,
-  background,
+  key_developments,
+  // background,
+  financial_details,
+  images_post_financial_details,
   endorsements,
-  CSOs,
   responsibile_government_office,
 }: Props) {
+  const financialDetailsImages = parseImageUrls(images_post_financial_details);
   return (
     <div className="border border-base-gray rounded-xl padding-3">
       <div className="text-end text-[#828282] italic">
@@ -31,6 +35,15 @@ export default function TrackerContent({
           </ContentSection>
         )}
 
+        {hasContent(key_developments) && (
+          <ContentSection
+            icon="/assets/investment-key-developments.svg"
+            title="Key Developments"
+          >
+            <RichToHTML content={key_developments!} />
+          </ContentSection>
+        )}
+
         {hasContent(responsibile_government_office) && (
           <ContentSection
             icon="/assets/investment-responsible-government-office.svg"
@@ -40,14 +53,34 @@ export default function TrackerContent({
           </ContentSection>
         )}
 
-        {hasContent(background) && (
+        {hasContent(financial_details) && (
+          <ContentSection
+            icon="/assets/investment-finance-details.svg"
+            title="Financial Details"
+          >
+            <RichToHTML content={financial_details!} />
+            {financialDetailsImages.length > 0 && (
+              <div className="flex flex-col items-center gap-4 mt-4">
+                {financialDetailsImages.map((url, index) => (
+                  <ExpandableImage
+                    key={url + index}
+                    src={url}
+                    className="w-full max-w-2xl"
+                  />
+                ))}
+              </div>
+            )}
+          </ContentSection>
+        )}
+
+        {/* {hasContent(background) && (
           <ContentSection
             icon="/assets/investment-background.svg"
             title="Other engagements for tropical forests"
           >
             <RichToHTML content={background!} />
           </ContentSection>
-        )}
+        )} */}
 
         {hasContent(endorsements) && (
           <ContentSection
@@ -58,6 +91,7 @@ export default function TrackerContent({
           </ContentSection>
         )}
 
+        {/* CSO section disabled, do not show on site. Keep for possible future re-enable.
         {hasContent(CSOs) && (
           <ContentSection
             icon="/assets/investment-csos.svg"
@@ -66,6 +100,7 @@ export default function TrackerContent({
             <RichToHTML content={CSOs!} />
           </ContentSection>
         )}
+        */}
       </div>
       <Spacer className="hidden lg:block" />
     </div>

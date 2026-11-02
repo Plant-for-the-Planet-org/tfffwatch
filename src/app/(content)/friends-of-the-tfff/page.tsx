@@ -4,6 +4,18 @@ import SecondaryHero, {
   OverlayFriendsOfTheTFFF,
 } from "@/components/sections/hero/SecondaryHero";
 import { Spacer } from "@/components/ui/layout";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
+};
 
 export default function Page() {
   return (

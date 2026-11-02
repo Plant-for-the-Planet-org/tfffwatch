@@ -4,7 +4,11 @@ import CountrySingnatories from "@/components/sections/features/endorsement/Coun
 import ForestCoverChange from "@/components/sections/features/forest-cover/ForestCoverChange";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import { Spacer } from "@/components/ui/layout";
-import { getCountryDetails } from "@/domain/country";
+import {
+  getCountryDetails,
+  getEndorsementData,
+  isSignatoryCountry,
+} from "@/domain/country";
 import { Metadata } from "next";
 import { humanize } from "underscore.string";
 
@@ -40,6 +44,14 @@ export default async function Page({ params, searchParams }: PageProps) {
   const validDataset: DatasetType =
     dataset === "GFW" ? "GFW" : dataset === "MMU" ? "MMU" : "JRC";
 
+  let isSignatory: boolean | null = null;
+  try {
+    const endorsementData = await getEndorsementData();
+    isSignatory = isSignatoryCountry(endorsementData, details.iso2);
+  } catch (error) {
+    console.error("Error fetching endorsement data:", error);
+  }
+
   return (
     <div>
       <TFFFCountryMapView
@@ -54,8 +66,12 @@ export default async function Page({ params, searchParams }: PageProps) {
       <ForestCoverChange />
       <Spacer />
       <AnnualPayout />
-      <Spacer />
-      <CountrySingnatories />
+      {isSignatory !== null && (
+        <>
+          <Spacer />
+          <CountrySingnatories isSignatory={isSignatory} />
+        </>
+      )}
     </div>
   );
 }

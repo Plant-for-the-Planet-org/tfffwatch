@@ -6,6 +6,7 @@ import { asIso2 } from "@/domain/brand";
 // eslint-disable-next-line
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 import countryMapping from "./country-mapping.json";
+import { urls } from "@/lib/http";
 import type { CountryDetails } from "@/domain/country.types";
 
 // Re-exported for existing importers; canonical definition lives in domain/.
@@ -115,4 +116,23 @@ export function transformEndorsementData(
     };
     return acc;
   }, {});
+}
+
+export async function getEndorsementData(): Promise<EndorsementData> {
+  const response = await fetch(urls.endorsementCountries, {
+    cache: "no-store",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to fetch endorsement data");
+  }
+  const data = await response.json();
+  return transformEndorsementData(data);
+}
+
+export function isSignatoryCountry(
+  endorsementData: EndorsementData,
+  iso2: string
+): boolean {
+  const countryData = endorsementData[iso2];
+  return Boolean(countryData?.hasEndorsed);
 }

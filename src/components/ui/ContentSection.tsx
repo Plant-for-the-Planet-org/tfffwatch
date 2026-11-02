@@ -2,7 +2,7 @@ import { Spacer } from "@/components/ui/layout";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 type ContentSectionProps = {
-  icon: string;
+  icon?: string;
   title: string;
   children: React.ReactNode;
   className?: string;

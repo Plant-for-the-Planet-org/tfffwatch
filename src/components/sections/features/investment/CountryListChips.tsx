@@ -21,6 +21,16 @@ type ChipItemType = {
   investedCapital: number | null;
 };
 
+function chipStatusClasses(item: ChipItemType) {
+  if (item.investedCapital) {
+    return "border border-primary bg-primary-light";
+  }
+  if (item.pledgedCapital) {
+    return "border border-[#90BDF2] bg-secondary-light";
+  }
+  return "border border-[#C5CDD8] bg-[#F5F7FA]";
+}
+
 export default function CountryListChips({ country, capitalsData }: Props) {
   // const scrollContainerRef = useRef<HTMLDivElement>(null);
   // const [isDragging, setIsDragging] = useState(false);
@@ -172,6 +182,42 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       pledgedCapital: null,
       investedCapital: null,
     },
+    {
+      slug: "Spain",
+      label: "Spain",
+      iso2: "ES",
+      emoji: "🇪🇸",
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
+    {
+      slug: "Canada",
+      label: "Canada",
+      iso2: "CA",
+      emoji: "🇨🇦",
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
+    {
+      slug: "Japan",
+      label: "Japan",
+      iso2: "JP",
+      emoji: "🇯🇵",
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
+    {
+      slug: "South_Korea",
+      label: "South Korea",
+      iso2: "KR",
+      emoji: "🇰🇷",
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
   ];
 
   const banksOthersList: ChipItemType[] = [
@@ -209,9 +255,29 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       pledgedCapital: null,
       investedCapital: null,
     },
+    // {
+    //   slug: "Philanthropies",
+    //   label: "Philanthropies",
+    //   iso2: "",
+    //   emoji: "🤝",
+    //   noFlag: true,
+    //   selected: false,
+    //   pledgedCapital: null,
+    //   investedCapital: null,
+    // },
     {
-      slug: "Philanthropies",
-      label: "Philanthropies",
+      slug: "Minderoo_Foundation",
+      label: "Minderoo Foundation",
+      iso2: "",
+      emoji: "🤝",
+      noFlag: true,
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
+    {
+      slug: "The_Nature_Conservancy",
+      label: "The Nature Conservancy",
       iso2: "",
       emoji: "🤝",
       noFlag: true,
@@ -238,7 +304,9 @@ export default function CountryListChips({ country, capitalsData }: Props) {
   }
 
   countryList.forEach((el) => {
-    const found = capitalsData.find((cap) => cap.country === el.label);
+    const found = capitalsData.find(
+      (cap) => cap.country === el.label || cap.country === el.slug,
+    );
     el.pledgedCapital = found?.pledged_capital ?? null;
     el.investedCapital = found?.invested_capital ?? null;
   });
@@ -249,7 +317,9 @@ export default function CountryListChips({ country, capitalsData }: Props) {
   });
 
   banksOthersList.forEach((el) => {
-    const found = capitalsData.find((cap) => cap.country === el.label);
+    const found = capitalsData.find(
+      (cap) => cap.country === el.label || cap.country === el.slug,
+    );
     el.pledgedCapital = found?.pledged_capital ?? null;
     el.investedCapital = found?.invested_capital ?? null;
   });
@@ -278,9 +348,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
           <Link
             className={twMerge(
               "rounded-full px-5 py-1.5 text-nowrap",
-              el?.pledgedCapital
-                ? "border border-primary bg-primary-light"
-                : "border border-secondary bg-secondary-light",
+              chipStatusClasses(el),
               el?.selected
                 ? "border border-base-text bg-base-text text-white"
                 : "",
@@ -320,9 +388,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
           <Link
             className={twMerge(
               "rounded-full px-5 py-1.5 text-nowrap",
-              el?.pledgedCapital
-                ? "border border-primary bg-primary-light"
-                : "border border-secondary bg-secondary-light",
+              chipStatusClasses(el),
               el?.selected
                 ? "border border-base-text bg-base-text text-white"
                 : "",

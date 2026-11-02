@@ -26,9 +26,15 @@ const investingCountries = [
   "Portugal",
   "Netherlands",
   "Luxembourg",
+  "Spain",
+  "Canada",
+  "Japan",
+  "South_Korea",
   /* "Asian_Infrastructure_Investment_Bank", */ "AIIB",
   /* "European_Bank_for_Reconstruction_and_Development", */ "EBRD",
-  "Philanthropies",
+  "Minderoo_Foundation",
+  "The_Nature_Conservancy",
+  // "Philanthropies",
   "Others",
 ];
 
@@ -105,8 +111,7 @@ the current analysis.`;
         <Spacer />
         <CountryListChips country={country} capitalsData={capitalsData} />
         <Spacer />
-        {country === investingCountries.at(-1) ||
-        country === investingCountries.at(-2) ? (
+        {country === investingCountries.at(-1) ? (
           <></>
         ) : (
           <>
@@ -117,7 +122,12 @@ the current analysis.`;
         <TrackerContent
           last_updated={richData?.last_updated}
           status={richData?.status ?? ""}
+          key_developments={richData?.key_developments ?? ""}
           background={richData?.background ?? ""}
+          financial_details={richData?.financial_details ?? ""}
+          images_post_financial_details={
+            richData?.images_post_financial_details ?? ""
+          }
           endorsements={richData?.endorsements ?? ""}
           CSOs={richData?.CSOs ?? ""}
           how_an_investment_could_work={

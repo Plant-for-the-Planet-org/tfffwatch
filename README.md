@@ -1,5 +1,7 @@
 # TFFF Watch
 
+![TFFF Watch Screenshot](https://github.com/Plant-for-the-Planet-org/TFFF-Watch/blob/a2182946a484b38a4ba7192122447b9331c3505f/tfffwatch.org_.png)
+
 TFFF Watch — tracks proposed Tropical Forest Forever Facility payouts and visualises forest loss in eligible countries.
 
 ## Introduction
@@ -18,10 +20,6 @@ A lightweight app that combines geospatial maps, summary tables and charts to sh
 ## Data & Methodology
 
 Data are combined from public datasets and project disclosures, processed into map tiles and aggregated summaries. Processing emphasises reproducibility and transparency: sources, transformation steps and assumptions are documented alongside derived results so users can review and validate findings.
-
-## Screenshot
-
-![TFFF Watch Screenshot](https://github.com/Plant-for-the-Planet-org/TFFF-Watch/blob/a2182946a484b38a4ba7192122447b9331c3505f/tfffwatch.org_.png)
 
 ## License
 

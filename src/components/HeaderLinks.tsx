@@ -27,8 +27,15 @@ export default function HeaderLinks() {
       label: "TFFF Explained",
       isActive: false,
     },
-    { id: 4, href: "/about-tfff-watch", label: "About", isActive: false },
-    { id: 5, href: "/press", label: "Press", isActive: false },
+    {
+      id: 4,
+      href: "https://plansfortheplanet.substack.com",
+      label: "News",
+      isActive: false,
+      external: true,
+    },
+    { id: 5, href: "/about-tfff-watch", label: "About", isActive: false },
+    { id: 6, href: "/press", label: "Press", isActive: false },
   ]);
   const optionsRef = useRef(options);
   optionsRef.current = options;
@@ -61,10 +68,16 @@ export default function HeaderLinks() {
           key={option.id}
           className={twJoin(
             "typo-p",
-            option.isActive ? "font-semibold" : "font-regular"
+            option.isActive ? "font-semibold" : "font-regular",
           )}
         >
-          <Link href={option.href}>{option.label}</Link>
+          <Link
+            href={option.href}
+            target={option.external ? "_blank" : undefined}
+            rel={option.external ? "noopener noreferrer" : undefined}
+          >
+            {option.label}
+          </Link>
         </div>
       ))}
     </div>

@@ -2,13 +2,16 @@
 
 import { useState } from "react";
 import { Dialog } from "@/components/ui/Dialog";
-import { Spacer } from "@/components/ui/layout";
 import EndorsementMap from "@/components/maps/world/EndorsementMap";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
-export default function CountrySignatories() {
+export default function CountrySignatories({
+  isSignatory,
+}: {
+  isSignatory: boolean;
+}) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleCountryClick = () => {
@@ -18,16 +21,24 @@ export default function CountrySignatories() {
   return (
     <div className="border border-base-gray rounded-xl padding-3">
       <div className="flex flex-col divide-y divide-base-gray">
-        <div className="flex flex-col sm:flex-row justify-between flex-wrap">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="font-bold typo-h2 flex items-center gap-2">
             <Image
               width={32}
               height={32}
-              src={"/assets/investment-endorsement.svg"}
-              alt={"Signatory of the TFFF Declaration"}
+              src={
+                isSignatory
+                  ? "/assets/signatory-yes.svg"
+                  : "/assets/signatory-no.svg"
+              }
+              alt={
+                isSignatory
+                  ? "Signatory of the TFFF Declaration"
+                  : "Not a signatory of the TFFF Declaration"
+              }
             />
             <p>
-              Signatory of the{" "}
+              {isSignatory ? "Signatory of the" : "Not a signatory of the"}{" "}
               <Link
                 href="https://tfff.earth/wp-content/uploads/2025/11/Declaration-on-the-Launch-of-the-TFFF.pdf"
                 className="underline"
@@ -38,10 +49,9 @@ export default function CountrySignatories() {
               </Link>
             </p>
           </h2>
-          <Spacer className="sm:none" />
           <Button
             type="button"
-            cn="min-w-40"
+            cn="min-w-40 sm:shrink-0"
             onClick={() => {
               setIsDialogOpen(true);
             }}
