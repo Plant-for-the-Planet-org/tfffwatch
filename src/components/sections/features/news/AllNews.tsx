@@ -1,6 +1,6 @@
-import Br from "@/components/ui/Br";
+import { Spacer } from "@/components/ui/layout";
 import { ResponsiveContainer } from "@/components/ui/Container";
-import { api, urls } from "@/utils/axios-helper";
+import { getNews } from "@/content/news";
 import { News } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
 import { Fragment } from "react";
@@ -10,11 +10,7 @@ export default async function AllNews() {
   let newsList: News[] = [];
 
   try {
-    newsList = await api<News[]>({
-      url: urls.news,
-      method: "GET",
-      token: "", // Add token if required
-    });
+    newsList = await getNews();
 
     newsList.sort((a, b) =>
       compareDesc(
@@ -28,8 +24,8 @@ export default async function AllNews() {
 
   return (
     <ResponsiveContainer>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 xl:gap-5">
           {newsList.slice(0, 12).map((el) => (
@@ -51,8 +47,8 @@ export default async function AllNews() {
           ))}
         </div>
       </div>
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
     </ResponsiveContainer>
   );
 }

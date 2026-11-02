@@ -1,6 +1,6 @@
 "use client";
 
-import { useWorldMapStore } from "@/stores/mapStore";
+import { useWorldMapStore } from "@/stores/map.store";
 import { useMemo, useEffect, useRef, useState } from "react";
 import { useWindowSize } from "@uidotdev/usehooks";
 import TFFFCard from "../shared/TFFFCard";
@@ -32,19 +32,6 @@ export default function WorldMapCard() {
         data["country-iso2"] === selectedCountry.iso2 &&
         String(data.year) === String(selectedYear)
     );
-
-    if (!data) {
-      console.log("WorldMapCard: No data found", {
-        country: selectedCountry.iso2,
-        selectedYear,
-        selectedDataset,
-        availableData: forestData[selectedDataset].slice(0, 3).map((d) => ({
-          country: d["country-iso2"],
-          year: d.year,
-          yearType: typeof d.year,
-        })),
-      });
-    }
 
     return data || null;
   }, [selectedCountry, forestData, selectedDataset, selectedYear]);

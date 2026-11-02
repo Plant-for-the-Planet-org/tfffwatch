@@ -1,23 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useState, useMemo, useRef } from "react";
-import {
-  Map,
-  Layer,
-  Source,
-  MapRef,
-  ViewStateChangeEvent,
-} from "@vis.gl/react-maplibre";
+import { useCallback, useEffect, useState, useMemo } from "react";
+import { Map, Layer, Source } from "@vis.gl/react-maplibre";
 import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
-import { transformEndorsementData } from "@/utils/country-helper";
-import { getEndorsementColorKey } from "@/utils/map-colors";
+import { transformEndorsementData } from "@/domain/country";
+import { endorsementColor } from "@/domain/eligibility";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useWindowSize } from "@uidotdev/usehooks";
 import countries from "../countries-optimized.geo.json";
-import * as turf from "@turf/turf";
-import { GEOFENCE } from "./WorldMap";
-import Br from "@/components/ui/Br";
+import { useMapEngine } from "../base/useMapEngine";
+import { urls } from "@/lib/http";
+import { Spacer } from "@/components/ui/layout";
 
 // Types
 interface CountryProperties {
@@ -41,13 +34,7 @@ interface EndorsementMapProps {
 export default function EndorsementMap({
   onCountryClick,
 }: EndorsementMapProps) {
-  const mapRef = useRef<MapRef>(null);
-  const { width } = useWindowSize();
-  const [viewState, setViewState] = useState({
-    latitude: 24,
-    longitude: 0,
-    zoom: 0.5,
-  });
+  const { mapRef, viewState, onMove, onLoad } = useMapEngine();
   const [endorsementData, setEndorsementData] = useState<{
     [key: string]: {
       countrySlug: string;
@@ -59,25 +46,11 @@ export default function EndorsementMap({
   const [error, setError] = useState<string | null>(null);
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
 
-  // Handle responsive view state
-  useEffect(() => {
-    if (!width) return;
-    if (width > 1024) {
-      setViewState((prev) => ({ ...prev, zoom: 0.5 }));
-    } else if (width > 768) {
-      setViewState((prev) => ({ ...prev, zoom: 0 }));
-    } else {
-      setViewState({ latitude: 10, longitude: 10, zoom: 0 });
-    }
-  }, [width]);
-
   // Fetch endorsement data
   useEffect(() => {
     const fetchEndorsementData = async () => {
       try {
-        const response = await fetch(
-          "https://automate.plant-for-the-planet.org/webhook/uncached/endorsement-countries",
-        );
+        const response = await fetch(urls.endorsementCountries);
         if (!response.ok) {
           throw new Error("Failed to fetch endorsement data");
         }
@@ -120,7 +93,7 @@ export default function EndorsementMap({
           hasEndorsed,
           hasInvested,
           countrySlug: countryData?.countrySlug || "",
-          colorKey: getEndorsementColorKey(hasEndorsed),
+          colorKey: endorsementColor(hasEndorsed),
         },
       };
     });
@@ -130,20 +103,6 @@ export default function EndorsementMap({
       features,
     };
   }, [endorsementData]);
-
-  // Handle map move
-  const onMove = useCallback(({ viewState }: ViewStateChangeEvent) => {
-    if (viewState.zoom < 0) return;
-
-    const newCenter = [viewState.longitude, viewState.latitude];
-    if (turf.booleanPointInPolygon(newCenter, GEOFENCE)) {
-      setViewState({
-        zoom: viewState.zoom,
-        longitude: newCenter[0],
-        latitude: newCenter[1],
-      });
-    }
-  }, []);
 
   // Handle country click
   const onClick = useCallback(
@@ -238,8 +197,8 @@ export default function EndorsementMap({
         </div>
       )}
 
-      <Br />
-      <Br />
+      <Spacer />
+      <Spacer />
       <div className="relative z-10">
         <div className="bg-primary-light">
           <div className="flex flex-col items-center">
@@ -252,8 +211,8 @@ export default function EndorsementMap({
           </div>
         </div>
         <div className="bg-gradient-to-b from-primary-light to-transparent">
-          <Br />
-          <Br />
+          <Spacer />
+          <Spacer />
         </div>
       </div>
 
@@ -276,12 +235,7 @@ export default function EndorsementMap({
           onClick={onClick}
           onMouseMove={onMouseMove}
           onMouseLeave={onMouseLeave}
-          onLoad={() => {
-            const map = mapRef.current?.getMap();
-            map?.addControl(
-              new maplibregl.AttributionControl({ compact: true }),
-            );
-          }}
+          onLoad={onLoad}
         >
           <Source
             id="countries"
@@ -325,14 +279,14 @@ export default function EndorsementMap({
           <div className="flex items-center">
             <div
               className="w-4 h-4 rounded-sm mr-2"
-              style={{ backgroundColor: getEndorsementColorKey(true) }}
+              style={{ backgroundColor: endorsementColor(true) }}
             />
             <span>Has Endorsed</span>
           </div>
           <div className="flex items-center">
             <div
               className="w-4 h-4 rounded-sm mr-2"
-              style={{ backgroundColor: getEndorsementColorKey(false) }}
+              style={{ backgroundColor: endorsementColor(false) }}
             />
             <span>Not Endorsed</span>
           </div>
