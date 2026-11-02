@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Dialog } from "@/components/ui/Dialog";
-import { Spacer } from "@/components/ui/layout";
 import EndorsementMap from "@/components/maps/world/EndorsementMap";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,7 +21,7 @@ export default function CountrySignatories({
   return (
     <div className="border border-base-gray rounded-xl padding-3">
       <div className="flex flex-col divide-y divide-base-gray">
-        <div className="flex flex-col sm:flex-row justify-between flex-wrap">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="font-bold typo-h2 flex items-center gap-2">
             <Image
               width={32}
@@ -50,10 +49,9 @@ export default function CountrySignatories({
               </Link>
             </p>
           </h2>
-          <Spacer className="sm:none" />
           <Button
             type="button"
-            cn="min-w-40"
+            cn="min-w-40 sm:shrink-0"
             onClick={() => {
               setIsDialogOpen(true);
             }}
