@@ -54,6 +54,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
         colorKey: "#E1EBE5", // Blank/neutral color
         JRCColorKey: "#E1EBE5",
         GFWColorKey: "#E1EBE5",
+        MMUColorKey: "#E1EBE5",
         countrySlug: "",
       },
     }));
@@ -65,6 +66,10 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     // Filter GFW data by selected year
     const gfwDataAll = forestData.GFW || [];
     const gfwData = gfwDataAll.filter((item) => item.year == selectedYear);
+
+    // Filter MMU data by selected year
+    const mmuDataAll = forestData.MMU || [];
+    const mmuData = mmuDataAll.filter((item) => item.year == selectedYear);
 
     // Update JRC colors if we have JRC data
     let featuresWithColors = blankFeatures;
@@ -107,6 +112,26 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
       });
     }
 
+    // Update MMU colors if we have MMU data
+    if (mmuData.length > 0) {
+      const transformedMMU = transformAllForestCoverChangeData(mmuData);
+      featuresWithColors = featuresWithColors.map((country) => {
+        const countrySlug = country.properties.countrySlug as string;
+        const countyISO2 = country.properties.iso_a2 as string;
+        const mmuEligibility = transformedMMU[countyISO2]?.eligibility;
+        const mmuColorKey = eligibilityColor(mmuEligibility || "NA");
+
+        return {
+          ...country,
+          properties: {
+            ...country.properties,
+            countrySlug,
+            MMUColorKey: mmuColorKey,
+          },
+        };
+      });
+    }
+
     return {
       ...countries,
       features: featuresWithColors,
@@ -116,7 +141,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
     const features = map?.queryRenderedFeatures(event.point, {
-      layers: ["country-fill-jrc", "country-fill-gfw"],
+      layers: ["country-fill-jrc", "country-fill-gfw", "country-fill-mmu"],
     });
     const { point } = event;
     const country = features?.[0]?.properties?.name_long;
@@ -198,6 +223,15 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                   "fill-opacity": selectedDataset === "GFW" ? 1 : 0,
                 }}
               />
+              {/* MMU Layer */}
+              <Layer
+                id="country-fill-mmu"
+                type="fill"
+                paint={{
+                  "fill-color": ["get", "MMUColorKey"],
+                  "fill-opacity": selectedDataset === "MMU" ? 1 : 0,
+                }}
+              />
               <Layer
                 id="country-line"
                 type="line"
@@ -238,7 +272,9 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                   colorKey:
                     selectedDataset === "JRC"
                       ? feature.properties.JRCColorKey
-                      : feature.properties.GFWColorKey,
+                      : selectedDataset === "MMU"
+                        ? feature.properties.MMUColorKey
+                        : feature.properties.GFWColorKey,
                 },
               })),
             };

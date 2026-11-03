@@ -103,7 +103,8 @@ export default function CountryMap({
             name: country.name,
             year,
             iso2: country.iso2,
-            dataset, // Include dataset in API call
+            // MMU has no layers endpoint yet — reuse JRC layers as placeholder.
+            dataset: dataset === "MMU" ? "JRC" : dataset,
           },
         });
         setLayersData(result);
@@ -204,8 +205,10 @@ export default function CountryMap({
           </>
         )}
 
-        {showLayers && layersData && dataset === "JRC" && (
-          <>
+        {showLayers &&
+          layersData &&
+          (dataset === "JRC" || dataset === "MMU") && (
+            <>
             {/* JRC Mode: Tropical forest layer (bottom) */}
             <Source
               key={`total-tropical-forest-${dataset}`}

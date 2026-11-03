@@ -14,6 +14,7 @@ import {
   CountryMapLegends,
   LegendsForGFW,
   LegendsForJRC,
+  LegendsForMMU,
 } from "@/components/maps/MapLegends";
 import {
   CountryMapHeaderContent,
@@ -21,6 +22,7 @@ import {
 } from "@/components/sections/hero/TFFFMapViewContent";
 import { Spacer } from "@/components/ui/layout";
 import { CountryDetails } from "@/domain/country.types";
+import { DatasetType } from "@/domain/dataset";
 import { asCountrySlug } from "@/domain/brand";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
 import { useParams, useSearchParams } from "next/navigation";
@@ -30,6 +32,7 @@ import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
 import {
   GFWTop10CountriesChart,
   JRC10CountriesChart,
+  MMU10CountriesChart,
 } from "../charts/Top10BarChart";
 import HeaderCountry from "@/components/HeaderCountry";
 
@@ -101,7 +104,13 @@ export function TFFFWorldMapView() {
 
           <div className="mb-8 md:mb-0 md:absolute left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
             <Spacer className="md:hidden" />
-            {selectedDataset === "JRC" ? <LegendsForJRC /> : <LegendsForGFW />}
+            {selectedDataset === "JRC" ? (
+              <LegendsForJRC />
+            ) : selectedDataset === "MMU" ? (
+              <LegendsForMMU />
+            ) : (
+              <LegendsForGFW />
+            )}
             <Spacer />
           </div>
         </div>
@@ -111,6 +120,8 @@ export function TFFFWorldMapView() {
       <RewardsChart />
       {selectedDataset === "JRC" ? (
         <JRC10CountriesChart />
+      ) : selectedDataset === "MMU" ? (
+        <MMU10CountriesChart />
       ) : (
         <GFWTop10CountriesChart />
       )}
@@ -120,7 +131,7 @@ export function TFFFWorldMapView() {
 
 type TFFFCountryMapViewProps = CountryDetails & {
   year: string;
-  dataset?: "GFW" | "JRC";
+  dataset?: DatasetType;
 };
 
 function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
@@ -129,7 +140,7 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
 
   // Get dataset from URL params, fallback to props or default
   const selectedDataset =
-    (searchParams.get("dataset") as "GFW" | "JRC") || props.dataset || "JRC";
+    (searchParams.get("dataset") as DatasetType) || props.dataset || "JRC";
 
   useEffect(() => {
     if (props.name && props.iso2) {

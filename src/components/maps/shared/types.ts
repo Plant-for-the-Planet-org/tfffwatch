@@ -51,6 +51,7 @@ export interface WorldMapState {
   forestData: {
     GFW: CountryForestRecord[];
     JRC: CountryForestRecord[];
+    MMU: CountryForestRecord[];
   };
   isLoading: boolean;
 }

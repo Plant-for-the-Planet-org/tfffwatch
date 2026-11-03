@@ -12,7 +12,7 @@ export async function fetchForestCoverChangeDataV2({
   country?: string;
   year?: string;
   iso2?: string;
-  source?: "GFW" | "JRC";
+  source?: "GFW" | "JRC" | "MMU";
 }) {
   const query: { [key: string]: string } = {};
 

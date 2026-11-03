@@ -92,6 +92,11 @@ export default function DatasetTabs({
       label: "Tree-cover-change Estimate (GFW)",
       description: "",
     },
+    {
+      key: "MMU",
+      label: "MMU",
+      description: "",
+    },
   ];
 
   const baseTabClasses =

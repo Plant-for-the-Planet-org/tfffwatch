@@ -24,3 +24,11 @@ export function JRC10CountriesChart() {
     </div>
   );
 }
+// Placeholder: reuses JRC image until an MMU-specific chart is provided.
+export function MMU10CountriesChart() {
+  return (
+    <div>
+      <Image width={1440} height={833} src="/assets/Top-10-JRC.png" alt="" />
+    </div>
+  );
+}
