@@ -6,6 +6,7 @@ import ForestCoverChange from "@/components/sections/features/forest-cover/Fores
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import { Spacer } from "@/components/ui/layout";
 import {
+  findCountryBySlug,
   getCountryDetails,
   getEndorsementData,
   isSignatoryCountry,
@@ -17,6 +18,7 @@ import {
 } from "@/lib/structured-data";
 import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
+import { permanentRedirect } from "next/navigation";
 import { humanize } from "underscore.string";
 
 export type PageParams = {
@@ -32,7 +34,8 @@ type PageProps = {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { country, year } = await params;
+  const { country: rawCountry, year } = await params;
+  const country = findCountryBySlug(rawCountry)?.countrySlug ?? rawCountry;
 
   return {
     title: `${humanize(country)} · TFFF Watch`,
@@ -48,6 +51,13 @@ export default async function Page({ params, searchParams }: PageProps) {
   const { country, year } = await params;
   const { dataset } = await searchParams;
   const slug = country;
+
+  // Send name or alias slugs (e.g. /kingdom-of-eswatini) to the canonical slug.
+  const canonicalSlug = findCountryBySlug(country)?.countrySlug;
+  if (canonicalSlug && canonicalSlug !== country) {
+    const query = dataset ? `?dataset=${dataset}` : "";
+    permanentRedirect(`/${canonicalSlug}/${year}${query}`);
+  }
 
   const details = getCountryDetails({ country, slug });
 
@@ -84,7 +94,6 @@ export default async function Page({ params, searchParams }: PageProps) {
         year={year}
         dataset={validDataset}
       />
-      <Spacer />
       <TFFFCountryMapView
         year={year}
         name={details.name}

@@ -89,7 +89,8 @@ export default async function CountryPayoutSummary({
   return (
     <section
       aria-labelledby="payout-summary-heading"
-      className="rounded-xl md:rounded-2xl border border-base-gray p-4 md:p-5"
+      // Visually hidden: kept in the DOM for crawlers and screen readers.
+      className="sr-only"
     >
       <h2 id="payout-summary-heading" className="font-bold typo-p mb-2">
         {countryName} in {year}: estimated TFFF payout

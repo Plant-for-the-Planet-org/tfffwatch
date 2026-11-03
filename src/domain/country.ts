@@ -1,4 +1,5 @@
 import countries, { alpha2ToAlpha3 } from "i18n-iso-countries";
+import { slugify } from "underscore.string";
 import { slugISO2 } from "./slug-iso2";
 import type { CountryForestRecord } from "@/domain/forest-record.types";
 import { classify } from "@/domain/eligibility";
@@ -12,6 +13,32 @@ import type { CountryDetails } from "@/domain/country.types";
 // Re-exported for existing importers; canonical definition lives in domain/.
 export type { CountryDetails };
 
+type CountryMappingEntry = {
+  country: string;
+  countrySlug: string;
+  countryIso2: string;
+  aliases?: string[];
+};
+
+// Finds a country by its canonical slug, its mapping name, or an alias
+// (e.g. "kingdom-of-eswatini" from the map's long name -> "eswatini").
+export function findCountryBySlug(
+  slug: string
+): CountryMappingEntry | undefined {
+  const target = slugify(slug || "");
+  if (!target) return undefined;
+  return (countryMapping as CountryMappingEntry[]).find(
+    (el) =>
+      el.countrySlug === target ||
+      slugify(el.country) === target ||
+      el.aliases?.includes(target)
+  );
+}
+
+export function getCountrySlugByIso2(iso2: string): string | undefined {
+  return countryMapping.find((el) => el.countryIso2 === iso2)?.countrySlug;
+}
+
 export function getCountryDetails({
   country = "",
   slug = "",
@@ -21,7 +48,7 @@ export function getCountryDetails({
 }): CountryDetails {
   let iso2, iso3, name;
 
-  const match = countryMapping.find((el) => el.countrySlug === slug);
+  const match = findCountryBySlug(slug);
   if (match) {
     iso2 = match.countryIso2;
     name = match.country;
