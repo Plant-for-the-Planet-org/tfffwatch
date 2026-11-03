@@ -93,13 +93,15 @@ export function buildPayoutDatasetSchema({
 }: {
   countryName: string;
   year: string;
-  dataset: "GFW" | "JRC";
+  dataset: "GFW" | "JRC" | "MMU";
   path: string;
 }) {
   const datasetLabel =
     dataset === "GFW"
       ? "Tree cover loss estimate (GFW-based)"
-      : "Standard estimate (JRC + GFW-based)";
+      : dataset === "MMU"
+        ? "MMU estimate"
+        : "Standard estimate (JRC + GFW-based)";
 
   return {
     "@context": "https://schema.org",

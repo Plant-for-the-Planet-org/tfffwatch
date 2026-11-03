@@ -65,7 +65,9 @@ export default async function CountryPayoutSummary({
   const datasetLabel =
     dataset === "GFW"
       ? "tree cover loss estimate (GFW)"
-      : "standard estimate (JRC)";
+      : dataset === "MMU"
+        ? "MMU estimate"
+        : "standard estimate (JRC)";
 
   const figures = [
     { label: "Intact forest", value: `${toReadable(record.intact_forest_ha)} ha` },
