@@ -3,7 +3,8 @@
   {
     "country": "Antigua and Barbuda",
     "countrySlug": "antigua-and-barbuda",
-    "countryIso2": "AG"
+    "countryIso2": "AG",
+    "aliases": ["antigua-and-barb"]
   },
   { "country": "Argentina", "countrySlug": "argentina", "countryIso2": "AR" },
   { "country": "Bangladesh", "countrySlug": "bangladesh", "countryIso2": "BD" },
@@ -18,7 +19,8 @@
   {
     "country": "Central African Republic",
     "countrySlug": "central-african-republic",
-    "countryIso2": "CF"
+    "countryIso2": "CF",
+    "aliases": ["central-african-rep"]
   },
   { "country": "China", "countrySlug": "china", "countryIso2": "CN" },
   { "country": "Colombia", "countrySlug": "colombia", "countryIso2": "CO" },
@@ -28,13 +30,15 @@
   {
     "country": "Democratic Republic of the Congo",
     "countrySlug": "democratic-republic-of-the-congo",
-    "countryIso2": "CD"
+    "countryIso2": "CD",
+    "aliases": ["dem-rep-congo"]
   },
   { "country": "Dominica", "countrySlug": "dominica", "countryIso2": "DM" },
   {
     "country": "Dominican Republic",
     "countrySlug": "dominican-republic",
-    "countryIso2": "DO"
+    "countryIso2": "DO",
+    "aliases": ["dominican-rep"]
   },
   { "country": "Ecuador", "countrySlug": "ecuador", "countryIso2": "EC" },
   {
@@ -45,7 +49,8 @@
   {
     "country": "Equatorial Guinea",
     "countrySlug": "equatorial-guinea",
-    "countryIso2": "GQ"
+    "countryIso2": "GQ",
+    "aliases": ["eq-guinea"]
   },
   { "country": "Ethiopia", "countrySlug": "ethiopia", "countryIso2": "ET" },
   { "country": "Gabon", "countrySlug": "gabon", "countryIso2": "GA" },
@@ -62,7 +67,8 @@
   {
     "country": "Lao Peoples Democratic Republic",
     "countrySlug": "lao-peoples-democratic-republic",
-    "countryIso2": "LA"
+    "countryIso2": "LA",
+    "aliases": ["laos", "lao-pdr"]
   },
   { "country": "Liberia", "countrySlug": "liberia", "countryIso2": "LR" },
   { "country": "Madagascar", "countrySlug": "madagascar", "countryIso2": "MG" },
@@ -102,7 +108,8 @@
   {
     "country": "Solomon Islands",
     "countrySlug": "solomon-islands",
-    "countryIso2": "SB"
+    "countryIso2": "SB",
+    "aliases": ["solomon-is"]
   },
   { "country": "Somalia", "countrySlug": "somalia", "countryIso2": "SO" },
   {
@@ -113,11 +120,17 @@
   {
     "country": "South Sudan",
     "countrySlug": "south-sudan",
-    "countryIso2": "SS"
+    "countryIso2": "SS",
+    "aliases": ["s-sudan"]
   },
   { "country": "Sri Lanka", "countrySlug": "sri-lanka", "countryIso2": "LK" },
   { "country": "Suriname", "countrySlug": "suriname", "countryIso2": "SR" },
-  { "country": "Swaziland", "countrySlug": "eswatini", "countryIso2": "SZ" },
+  {
+    "country": "Swaziland",
+    "countrySlug": "eswatini",
+    "countryIso2": "SZ",
+    "aliases": ["kingdom-of-eswatini", "swaziland"]
+  },
   { "country": "Thailand", "countrySlug": "thailand", "countryIso2": "TH" },
   { "country": "Togo", "countrySlug": "togo", "countryIso2": "TG" },
   {

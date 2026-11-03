@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { Spacer } from "@/components/ui/layout";
 import { useWorldMapStore } from "@/stores/map.store";
 import { buildRewardsDonut } from "./transforms/rewards-donut";
-import { DonutChart } from "./primitives/DonutChart";
+import { LazyDonutChart as DonutChart } from "./lazy";
 
 export default function MaximumRewardsChart() {
   const { selectedDataset, forestData } = useWorldMapStore();

@@ -3,12 +3,17 @@ import SecondaryHero, {
   OverlayPoliciesTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
 import { Spacer } from "@/components/ui/layout";
+import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Policy Papers & Commentary  · TFFF Watch",
+  title: "Policy Papers & Commentary · TFFF Watch",
   description:
     "Key policy briefs or open letters published about the Tropical Forest Forever Facility (TFFF)",
+  alternates: {
+    canonical: "/policy-papers-commentary",
+  },
+  openGraph: pageOpenGraph("/policy-papers-commentary"),
 };
 
 export default function Page() {

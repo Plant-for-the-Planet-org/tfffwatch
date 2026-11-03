@@ -1,11 +1,13 @@
 "use client";
 
+// Direct imports, not the "@/components/maps" barrel, so the barrel's static
+// map exports do not pull MapLibre into this page's first-load bundle.
 import {
-  CountryMap,
-  DatasetTabs,
-  useWorldMapStore,
-  WorldMap,
-} from "@/components/maps";
+  LazyCountryMap as CountryMap,
+  LazyWorldMap as WorldMap,
+} from "@/components/maps/lazy";
+import DatasetTabs from "@/components/maps/shared/DatasetTabsWrapper";
+import { useWorldMapStore } from "@/stores/map.store";
 import CountryMapCard from "@/components/maps/country/CountryMapCard";
 import { ClickTooltip } from "@/components/maps/base/ClickTooltip";
 import {

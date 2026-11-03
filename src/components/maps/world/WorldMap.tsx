@@ -1,7 +1,10 @@
 "use client";
 
 import { useWorldMapStore } from "@/stores/map.store";
-import { transformAllForestCoverChangeData } from "@/domain/country";
+import {
+  getCountrySlugByIso2,
+  transformAllForestCoverChangeData,
+} from "@/domain/country";
 import { downloadGeoJsonAsSvg } from "@/utils/download-map";
 import { env } from "@/utils/env";
 import { eligibilityColor } from "@/domain/eligibility";
@@ -156,7 +159,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
       iso2: countryISO2,
       iso3: "", // We don't have ISO3 in the current data
       name: country,
-      slug: countrySlug || "",
+      slug: countrySlug || getCountrySlugByIso2(countryISO2) || "",
       flagImgUrl: `http://purecatamphetamine.github.io/country-flag-icons/3x2/${countryISO2}.svg`,
     };
 
@@ -288,7 +291,12 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
             );
           }}
         >
-          <Image width={24} height={24} src="/assets/download-map.svg" alt="" />
+          <Image
+            width={24}
+            height={24}
+            src="/assets/download-map.svg"
+            alt="Download map"
+          />
         </button>
       </div>
     </>

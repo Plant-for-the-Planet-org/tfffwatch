@@ -14,7 +14,7 @@ export function ClickTooltip() {
           width={32}
           height={32}
           src="/assets/finger-tap.gif"
-          alt=""
+          alt="Tap or click a country on the map to see its details"
         />
       </button>
 

@@ -5,11 +5,16 @@ import SecondaryHero, {
   OverlayPressTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
 import { Spacer } from "@/components/ui/layout";
+import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Press · TFFF Watch",
   description: "Access press releases and contact us for press inquiries.",
+  alternates: {
+    canonical: "/press",
+  },
+  openGraph: pageOpenGraph("/press"),
 };
 
 export default function Page() {

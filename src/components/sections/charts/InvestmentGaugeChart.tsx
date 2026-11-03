@@ -126,7 +126,7 @@ const CustomLabel = (props: CustomLabelWithDataProps) => {
                       width={14}
                       height={14}
                       src={"/assets/tooltip-info-icon-2.svg"}
-                      alt=""
+                      alt="About the 2026 target"
                     />
                     <div className="hidden group-hover:block absolute z-50 -top-16 left-4">
                       <div className="bg-white border border-primary-light w-48 p-2 px-4 rounded-xl">
@@ -443,27 +443,25 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
       </ResponsiveContainer>
 
       <div className="sm:hidden flex flex-nowrap justify-between gap-2 mt-4 px-3">
-        {labelData.map((item) => (
-          <>
-            {item.id === "norway2026" ? null : (
+        {labelData
+          .filter((item) => item.id !== "norway2026")
+          .map((item) => (
+            <div
+              key={item.id}
+              className="flex justify-center items-center gap-2"
+            >
               <div
-                key={item.name}
-                className="flex justify-center items-center gap-2"
-              >
-                <div
-                  className="w-4 h-4 rounded-sm"
-                  style={{ backgroundColor: item.color }}
-                />
-                <div className="text-center">
-                  <div className="text-sm font-semibold text-gray-800">
-                    {toReadableAmount(item.actualValue, true)}
-                  </div>
-                  <div className="text-xs text-gray-600">{item.nameShort}</div>
+                className="w-4 h-4 rounded-sm"
+                style={{ backgroundColor: item.color }}
+              />
+              <div className="text-center">
+                <div className="text-sm font-semibold text-gray-800">
+                  {toReadableAmount(item.actualValue, true)}
                 </div>
+                <div className="text-xs text-gray-600">{item.nameShort}</div>
               </div>
-            )}
-          </>
-        ))}
+            </div>
+          ))}
       </div>
     </div>
   );

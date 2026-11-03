@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Dialog } from "@/components/ui/Dialog";
-import EndorsementMap from "@/components/maps/world/EndorsementMap";
+import { LazyEndorsementMap as EndorsementMap } from "@/components/maps/lazy";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";

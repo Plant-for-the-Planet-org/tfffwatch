@@ -58,9 +58,9 @@ export default function AboutTFFFWatch() {
           <h2 className="font-bold typo-h2">Analysis Methodology</h2>
           <Spacer />
           <div className="typo-p">
-            <h2 className="font-bold typo-h3">
+            <h3 className="font-bold typo-h3">
               Tree cover loss estimate (GFW-based)
-            </h2>
+            </h3>
             <Spacer />
             <b>a. Baseline</b>
             <p>
@@ -123,9 +123,9 @@ export default function AboutTFFFWatch() {
             </p>
             <Spacer />
 
-            <h2 className="font-bold typo-h3">
+            <h3 className="font-bold typo-h3">
               Standard estimate (JRC + GFW-based)
-            </h2>
+            </h3>
             <Spacer />
             <b>a. Baseline</b>
             <p>

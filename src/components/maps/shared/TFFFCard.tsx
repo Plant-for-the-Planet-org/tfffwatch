@@ -52,7 +52,9 @@ export default function TFFFCard({
           />
           {country.name} {data.year}
         </p>
-        <p className="flex items-center gap-2 relative group cursor-default">
+        {/* A <div>, not a <p>: it holds the criteria popover, whose block
+            content is invalid inside a <p> and breaks hydration. */}
+        <div className="flex items-center gap-2 relative group cursor-default">
           <Image
             className="h-4 w-4 rounded-full"
             width={12}
@@ -78,7 +80,7 @@ export default function TFFFCard({
               />
             </div>
           </div>
-        </p>
+        </div>
       </div>
       <Spacer />
       <div className={twMerge("p-2 px-4 sm:px-2 md:p-0", contentClassName)}>
