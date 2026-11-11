@@ -80,7 +80,7 @@ export default function ForestCoverChangeAreaChart() {
   const { forestCoverChangeDataByCountry } = useForestCoverChangeData();
   const [chartData, setChartData] = useState<ChartData[]>([]);
 
-  // MMU data starts at 2021.
+  // Charts start at DATASET_MIN_YEAR (2022).
   const minYear = DATASET_MIN_YEAR - 1;
 
   useEffect(() => {

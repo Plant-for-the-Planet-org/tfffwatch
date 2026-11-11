@@ -1,7 +1,7 @@
 "use client";
 
 import { useWorldMapStore } from "@/stores/map.store";
-import { DATASET_LATEST_YEAR, YEAR_SELECT_MIN_YEAR } from "@/domain/dataset";
+import { DATASET_LATEST_YEAR, DATASET_MIN_YEAR } from "@/domain/dataset";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -30,8 +30,8 @@ function YearSelectContent({ initialValue, onChange }: Props) {
     })
   );
 
-  // The picker goes back only to 2022.
-  const minYear = YEAR_SELECT_MIN_YEAR;
+  // The picker goes back only to DATASET_MIN_YEAR (2022).
+  const minYear = DATASET_MIN_YEAR;
   const options = useMemo(
     () => allOptions.filter((el) => +el.value >= minYear),
     [allOptions, minYear]

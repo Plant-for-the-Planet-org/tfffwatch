@@ -3,7 +3,7 @@ import {
   DATASET_LATEST_YEAR,
   DatasetType,
   DEFAULT_DATASET,
-  YEAR_SELECT_MIN_YEAR,
+  DATASET_MIN_YEAR,
 } from "@/domain/dataset";
 import AnnualPayout from "@/components/sections/features/forest-cover/AnnualPayout";
 import CountrySingnatories from "@/components/sections/features/endorsement/CountrySignatories";
@@ -63,7 +63,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   const yearNum = Number(year);
   const validYear =
     Number.isInteger(yearNum) &&
-    yearNum >= YEAR_SELECT_MIN_YEAR &&
+    yearNum >= DATASET_MIN_YEAR &&
     yearNum <= DATASET_LATEST_YEAR
       ? year
       : String(DATASET_LATEST_YEAR);

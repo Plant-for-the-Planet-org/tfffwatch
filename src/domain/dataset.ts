@@ -9,12 +9,9 @@ export const DATASET_LABEL = {
   full: "JRC+GFW with MMU",
 } as const;
 
-// MMU data starts at 2021.
-export const DATASET_MIN_YEAR = 2021;
-
-// Earliest year in the country page year picker. Charts still start at
-// DATASET_MIN_YEAR; only the picker stops here.
-export const YEAR_SELECT_MIN_YEAR = 2022;
+// First year shown on the site: country year picker and all year charts.
+// The API has data from 2020, but only 2022 onwards is shown.
+export const DATASET_MIN_YEAR = 2022;
 
 // Latest year of data. The site opens on this year everywhere (map, donuts,
 // captions, country year picker, sitemap). Bump it when a new year lands.
