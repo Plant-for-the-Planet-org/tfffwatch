@@ -27,8 +27,6 @@ import WorldMapCard from "./WorldMapCard";
 import { ClickTooltip } from "../base/ClickTooltip";
 import { useMapEngine } from "../base/useMapEngine";
 
-const NO_DATA_FILL = "#E1EBE5";
-
 export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   const {
     selectedDataset,
@@ -61,9 +59,8 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
         ...country,
         properties: {
           ...country.properties,
-          // No-data countries get a light grey-green fill so the white
-          // borders stay visible between them.
-          colorKey: eligibility ? eligibilityColor(eligibility) : NO_DATA_FILL,
+          // No-data countries fall through to white (matches prod).
+          colorKey: eligibilityColor(eligibility || "NA"),
           countrySlug: "",
         },
       };
@@ -151,9 +148,8 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                 id="country-line"
                 type="line"
                 paint={{
-                  // Thin white border around every country.
-                  "line-color": "#FFFFFF",
-                  "line-width": 1,
+                  "line-color": "#F0FAF4",
+                  "line-width": 1.5,
                 }}
               />
             </Source>
