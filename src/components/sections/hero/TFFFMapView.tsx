@@ -69,12 +69,12 @@ export function TFFFWorldMapView() {
 
   return (
     <WorldMapViewContainer>
-      <div className="h-full flex flex-col">
-        <div className="hidden md:flex justify-end mb-4">
+      <div className="relative h-full flex flex-col">
+        {/* Floats top-right so it does not push the title down. */}
+        <div className="hidden md:block absolute top-0 right-0 z-20">
           <ClickTooltip />
         </div>
 
-        <Spacer />
         <div className="relative z-10">
           <div className="bg-primary-light">
             <WorldMapHeaderContent />
