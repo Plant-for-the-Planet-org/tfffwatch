@@ -19,6 +19,11 @@ import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 import { capitalize } from "underscore.string";
 
+// Slugs use underscores (e.g. "South_Korea"); show them with spaces.
+function toDisplayName(slug: string) {
+  return capitalize(slug.replaceAll("_", " "));
+}
+
 // https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 export async function generateStaticParams() {
   return investingCountries.map((el) => ({ country: el }));
@@ -36,8 +41,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { country } = await params;
 
-  const countryContentInMetadata = capitalize(country);
-  // countryContentInMetadata = countryContentInMetadata.replaceAll("_", " ");
+  const countryContentInMetadata = toDisplayName(country);
 
   return {
     title: `${countryContentInMetadata} Investment Tracker · TFFF Watch`,
@@ -90,7 +94,7 @@ the current analysis.`;
 
   if (!richData) return null;
 
-  const countryName = capitalize(country);
+  const countryName = toDisplayName(country);
   const path = `/investment-tracker/${country}`;
   const datasetSchema = buildTrackerDatasetSchema({ countryName, path });
   const breadcrumbSchema = buildBreadcrumbSchema([
@@ -104,7 +108,7 @@ the current analysis.`;
       <JsonLd data={[datasetSchema, breadcrumbSchema]} />
       <div>
         <h1 className="sr-only">
-          {capitalize(country)} Investment Tracker
+          {countryName} Investment Tracker
         </h1>
         <InvestmentTracker />
         <Spacer />

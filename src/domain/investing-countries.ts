@@ -22,6 +22,7 @@ export const investingCountries = [
   /* "European_Bank_for_Reconstruction_and_Development", */ "EBRD",
   "Minderoo_Foundation",
   "The_Nature_Conservancy",
+  "Conservation_International",
   // "Philanthropies",
   "Others",
 ];

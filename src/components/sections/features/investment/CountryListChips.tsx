@@ -286,6 +286,16 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       investedCapital: null,
     },
     {
+      slug: "Conservation_International",
+      label: "Conservation International",
+      iso2: "",
+      emoji: "🤝",
+      noFlag: true,
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
+    {
       slug: "Others",
       label: "Others",
       iso2: "OT",
@@ -382,7 +392,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       </div>
 
       <p className="typo-p font-bold mb-2 text-center xl:text-left">
-        Development Banks & Others
+        Foundations, development banks & others
       </p>
       <div className="w-full flex justify-center xl:justify-start  gap-3 pb-4 flex-wrap">
         {banksOthersList.map((el, key) => (

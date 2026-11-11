@@ -218,7 +218,7 @@ function CustomPieTooltip({
     return (
       <div className="bg-background border border-primary-light rounding-lg p-2 px-4">
         <p className="font-semibold text-sm whitespace-nowrap">
-          {data.country || data.label}
+          {data.country?.replaceAll("_", " ") || data.label}
         </p>
         <p className="text-sm">
           {toReadableAmountLong(data.value, true, true).toLowerCase()}
