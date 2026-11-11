@@ -1,6 +1,7 @@
 "use client";
 
 import { useWorldMapStore } from "@/stores/map.store";
+import { DATASET_MIN_YEAR } from "@/domain/dataset";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -16,7 +17,7 @@ function YearSelectContent({ initialValue, onChange }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { setSelectedYear, selectedDataset } = useWorldMapStore();
+  const { setSelectedYear } = useWorldMapStore();
 
   const [selectedId, setSelectedId] = useState(0);
   const [allOptions] = useState<
@@ -37,15 +38,15 @@ function YearSelectContent({ initialValue, onChange }: Props) {
     // },
   ]);
 
-  // MMU data only goes back to 2021; other datasets back to 2018.
-  const minYear = selectedDataset === "MMU" ? 2021 : 2018;
+  // MMU data only goes back to 2021.
+  const minYear = DATASET_MIN_YEAR;
   const options = useMemo(
     () => allOptions.filter((el) => +el.value >= minYear),
     [allOptions, minYear]
   );
 
-  // When switching to a dataset with a narrower year range (e.g. MMU),
-  // snap an out-of-range selected year to the latest valid year + sync URL.
+  // Snap an out-of-range selected year (e.g. an old /country/2019 link)
+  // to the latest valid year + sync URL.
   useEffect(() => {
     const current = allOptions.find((el) => el.id === selectedId);
     if (current && +current.value < minYear) {

@@ -12,8 +12,6 @@ import CountryMapCard from "@/components/maps/country/CountryMapCard";
 import { ClickTooltip } from "@/components/maps/base/ClickTooltip";
 import {
   CountryMapLegends,
-  LegendsForGFW,
-  LegendsForJRC,
   LegendsForMMU,
 } from "@/components/maps/MapLegends";
 import {
@@ -22,18 +20,14 @@ import {
 } from "@/components/sections/hero/TFFFMapViewContent";
 import { Spacer } from "@/components/ui/layout";
 import { CountryDetails } from "@/domain/country.types";
-import { DatasetType } from "@/domain/dataset";
+import { DatasetType, DEFAULT_DATASET } from "@/domain/dataset";
 import { asCountrySlug } from "@/domain/brand";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import RewardsChart from "../charts/RewardsChart";
 import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
-import {
-  GFWTop10CountriesChart,
-  JRC10CountriesChart,
-  MMU10CountriesChart,
-} from "../charts/Top10BarChart";
+import { Top10CountriesChart } from "../charts/Top10BarChart";
 import HeaderCountry from "@/components/HeaderCountry";
 
 export function TFFFWorldMapView() {
@@ -60,10 +54,9 @@ export function TFFFWorldMapView() {
     );
     setForestCoverChangeDataByYear(_yearWise);
 
-    // Update new store with forest data for both datasets initially
-    // This provides immediate data for map rendering, specific data will be fetched by DatasetTabs
-    setForestData("GFW", _yearWise);
-    setForestData("JRC", _yearWise); // Use as fallback until JRC-specific data is fetched
+    // Seed the map store so the map can render right away; DatasetTabs then
+    // fetches the full MMU series (all years).
+    setForestData("MMU", _yearWise);
   }, [
     forestCoverChangeData,
     selectedYear,
@@ -104,13 +97,7 @@ export function TFFFWorldMapView() {
 
           <div className="mb-8 md:mb-0 md:absolute left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
             <Spacer className="md:hidden" />
-            {selectedDataset === "JRC" ? (
-              <LegendsForJRC />
-            ) : selectedDataset === "MMU" ? (
-              <LegendsForMMU />
-            ) : (
-              <LegendsForGFW />
-            )}
+            <LegendsForMMU />
             <Spacer />
           </div>
         </div>
@@ -118,13 +105,7 @@ export function TFFFWorldMapView() {
       <Spacer />
       <Spacer />
       <RewardsChart />
-      {selectedDataset === "JRC" ? (
-        <JRC10CountriesChart />
-      ) : selectedDataset === "MMU" ? (
-        <MMU10CountriesChart />
-      ) : (
-        <GFWTop10CountriesChart />
-      )}
+      <Top10CountriesChart />
     </WorldMapViewContainer>
   );
 }
@@ -136,11 +117,8 @@ type TFFFCountryMapViewProps = CountryDetails & {
 
 function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
   const { country } = useParams();
-  const searchParams = useSearchParams();
-
-  // Get dataset from URL params, fallback to props or default
-  const selectedDataset =
-    (searchParams.get("dataset") as DatasetType) || props.dataset || "JRC";
+  // Single dataset mode; the ?dataset URL param is ignored.
+  const selectedDataset = DEFAULT_DATASET;
 
   useEffect(() => {
     if (props.name && props.iso2) {

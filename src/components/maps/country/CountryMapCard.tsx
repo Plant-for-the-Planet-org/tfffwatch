@@ -15,7 +15,7 @@ interface CountryMapCardProps {
 
 export default function CountryMapCard({
   country,
-  dataset = "JRC",
+  dataset = "MMU",
 }: CountryMapCardProps) {
   const { selectedYear } = useWorldMapStore();
   const [tfffData, setTfffData] = useState<CountryForestRecord | null>(null);

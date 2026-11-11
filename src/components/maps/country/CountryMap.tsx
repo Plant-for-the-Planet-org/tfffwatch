@@ -36,7 +36,7 @@ function getCountryGeoJSON(iso2: string): FeatureCollection {
 export default function CountryMap({
   country,
   year,
-  dataset = "GFW",
+  dataset = "MMU",
   showLayers = true,
 }: CountryMapProps) {
   const { width = 0 } = useWindowSize();
@@ -103,8 +103,8 @@ export default function CountryMap({
             name: country.name,
             year,
             iso2: country.iso2,
-            // MMU has no layers endpoint yet — reuse JRC layers as placeholder.
-            dataset: dataset === "MMU" ? "JRC" : dataset,
+            // MMU has no layers endpoint yet; reuse JRC layers as placeholder.
+            dataset: "JRC",
           },
         });
         setLayersData(result);
@@ -150,66 +150,9 @@ export default function CountryMap({
           </Source>
         )}
 
-        {showLayers && layersData && dataset === "GFW" && (
+        {showLayers && layersData && (
           <>
-            {/* GFW Mode: Forest layer (bottom) */}
-            <Source
-              key={`current-forest-${dataset}`}
-              id="current-forest-source"
-              type="raster"
-              tiles={[layersData.currentForestLayer?.tileUrl]}
-              tileSize={256}
-            >
-              <Layer
-                id="current-forest-layer"
-                type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-
-            {/* GFW Mode: Deforestation layer (middle) */}
-            <Source
-              key={`loss-in-year-${dataset}`}
-              id="loss-in-year-source"
-              type="raster"
-              tiles={[layersData.lossInYearLayer?.tileUrl]}
-              tileSize={256}
-            >
-              <Layer
-                id="loss-in-year-layer"
-                type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-
-            {/* GFW Mode: Fire loss layer (top) */}
-            <Source
-              key={`fire-loss-${dataset}`}
-              id="fire-loss-source"
-              type="raster"
-              tiles={[layersData.fireLossLayer?.tileUrl]}
-              tileSize={256}
-            >
-              <Layer
-                id="fire-loss-layer"
-                type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-          </>
-        )}
-
-        {showLayers &&
-          layersData &&
-          (dataset === "JRC" || dataset === "MMU") && (
-            <>
-            {/* JRC Mode: Tropical forest layer (bottom) */}
+            {/* Tropical forest layer (bottom) */}
             <Source
               key={`total-tropical-forest-${dataset}`}
               id="total-tropical-forest-source"
@@ -226,7 +169,7 @@ export default function CountryMap({
               />
             </Source>
 
-            {/* JRC Mode: Subtropical forest layer (bottom) */}
+            {/* Subtropical forest layer (bottom) */}
             <Source
               key={`subtropical-forest-${dataset}`}
               id="subtropical-forest-source"
@@ -243,7 +186,7 @@ export default function CountryMap({
               />
             </Source>
 
-            {/* JRC Mode: Tropical deforestation layer (middle) */}
+            {/* Tropical deforestation layer (middle) */}
             <Source
               key={`tropical-deforestation-${dataset}`}
               id="tropical-deforestation-source"
@@ -260,7 +203,7 @@ export default function CountryMap({
               />
             </Source>
 
-            {/* JRC Mode: Subtropical deforestation layer (middle) */}
+            {/* Subtropical deforestation layer (middle) */}
             <Source
               key={`subtropical-deforestation-${dataset}`}
               id="subtropical-deforestation-source"
@@ -277,7 +220,7 @@ export default function CountryMap({
               />
             </Source>
 
-            {/* JRC Mode: Tropical degradation layer (top) */}
+            {/* Tropical degradation layer (top) */}
             <Source
               key={`tropical-degradation-${dataset}`}
               id="tropical-degradation-source"
@@ -294,7 +237,7 @@ export default function CountryMap({
               />
             </Source>
 
-            {/* JRC Mode: Subtropical degradation layer (top) */}
+            {/* Subtropical degradation layer (top) */}
             <Source
               key={`subtropical-degradation-${dataset}`}
               id="subtropical-degradation-source"

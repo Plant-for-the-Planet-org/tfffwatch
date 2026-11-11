@@ -2,7 +2,7 @@
 
 import { toReadable } from "@/lib/format";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
-import { useWorldMapStore } from "@/stores/map.store";
+import { DATASET_MIN_YEAR } from "@/domain/dataset";
 import { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
@@ -18,12 +18,11 @@ type ChartData = {
 
 export default function AnnualPayoutAreaChart() {
   const { forestCoverChangeDataByCountry } = useForestCoverChangeData();
-  const { selectedDataset } = useWorldMapStore();
 
   const [chartData, setChartData] = useState<ChartData[]>([]);
 
-  // MMU data starts at 2021; other datasets at 2019.
-  const minYear = selectedDataset === "MMU" ? 2020 : 2018;
+  // MMU data starts at 2021.
+  const minYear = DATASET_MIN_YEAR - 1;
 
   useEffect(() => {
     if (!forestCoverChangeDataByCountry?.length) return;

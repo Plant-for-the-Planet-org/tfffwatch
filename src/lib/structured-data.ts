@@ -3,6 +3,7 @@
 // operator, already stated in the footer and About page).
 // No `sameAs` (no social profiles exist) and no `SearchAction` (no site search).
 import type { News } from "@/utils/types";
+import { DATASET_LABEL, type DatasetType } from "@/domain/dataset";
 
 const SITE_URL = "https://tfffwatch.org";
 const SITE_NAME = "TFFF Watch";
@@ -88,20 +89,15 @@ const PAYOUT_VARIABLES = [
 export function buildPayoutDatasetSchema({
   countryName,
   year,
-  dataset,
   path,
 }: {
   countryName: string;
   year: string;
-  dataset: "GFW" | "JRC" | "MMU";
+  // Only one dataset mode (MMU); kept so callers stay explicit.
+  dataset: DatasetType;
   path: string;
 }) {
-  const datasetLabel =
-    dataset === "GFW"
-      ? "Tree cover loss estimate (GFW-based)"
-      : dataset === "MMU"
-        ? "MMU estimate"
-        : "Standard estimate (JRC + GFW-based)";
+  const datasetLabel = `${DATASET_LABEL.full} estimate`;
 
   return {
     "@context": "https://schema.org",

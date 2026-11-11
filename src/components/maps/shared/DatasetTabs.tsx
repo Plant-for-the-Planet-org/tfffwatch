@@ -2,10 +2,9 @@
 
 import { useWorldMapStore } from "@/stores/map.store";
 import { api, urls } from "@/lib/http";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
-import { DatasetType } from "./types";
+import { DATASET_LABEL, DEFAULT_DATASET } from "@/domain/dataset";
 import { CountryForestRecord } from "@/domain/forest-record.types";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,20 +13,14 @@ import PersistentTooltip from "@/components/ui/PersistentTooltip";
 interface DatasetTabsProps {
   tabsClassName?: string;
   activeTabClassName?: string;
-  inactiveTabClassName?: string;
-  disabled?: boolean;
-  defaultDataset?: DatasetType;
 }
 
+// Single dataset mode (MMU). Kept as a tab-styled label so the layout and the
+// data fetch stay in one place; the ?dataset URL param is ignored.
 export default function DatasetTabs({
   tabsClassName,
   activeTabClassName,
-  inactiveTabClassName,
-  disabled = false,
-  defaultDataset = "JRC",
 }: DatasetTabsProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const {
     setForestData,
     setIsLoading,
@@ -36,86 +29,36 @@ export default function DatasetTabs({
     markDatasetFetched,
   } = useWorldMapStore();
 
-  // Get current dataset from URL or use default
-  const selectedDataset =
-    (searchParams.get("dataset") as DatasetType) || defaultDataset;
+  const dataset = DEFAULT_DATASET;
 
-  // Fetch data for a specific dataset (fetch ALL years at once)
-  const fetchDatasetData = useCallback(
-    async (dataset: DatasetType, force: boolean = false) => {
-      // Check if we've already fetched this dataset (not year-specific)
-      if (datasetFetched[dataset] && !force) {
-        return;
-      }
+  const fetchDatasetData = useCallback(async () => {
+    if (datasetFetched[dataset]) return;
 
-      try {
-        setIsLoading(true);
-        const data = await api<CountryForestRecord[]>({
-          url: urls.forestChangeAll,
-          method: "GET",
-          token: "",
-          query: {
-            source: dataset,
-            // Do NOT include year - fetch all years at once
-          },
-        });
+    try {
+      setIsLoading(true);
+      // Fetch ALL years at once (no year param).
+      const data = await api<CountryForestRecord[]>({
+        url: urls.forestChangeAll,
+        method: "GET",
+        token: "",
+        query: { source: dataset },
+      });
+      setForestData(dataset, data);
+      markDatasetFetched(dataset);
+    } catch (error) {
+      console.error(`Error fetching ${dataset} data:`, error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [dataset, datasetFetched, setForestData, setIsLoading, markDatasetFetched]);
 
-        // Store ALL data (not filtered by year)
-        setForestData(dataset, data);
-        markDatasetFetched(dataset);
-      } catch (error) {
-        console.error(`Error fetching ${dataset} data:`, error);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [datasetFetched, setForestData, setIsLoading, markDatasetFetched]
-  );
-
-  // Set selected dataset immediately on mount and when URL changes
   useEffect(() => {
-    setSelectedDataset(selectedDataset);
-  }, [selectedDataset, setSelectedDataset]);
+    setSelectedDataset(dataset);
+  }, [dataset, setSelectedDataset]);
 
-  // Fetch data when dataset changes (NOT on year change)
   useEffect(() => {
-    fetchDatasetData(selectedDataset);
-  }, [selectedDataset, fetchDatasetData]);
-  const datasets: { key: DatasetType; label: string; description: string }[] = [
-    {
-      key: "JRC",
-      label: "Standard Estimate (JRC+GFW)",
-      description: "",
-    },
-    {
-      key: "GFW",
-      label: "Tree-cover-change Estimate (GFW)",
-      description: "",
-    },
-    {
-      key: "MMU",
-      label: "MMU",
-      description: "",
-    },
-  ];
-
-  const baseTabClasses =
-    "px-1 py-1 sm:px-2 sm:py-2 md:px-4 md:py-2 text-sm font-regular rounded-lg transition-colors duration-200 cursor-pointer outline-none";
-  const defaultActiveClasses = "bg-white font-medium text-[#333333] shadow-sm";
-  const defaultInactiveClasses =
-    "bg-transparent text-[#828282] hover:bg-[#E4F6EB]/50";
-  const disabledClasses = "opacity-50 cursor-not-allowed";
-
-  const handleTabClick = useCallback(
-    (dataset: DatasetType) => {
-      if (!disabled) {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("dataset", dataset);
-        router.push(`?${params.toString()}`, { scroll: false });
-      }
-    },
-    [disabled, router, searchParams]
-  );
+    fetchDatasetData();
+  }, [fetchDatasetData]);
 
   return (
     <div
@@ -124,27 +67,16 @@ export default function DatasetTabs({
         tabsClassName
       )}
     >
-      {datasets.map(({ key, label, description }) => {
-        const isActive = selectedDataset === key;
-
-        return (
-          <button
-            key={key}
-            onClick={() => handleTabClick(key)}
-            disabled={disabled}
-            title={description}
-            className={twMerge(
-              baseTabClasses,
-              isActive
-                ? twMerge(defaultActiveClasses, activeTabClassName)
-                : twMerge(defaultInactiveClasses, inactiveTabClassName),
-              disabled && disabledClasses
-            )}
-          >
-            {label}
-          </button>
-        );
-      })}
+      <div
+        title={DATASET_LABEL.full}
+        className={twMerge(
+          "px-2 py-1 sm:px-4 sm:py-2 text-sm rounded-lg bg-white font-medium text-[#333333] shadow-sm",
+          activeTabClassName
+        )}
+      >
+        <span className="sm:hidden">{DATASET_LABEL.short}</span>
+        <span className="hidden sm:inline">{DATASET_LABEL.full}</span>
+      </div>
 
       <div className="flex items-center">
         <PersistentTooltip
@@ -155,7 +87,7 @@ export default function DatasetTabs({
                 width={16}
                 height={16}
                 src={"/assets/tooltip-info-icon.svg"}
-                alt="About these datasets"
+                alt="About this dataset"
               />
             </button>
           }
@@ -170,8 +102,7 @@ function DatasetTabsInfoContent() {
   return (
     <div className="w-2xs lg:w-sm text-xs bg-background text-base-text px-3 py-2 rounded-lg shadow-lg">
       <div>
-        We created TFFF payout estimates, based on two different global
-        deforestation classifications. Our Standard Estimate is based on the{" "}
+        Our TFFF payout estimates are based on the{" "}
         <Link
           href={"https://www.science.org/doi/10.1126/sciadv.abe1603"}
           className="text-blue-500"
@@ -185,16 +116,8 @@ function DatasetTabsInfoContent() {
         >
           Hansen/Global Forest Watch (GFW)
         </Link>{" "}
-        data for subtropical regions (for which no JRC data is available). The
-        Conservative Estimate is entirely based on GFW data.  Neither should be
-        understood as the “better” one. We refer to the former as the Standard
-        Estimate, since it is the one preferred by the TFFF team and due to its
-        lower detected deforestation rates, it is likely also closer to the
-        submissions that will be made by rainforest countries as part of their
-        payout claims. We refer to the GFW model as the Conservative Estimate,
-        since on average it shows higher deforestation rates which results in
-        fewer countries being eligible for payouts and generally lower payouts
-        for eligible countries.
+        data for subtropical regions (for which no JRC data is available),
+        with the MMU method applied.
       </div>
     </div>
   );

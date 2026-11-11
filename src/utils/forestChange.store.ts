@@ -1,4 +1,5 @@
 import { api, urls } from "@/lib/http";
+import { DatasetType, DEFAULT_DATASET } from "@/domain/dataset";
 import { getCountryDetails } from "@/domain/country";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
 import type { CountryForestRecord } from "@/domain/forest-record.types";
@@ -7,12 +8,12 @@ export async function fetchForestCoverChangeDataV2({
   country,
   year,
   iso2 = "",
-  source = "JRC",
+  source = DEFAULT_DATASET,
 }: {
   country?: string;
   year?: string;
   iso2?: string;
-  source?: "GFW" | "JRC" | "MMU";
+  source?: DatasetType;
 }) {
   const query: { [key: string]: string } = {};
 

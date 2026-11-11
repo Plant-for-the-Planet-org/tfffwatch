@@ -12,7 +12,7 @@ interface WorldMapStore extends WorldMapState {
   setIsLoading: (loading: boolean) => void;
   getCurrentForestData: () => CountryForestRecord[];
   getSelectedCountryData: () => CountryForestRecord | null;
-  datasetFetched: { GFW: boolean; JRC: boolean; MMU: boolean };
+  datasetFetched: { MMU: boolean };
   markDatasetFetched: (dataset: DatasetType) => void;
   resetDatasetFetched: () => void;
 }
@@ -20,11 +20,11 @@ interface WorldMapStore extends WorldMapState {
 export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
   selectedCountry: null,
   selectedYear: "2024",
-  selectedDataset: "JRC",
+  selectedDataset: "MMU",
   clickPosition: null,
-  forestData: { GFW: [], JRC: [], MMU: [] },
+  forestData: { MMU: [] },
   isLoading: false,
-  datasetFetched: { GFW: false, JRC: false, MMU: false },
+  datasetFetched: { MMU: false },
 
   setSelectedCountry: (country) => set({ selectedCountry: country }),
   setSelectedYear: (year) =>
@@ -48,7 +48,7 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
     })),
   resetDatasetFetched: () =>
     set({
-      datasetFetched: { GFW: false, JRC: false, MMU: false },
+      datasetFetched: { MMU: false },
     }),
 
   getCurrentForestData: () => {

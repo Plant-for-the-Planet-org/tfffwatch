@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "dev",
-      "runtimeExecutable": "/Users/rupamkairi/.vite-plus/bin/npm",
+      "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000,
       "autoPort": true

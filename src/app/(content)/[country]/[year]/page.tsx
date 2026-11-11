@@ -1,4 +1,4 @@
-import { DatasetType } from "@/components/maps/shared/types";
+import { DatasetType, DEFAULT_DATASET } from "@/domain/dataset";
 import AnnualPayout from "@/components/sections/features/forest-cover/AnnualPayout";
 import CountrySingnatories from "@/components/sections/features/endorsement/CountrySignatories";
 import CountryPayoutSummary from "@/components/sections/features/forest-cover/CountryPayoutSummary";
@@ -61,9 +61,8 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   const details = getCountryDetails({ country, slug });
 
-  // Validate dataset parameter - default to JRC if not specified or invalid
-  const validDataset: DatasetType =
-    dataset === "GFW" ? "GFW" : dataset === "MMU" ? "MMU" : "JRC";
+  // Single dataset mode (MMU); any ?dataset value is ignored.
+  const validDataset: DatasetType = DEFAULT_DATASET;
 
   let isSignatory: boolean | null = null;
   try {

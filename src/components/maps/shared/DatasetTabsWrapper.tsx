@@ -2,24 +2,19 @@
 
 import { Suspense } from "react";
 import DatasetTabs from "./DatasetTabs";
-import { DatasetType } from "./types";
+import { DATASET_LABEL } from "@/domain/dataset";
 
 interface DatasetTabsWrapperProps {
   tabsClassName?: string;
   activeTabClassName?: string;
-  inactiveTabClassName?: string;
-  disabled?: boolean;
-  defaultDataset?: DatasetType;
 }
 
 function DatasetTabsFallback() {
   return (
     <div className="flex gap-1 p-1 bg-[#E4F6EB] rounded-xl border border-primary-light">
-      <div className="px-4 py-2 typo-p font-medium rounded-lg bg-white text-[#333333] shadow-sm">
-        Standard Estimate (JRC + GFW)
-      </div>
-      <div className="px-4 py-2 typo-p font-medium rounded-lg bg-transparent text-[#828282]">
-        Tree-cover-change Estimate (GFW)
+      <div className="px-2 py-1 sm:px-4 sm:py-2 text-sm font-medium rounded-lg bg-white text-[#333333] shadow-sm">
+        <span className="sm:hidden">{DATASET_LABEL.short}</span>
+        <span className="hidden sm:inline">{DATASET_LABEL.full}</span>
       </div>
     </div>
   );
