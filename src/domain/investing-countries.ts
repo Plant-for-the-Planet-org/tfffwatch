@@ -24,6 +24,7 @@ export const investingCountries = [
   "The_Nature_Conservancy",
   "Conservation_International",
   "5_Foundations",
+  "CIFF",
   // "Philanthropies",
   "Others",
 ];

@@ -297,7 +297,17 @@ export default function CountryListChips({ country, capitalsData }: Props) {
     },
     {
       slug: "5_Foundations",
-      label: "5 Foundations and Family Office",
+      label: "Other philanthropies",
+      iso2: "",
+      emoji: "🤝",
+      noFlag: true,
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
+    {
+      slug: "CIFF",
+      label: "CIFF",
       iso2: "",
       emoji: "🤝",
       noFlag: true,
