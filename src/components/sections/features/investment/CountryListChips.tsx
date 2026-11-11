@@ -296,7 +296,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       investedCapital: null,
     },
     {
-      slug: "5_Foundations_and_family_office",
+      slug: "5_Foundations",
       label: "5 Foundations & Family Office",
       iso2: "",
       emoji: "🤝",
