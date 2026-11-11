@@ -296,7 +296,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       investedCapital: null,
     },
     {
-      slug: "5_Foundations",
+      slug: "5_Foundations_and_family_office",
       label: "5 Foundations",
       iso2: "",
       emoji: "🤝",
@@ -441,7 +441,6 @@ export default function CountryListChips({ country, capitalsData }: Props) {
           </Link>
         ))}
       </div>
-
     </div>
   );
 }
