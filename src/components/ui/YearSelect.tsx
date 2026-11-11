@@ -1,7 +1,7 @@
 "use client";
 
 import { useWorldMapStore } from "@/stores/map.store";
-import { DATASET_LATEST_YEAR, DATASET_MIN_YEAR } from "@/domain/dataset";
+import { DATASET_LATEST_YEAR, YEAR_SELECT_MIN_YEAR } from "@/domain/dataset";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -30,8 +30,8 @@ function YearSelectContent({ initialValue, onChange }: Props) {
     })
   );
 
-  // MMU data only goes back to 2021.
-  const minYear = DATASET_MIN_YEAR;
+  // The picker goes back only to 2022.
+  const minYear = YEAR_SELECT_MIN_YEAR;
   const options = useMemo(
     () => allOptions.filter((el) => +el.value >= minYear),
     [allOptions, minYear]
@@ -79,7 +79,7 @@ function YearSelectContent({ initialValue, onChange }: Props) {
     }
 
     // Fall back to the latest valid year if initialValue is out of range
-    // for the current dataset (e.g. a pre-2021 year while MMU is active).
+    // for the current dataset (e.g. a year before the picker range).
     const selected =
       options.find((el) => el.value === initialValue) ?? options[0];
     setSelectedId(selected.id);

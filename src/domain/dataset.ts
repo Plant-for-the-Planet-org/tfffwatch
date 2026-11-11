@@ -12,6 +12,10 @@ export const DATASET_LABEL = {
 // MMU data starts at 2021.
 export const DATASET_MIN_YEAR = 2021;
 
+// Earliest year in the country page year picker. Charts still start at
+// DATASET_MIN_YEAR; only the picker stops here.
+export const YEAR_SELECT_MIN_YEAR = 2022;
+
 // Latest year of data. The site opens on this year everywhere (map, donuts,
 // captions, country year picker, sitemap). Bump it when a new year lands.
 export const DATASET_LATEST_YEAR = 2025;

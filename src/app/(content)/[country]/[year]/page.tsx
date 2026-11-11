@@ -1,7 +1,9 @@
 import {
   countryPagePath,
+  DATASET_LATEST_YEAR,
   DatasetType,
   DEFAULT_DATASET,
+  YEAR_SELECT_MIN_YEAR,
 } from "@/domain/dataset";
 import AnnualPayout from "@/components/sections/features/forest-cover/AnnualPayout";
 import CountrySingnatories from "@/components/sections/features/endorsement/CountrySignatories";
@@ -56,16 +58,27 @@ export default async function Page({ params, searchParams }: PageProps) {
   const { dataset } = await searchParams;
   const slug = country;
 
+  // Years outside the picker range (e.g. an old /brazil/2021 link) go to the
+  // latest year, so the URL, picker and figures all match.
+  const yearNum = Number(year);
+  const validYear =
+    Number.isInteger(yearNum) &&
+    yearNum >= YEAR_SELECT_MIN_YEAR &&
+    yearNum <= DATASET_LATEST_YEAR
+      ? year
+      : String(DATASET_LATEST_YEAR);
+
   // Send name or alias slugs (e.g. /kingdom-of-eswatini) to the canonical slug.
   const canonicalSlug = findCountryBySlug(country)?.countrySlug;
   if (canonicalSlug && canonicalSlug !== country) {
-    permanentRedirect(countryPagePath(canonicalSlug, year));
+    permanentRedirect(countryPagePath(canonicalSlug, validYear));
   }
 
   // Single dataset mode (MMU). A missing or old ?dataset value (e.g. JRC, GFW)
   // is sent to ?dataset=MMU so the URL always says which data is shown.
-  if (dataset !== DEFAULT_DATASET) {
-    redirect(countryPagePath(country, year));
+  // One redirect fixes both the year and the dataset.
+  if (dataset !== DEFAULT_DATASET || validYear !== year) {
+    redirect(countryPagePath(country, validYear));
   }
 
   const details = getCountryDetails({ country, slug });
