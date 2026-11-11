@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { DatasetType, WorldMapState } from "../components/maps/shared/types";
 import { Country } from "@/domain/country.types";
+import { DATASET_LATEST_YEAR } from "@/domain/dataset";
 import { CountryForestRecord } from "@/domain/forest-record.types";
 
 interface WorldMapStore extends WorldMapState {
@@ -19,7 +20,7 @@ interface WorldMapStore extends WorldMapState {
 
 export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
   selectedCountry: null,
-  selectedYear: "2024",
+  selectedYear: String(DATASET_LATEST_YEAR),
   selectedDataset: "MMU",
   clickPosition: null,
   forestData: { MMU: [] },

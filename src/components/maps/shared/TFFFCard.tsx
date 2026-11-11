@@ -108,7 +108,7 @@ export default function TFFFCard({
         <div className="flex justify-between items-center">
           <span>
             Discount for <b>{toReadable(data.degraded_forest_ha) ?? "?"} ha</b>{" "}
-            degradation in 2024 ({toReadable(data.percentage_degraded) ?? "?"}%)
+            degradation in {data.year} ({toReadable(data.percentage_degraded) ?? "?"}%)
           </span>
           <span className={twMerge("text-[#F2994A]", "text-sm")}>
             <b>-${toReadable(data.degradation_deduction_usd)}</b>

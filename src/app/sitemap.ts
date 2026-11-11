@@ -1,4 +1,5 @@
 import countryMapping from "@/domain/country-mapping.json";
+import { DATASET_LATEST_YEAR } from "@/domain/dataset";
 import { investingCountries } from "@/domain/investing-countries";
 import type { MetadataRoute } from "next";
 
@@ -17,8 +18,8 @@ const STATIC_ROUTES = [
 
 // Payout pages are listed for the latest data year only: it is the year the
 // site opens on (see the map store default and YearSelect), and older years
-// are the same page with older figures. Bump this when a new year of data lands.
-const PAYOUT_SITEMAP_YEAR = "2024";
+// are the same page with older figures. Set in src/domain/dataset.ts.
+const PAYOUT_SITEMAP_YEAR = String(DATASET_LATEST_YEAR);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();

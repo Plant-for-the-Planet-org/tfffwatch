@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { DATASET_LATEST_YEAR } from "@/domain/dataset";
 import { Spacer } from "@/components/ui/layout";
 import { useWorldMapStore } from "@/stores/map.store";
 import { buildRewardsDonut } from "./transforms/rewards-donut";
@@ -32,7 +33,7 @@ export default function CurrentRewardsChart() {
         <div className="max-w-3xs mx-auto">
           <h2 className="typo-h2 font-bold text-center">Current Rewards</h2>
           <p className="text-sm text-center text-foreground">
-            if TFFF was already operational, based on 2024 data for fully and
+            if TFFF was already operational, based on {DATASET_LATEST_YEAR} data for fully and
             almost eligible countries
           </p>
         </div>
@@ -49,7 +50,7 @@ export default function CurrentRewardsChart() {
       <div className="max-w-3xs mx-auto">
         <h2 className="typo-h2 font-bold text-center">Current Rewards</h2>
         <p className="text-sm text-center text-foreground">
-          if TFFF was already operational, based on 2024 data for fully and
+          if TFFF was already operational, based on {DATASET_LATEST_YEAR} data for fully and
           almost eligible countries
         </p>
       </div>

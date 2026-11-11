@@ -1,7 +1,7 @@
 "use client";
 
 import { useWorldMapStore } from "@/stores/map.store";
-import { DATASET_MIN_YEAR } from "@/domain/dataset";
+import { DATASET_LATEST_YEAR, DATASET_MIN_YEAR } from "@/domain/dataset";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -20,23 +20,15 @@ function YearSelectContent({ initialValue, onChange }: Props) {
   const { setSelectedYear } = useWorldMapStore();
 
   const [selectedId, setSelectedId] = useState(0);
+  // Latest year first, down to 2018; filtered to the dataset range below.
   const [allOptions] = useState<
     { id: number; value: string; label: string; additionalLabels?: string[] }[]
-  >([
-    { id: 0, value: "2024", label: "2024" },
-    { id: 1, value: "2023", label: "2023" },
-    { id: 2, value: "2022", label: "2022" },
-    { id: 3, value: "2021", label: "2021" },
-    { id: 4, value: "2020", label: "2020" },
-    { id: 5, value: "2019", label: "2019" },
-    { id: 6, value: "2018", label: "2018" },
-    // {
-    //   id: 7,
-    //   value: "2018-2024",
-    //   label: "2018-2024",
-    //   additionalLabels: ["average"],
-    // },
-  ]);
+  >(() =>
+    Array.from({ length: DATASET_LATEST_YEAR - 2018 + 1 }, (_, i) => {
+      const year = String(DATASET_LATEST_YEAR - i);
+      return { id: i, value: year, label: year };
+    })
+  );
 
   // MMU data only goes back to 2021.
   const minYear = DATASET_MIN_YEAR;
@@ -174,7 +166,7 @@ export default function YearSelect(props: Props) {
 function YearSelectFallback() {
   return (
     <button className="mx-2 rounded-full font-bold bg-white px-5 py-1 border border-base-gray outline-none inline-flex gap-2 items-center justify-center">
-      <span>2024</span>
+      <span>{DATASET_LATEST_YEAR}</span>
       <Image width={8} height={8} src="/assets/ui/select-arrow.svg" alt="" />
     </button>
   );

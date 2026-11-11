@@ -1,4 +1,5 @@
 import { twMerge } from "tailwind-merge";
+import { DATASET_LATEST_YEAR } from "@/domain/dataset";
 
 export function LegendsForMMU() {
   return (
@@ -20,7 +21,7 @@ export function LegendsForMMU() {
             <p>Almost eligible</p>
             <p className="text-xs text-gray-600">
               Deforestation rate under 0.5% but increase in deforestation rate
-              from 2023 to 2024
+              from {DATASET_LATEST_YEAR - 1} to {DATASET_LATEST_YEAR}
             </p>
           </div>
         </div>

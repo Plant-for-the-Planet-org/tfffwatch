@@ -11,3 +11,7 @@ export const DATASET_LABEL = {
 
 // MMU data starts at 2021.
 export const DATASET_MIN_YEAR = 2021;
+
+// Latest year of data. The site opens on this year everywhere (map, donuts,
+// captions, country year picker, sitemap). Bump it when a new year lands.
+export const DATASET_LATEST_YEAR = 2025;

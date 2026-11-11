@@ -1,8 +1,7 @@
-import { api, urls } from "@/lib/http";
+import { fetchCountryRecords } from "@/lib/forest-records";
 import { DatasetType, DEFAULT_DATASET } from "@/domain/dataset";
 import { getCountryDetails } from "@/domain/country";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
-import type { CountryForestRecord } from "@/domain/forest-record.types";
 
 export async function fetchForestCoverChangeDataV2({
   country,
@@ -15,26 +14,15 @@ export async function fetchForestCoverChangeDataV2({
   iso2?: string;
   source?: DatasetType;
 }) {
-  const query: { [key: string]: string } = {};
-
-  if (iso2) {
-    query["country-iso2"] = iso2;
-  } else if (country) {
-    const { iso2 } = getCountryDetails({ country, slug: country });
-    query["country-iso2"] = iso2;
-  }
-
-  // Add source parameter for dataset selection
-  query["source"] = source;
+  const countryIso2 =
+    iso2 ||
+    (country ? getCountryDetails({ country, slug: country }).iso2 : "");
 
   try {
-    const _results = await api<CountryForestRecord[]>({
-      url: urls.forestChange,
-      query: query,
-      method: "GET",
-      token: "",
+    const _results = await fetchCountryRecords({
+      iso2: countryIso2,
+      dataset: source,
     });
-
 
     if (country && year) {
       // For specific country and year, still set the country data for charts

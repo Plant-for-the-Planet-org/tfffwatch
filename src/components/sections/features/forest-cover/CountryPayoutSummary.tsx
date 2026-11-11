@@ -10,7 +10,7 @@
 import { DATASET_LABEL, DatasetType } from "@/domain/dataset";
 import type { CountryForestRecord } from "@/domain/forest-record.types";
 import { toReadable } from "@/lib/format";
-import { api, urls } from "@/lib/http";
+import { fetchCountryRecords } from "@/lib/forest-records";
 
 type Props = {
   countryName: string;
@@ -29,11 +29,9 @@ async function getRecord({
   dataset: DatasetType;
 }): Promise<CountryForestRecord | null> {
   try {
-    const records = await api<CountryForestRecord[]>({
-      url: urls.forestChange,
-      query: { "country-iso2": iso2, source: dataset },
-      method: "GET",
-      token: "",
+    const records = await fetchCountryRecords({
+      iso2,
+      dataset,
       nextOptions: { revalidate: 1800 }, // same 30 min window as the tracker
     });
 
