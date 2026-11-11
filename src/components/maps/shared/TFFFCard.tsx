@@ -1,9 +1,10 @@
 "use client";
 
 import { Spacer } from "@/components/ui/layout";
-import LinkWithParams from "@/components/ui/LinkWithParams";
+import { countryPagePath } from "@/domain/dataset";
 import { toReadable } from "@/lib/format";
 import Image from "next/image";
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { TFFFCardProps } from "./types";
 import { slugify } from "underscore.string";
@@ -155,9 +156,11 @@ export default function TFFFCard({
       {showCTA && (
         <>
           <Spacer className="hidden md:block" />
-          <LinkWithParams
-            href={`/${country?.slug || slugify(country.name)}/${data?.year}`}
-            preserveParams={["dataset"]}
+          <Link
+            href={countryPagePath(
+              country?.slug || slugify(country.name),
+              data?.year
+            )}
             className="inline-block bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl cursor-pointer transition-colors min-w-32 rounded-t-none md:rounded-xl w-full"
           >
             <span className="flex justify-between items-center flex-nowrap">
@@ -172,7 +175,7 @@ export default function TFFFCard({
                 />
               </span>
             </span>
-          </LinkWithParams>
+          </Link>
         </>
       )}
     </div>

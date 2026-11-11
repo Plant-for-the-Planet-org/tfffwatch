@@ -1,5 +1,5 @@
 import countryMapping from "@/domain/country-mapping.json";
-import { DATASET_LATEST_YEAR } from "@/domain/dataset";
+import { countryPagePath, DATASET_LATEST_YEAR } from "@/domain/dataset";
 import { investingCountries } from "@/domain/investing-countries";
 import type { MetadataRoute } from "next";
 
@@ -39,7 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Same slug list the /[country]/[year] route resolves against.
   const payoutEntries: MetadataRoute.Sitemap = countryMapping.map(
     ({ countrySlug }) => ({
-      url: `${BASE_URL}/${countrySlug}/${PAYOUT_SITEMAP_YEAR}`,
+      url: `${BASE_URL}${countryPagePath(countrySlug, PAYOUT_SITEMAP_YEAR)}`,
       lastModified,
     })
   );

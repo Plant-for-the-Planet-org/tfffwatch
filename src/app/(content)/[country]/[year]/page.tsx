@@ -1,4 +1,8 @@
-import { DatasetType, DEFAULT_DATASET } from "@/domain/dataset";
+import {
+  countryPagePath,
+  DatasetType,
+  DEFAULT_DATASET,
+} from "@/domain/dataset";
 import AnnualPayout from "@/components/sections/features/forest-cover/AnnualPayout";
 import CountrySingnatories from "@/components/sections/features/endorsement/CountrySignatories";
 import CountryPayoutSummary from "@/components/sections/features/forest-cover/CountryPayoutSummary";
@@ -18,7 +22,7 @@ import {
 } from "@/lib/structured-data";
 import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
-import { permanentRedirect } from "next/navigation";
+import { permanentRedirect, redirect } from "next/navigation";
 import { humanize } from "underscore.string";
 
 export type PageParams = {
@@ -41,9 +45,9 @@ export async function generateMetadata({
     title: `${humanize(country)} · TFFF Watch`,
     description: `How much would ${humanize(country)} receive from the TFFF?`,
     alternates: {
-      canonical: `/${country}/${year}`,
+      canonical: countryPagePath(country, year),
     },
-    openGraph: pageOpenGraph(`/${country}/${year}`),
+    openGraph: pageOpenGraph(countryPagePath(country, year)),
   };
 }
 
@@ -55,13 +59,17 @@ export default async function Page({ params, searchParams }: PageProps) {
   // Send name or alias slugs (e.g. /kingdom-of-eswatini) to the canonical slug.
   const canonicalSlug = findCountryBySlug(country)?.countrySlug;
   if (canonicalSlug && canonicalSlug !== country) {
-    const query = dataset ? `?dataset=${dataset}` : "";
-    permanentRedirect(`/${canonicalSlug}/${year}${query}`);
+    permanentRedirect(countryPagePath(canonicalSlug, year));
+  }
+
+  // Single dataset mode (MMU). A missing or old ?dataset value (e.g. JRC, GFW)
+  // is sent to ?dataset=MMU so the URL always says which data is shown.
+  if (dataset !== DEFAULT_DATASET) {
+    redirect(countryPagePath(country, year));
   }
 
   const details = getCountryDetails({ country, slug });
 
-  // Single dataset mode (MMU); any ?dataset value is ignored.
   const validDataset: DatasetType = DEFAULT_DATASET;
 
   let isSignatory: boolean | null = null;
@@ -72,7 +80,7 @@ export default async function Page({ params, searchParams }: PageProps) {
     console.error("Error fetching endorsement data:", error);
   }
 
-  const path = `/${country}/${year}`;
+  const path = countryPagePath(country, year);
   const datasetSchema = buildPayoutDatasetSchema({
     countryName: details.name,
     year,
