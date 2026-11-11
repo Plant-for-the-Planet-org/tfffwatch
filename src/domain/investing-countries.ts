@@ -23,6 +23,7 @@ export const investingCountries = [
   "Minderoo_Foundation",
   "The_Nature_Conservancy",
   "Conservation_International",
+  "5_Foundations",
   // "Philanthropies",
   "Others",
 ];
