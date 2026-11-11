@@ -296,6 +296,16 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       investedCapital: null,
     },
     {
+      slug: "5_Foundations",
+      label: "5 Foundations",
+      iso2: "",
+      emoji: "🤝",
+      noFlag: true,
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
+    {
       slug: "Others",
       label: "Others",
       iso2: "OT",
