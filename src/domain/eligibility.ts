@@ -11,7 +11,7 @@ export function classify(
     CountryForestRecord,
     | "eligibility_deforestation_rate_below_half_percent"
     | "eligibility_decreasing_trend_of_deforestation"
-  >
+  >,
 ): Eligibility {
   if (r.eligibility_deforestation_rate_below_half_percent === true) {
     if (r.eligibility_decreasing_trend_of_deforestation === false) {
@@ -42,4 +42,27 @@ export function eligibilityColor(eligibility: Eligibility | string): string {
 // Endorsement fill color (separate concept; preserved from getEndorsementColorKey).
 export function endorsementColor(hasEndorsed: boolean): string {
   return hasEndorsed ? "#6FCF97" : "#FFFFFF";
+}
+
+// Country status shown in search results: an eligibility verdict, or
+// "NO_DATA" when the country has no record for the chosen year/dataset.
+export type CountryStatus = Eligibility | "NO_DATA";
+
+// Short labels for each status (short forms of the map legend wording).
+export function statusLabel(status: CountryStatus): string {
+  switch (status) {
+    case "ELIGIBLE":
+      return "Eligible";
+    case "ALMOST_ELIGIBLE":
+      return "Almost eligible";
+    case "INELIGIBLE":
+      return "Ineligible";
+    default:
+      return "No data";
+  }
+}
+
+// Dot color for each status. "No data" uses the map's blank fill.
+export function statusColor(status: CountryStatus): string {
+  return status === "NO_DATA" ? "#E1EBE5" : eligibilityColor(status);
 }
