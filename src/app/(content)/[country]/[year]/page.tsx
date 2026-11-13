@@ -1,4 +1,10 @@
-import { DatasetType } from "@/components/maps/shared/types";
+import {
+  countryPagePath,
+  DATASET_LATEST_YEAR,
+  DatasetType,
+  DEFAULT_DATASET,
+  DATASET_MIN_YEAR,
+} from "@/domain/dataset";
 import AnnualPayout from "@/components/sections/features/forest-cover/AnnualPayout";
 import CountrySingnatories from "@/components/sections/features/endorsement/CountrySignatories";
 import CountryPayoutSummary from "@/components/sections/features/forest-cover/CountryPayoutSummary";
@@ -18,7 +24,7 @@ import {
 } from "@/lib/structured-data";
 import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
-import { permanentRedirect } from "next/navigation";
+import { permanentRedirect, redirect } from "next/navigation";
 import { humanize } from "underscore.string";
 
 export type PageParams = {
@@ -41,9 +47,9 @@ export async function generateMetadata({
     title: `${humanize(country)} · TFFF Watch`,
     description: `How much would ${humanize(country)} receive from the TFFF?`,
     alternates: {
-      canonical: `/${country}/${year}`,
+      canonical: countryPagePath(country, year),
     },
-    openGraph: pageOpenGraph(`/${country}/${year}`),
+    openGraph: pageOpenGraph(countryPagePath(country, year)),
   };
 }
 
@@ -52,17 +58,32 @@ export default async function Page({ params, searchParams }: PageProps) {
   const { dataset } = await searchParams;
   const slug = country;
 
+  // Years outside the picker range (e.g. an old /brazil/2021 link) go to the
+  // latest year, so the URL, picker and figures all match.
+  const yearNum = Number(year);
+  const validYear =
+    Number.isInteger(yearNum) &&
+    yearNum >= DATASET_MIN_YEAR &&
+    yearNum <= DATASET_LATEST_YEAR
+      ? year
+      : String(DATASET_LATEST_YEAR);
+
   // Send name or alias slugs (e.g. /kingdom-of-eswatini) to the canonical slug.
   const canonicalSlug = findCountryBySlug(country)?.countrySlug;
   if (canonicalSlug && canonicalSlug !== country) {
-    const query = dataset ? `?dataset=${dataset}` : "";
-    permanentRedirect(`/${canonicalSlug}/${year}${query}`);
+    permanentRedirect(countryPagePath(canonicalSlug, validYear));
+  }
+
+  // Single dataset mode (MMU). A missing or old ?dataset value (e.g. JRC, GFW)
+  // is sent to ?dataset=MMU so the URL always says which data is shown.
+  // One redirect fixes both the year and the dataset.
+  if (dataset !== DEFAULT_DATASET || validYear !== year) {
+    redirect(countryPagePath(country, validYear));
   }
 
   const details = getCountryDetails({ country, slug });
 
-  // Validate dataset parameter - default to JRC if not specified or invalid
-  const validDataset: DatasetType = dataset === "GFW" ? "GFW" : "JRC";
+  const validDataset: DatasetType = DEFAULT_DATASET;
 
   let isSignatory: boolean | null = null;
   try {
@@ -72,7 +93,7 @@ export default async function Page({ params, searchParams }: PageProps) {
     console.error("Error fetching endorsement data:", error);
   }
 
-  const path = `/${country}/${year}`;
+  const path = countryPagePath(country, year);
   const datasetSchema = buildPayoutDatasetSchema({
     countryName: details.name,
     year,

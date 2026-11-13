@@ -49,8 +49,7 @@ export interface WorldMapState {
   selectedDataset: DatasetType;
   clickPosition: { x: number; y: number } | null;
   forestData: {
-    GFW: CountryForestRecord[];
-    JRC: CountryForestRecord[];
+    MMU: CountryForestRecord[];
   };
   isLoading: boolean;
 }
@@ -120,14 +119,6 @@ export interface MapContainerProps {
   padding?: "none" | "small" | "medium" | "large";
 }
 
-// DatasetTabs component props (now URL-driven)
-export interface DatasetTabsProps {
-  tabsClassName?: string;
-  activeTabClassName?: string;
-  inactiveTabClassName?: string;
-  disabled?: boolean;
-  defaultDataset?: DatasetType;
-}
 
 // Map click event interface
 export interface MapCountryClickEvent {

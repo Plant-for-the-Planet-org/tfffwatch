@@ -2,6 +2,7 @@
 
 import { toReadable } from "@/lib/format";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
+import { DATASET_MIN_YEAR } from "@/domain/dataset";
 import { useEffect, useMemo, useState } from "react";
 import {
   Area,
@@ -79,11 +80,14 @@ export default function ForestCoverChangeAreaChart() {
   const { forestCoverChangeDataByCountry } = useForestCoverChangeData();
   const [chartData, setChartData] = useState<ChartData[]>([]);
 
+  // Charts start at DATASET_MIN_YEAR (2022).
+  const minYear = DATASET_MIN_YEAR - 1;
+
   useEffect(() => {
     if (!forestCoverChangeDataByCountry?.length) return;
 
     const _chartData = forestCoverChangeDataByCountry
-      .filter((el) => +el.year > 2018)
+      .filter((el) => +el.year > minYear)
       .map((el) => ({
         year: el.year,
         degradation: -el.degraded_forest_ha,
@@ -91,7 +95,7 @@ export default function ForestCoverChangeAreaChart() {
       }));
 
     setChartData(_chartData);
-  }, [forestCoverChangeDataByCountry]);
+  }, [forestCoverChangeDataByCountry, minYear]);
 
   const { leftDomainMin, rightDomainMin } = useMemo(() => {
     if (!chartData.length)

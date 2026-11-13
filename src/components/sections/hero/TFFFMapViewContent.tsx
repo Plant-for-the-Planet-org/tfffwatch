@@ -1,5 +1,6 @@
 import { Spacer } from "@/components/ui/layout";
 import YearSelect from "@/components/ui/YearSelect";
+import { DATASET_LATEST_YEAR } from "@/domain/dataset";
 
 type HeaderProps = {
   year: string;
@@ -21,7 +22,8 @@ export function WorldMapHeaderContent() {
         countries according to the TFFF’s standards
       </p> */}
       <p className="text-center max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl typo-p">
-        if TFFF were fully funded; based on 2024 forest change data
+        if TFFF were fully funded; based on {DATASET_LATEST_YEAR} forest change
+        data
       </p>
     </div>
   );

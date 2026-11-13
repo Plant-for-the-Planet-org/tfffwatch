@@ -7,10 +7,10 @@
 //
 // Wording mirrors TFFFCard so the page reads consistently ("intact forest",
 // "estimated reward if TFFF already existed", the 20% Indigenous Peoples share).
-import { DatasetType } from "@/components/maps/shared/types";
+import { DATASET_LABEL, DatasetType } from "@/domain/dataset";
 import type { CountryForestRecord } from "@/domain/forest-record.types";
 import { toReadable } from "@/lib/format";
-import { api, urls } from "@/lib/http";
+import { fetchCountryRecords } from "@/lib/forest-records";
 
 type Props = {
   countryName: string;
@@ -29,11 +29,9 @@ async function getRecord({
   dataset: DatasetType;
 }): Promise<CountryForestRecord | null> {
   try {
-    const records = await api<CountryForestRecord[]>({
-      url: urls.forestChange,
-      query: { "country-iso2": iso2, source: dataset },
-      method: "GET",
-      token: "",
+    const records = await fetchCountryRecords({
+      iso2,
+      dataset,
       nextOptions: { revalidate: 1800 }, // same 30 min window as the tracker
     });
 
@@ -62,10 +60,7 @@ export default async function CountryPayoutSummary({
   const reward = isEligible ? record.reward_after_deductions_usd : 0;
   const iplcReward = isEligible ? record.iplc_reward_usd : 0;
 
-  const datasetLabel =
-    dataset === "GFW"
-      ? "tree cover loss estimate (GFW)"
-      : "standard estimate (JRC)";
+  const datasetLabel = `${DATASET_LABEL.full} estimate`;
 
   const figures = [
     { label: "Intact forest", value: `${toReadable(record.intact_forest_ha)} ha` },
