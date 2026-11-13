@@ -16,11 +16,12 @@ export default async function WhatsAppInvite() {
           alt="WhatsApp Icon"
         />
         <Spacer />
-        <h2 className="text-center font-bold typo-h2">Join the Conversation</h2>
+        <h2 className="text-center font-bold typo-h2">
+          Rapid TFFF News Updates
+        </h2>
         <Spacer />
         <p className="text-center typo-p">
-          Stay in the loop with latest on TFFF Updates and policy news - right
-          in your pocket
+          Short updates for key TFFF developments, about twice a month
         </p>
         <Spacer />
         <Button
@@ -28,7 +29,7 @@ export default async function WhatsAppInvite() {
           external
           href="https://chat.whatsapp.com/IpyHiUsJRHwBaiRjkTWa6T?mode=wwt"
         >
-          Join Our WhatsApp Group
+          Join the channel
         </Button>
       </div>
       <Spacer />
