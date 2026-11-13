@@ -26,30 +26,42 @@ type SubstackRSSFeed = {
   };
 };
 
-// Helper function to decode HTML entities
+const NAMED_ENTITIES: Record<string, string> = {
+  amp: "&",
+  lt: "<",
+  gt: ">",
+  quot: '"',
+  apos: "'",
+  nbsp: " ",
+  pound: "£",
+  euro: "€",
+  hellip: "…",
+  ndash: "–",
+  mdash: "—",
+  lsquo: "‘",
+  rsquo: "’",
+  ldquo: "“",
+  rdquo: "”",
+};
+
+// Substack's RSS sends text with HTML entities (e.g. "&#163;" for "£").
+// Decode every numeric entity (&#163; / &#xA3;) plus common named ones.
 function decodeHtmlEntities(text: string): string {
-  if (typeof document !== "undefined") {
-    // Browser environment
-    const textarea = document.createElement("textarea");
-    textarea.innerHTML = text;
-    return textarea.value;
-  } else {
-    // Server environment - handle common entities manually
-    return text
-      .replace(/&#8217;/g, "'") // Right single quotation mark
-      .replace(/&#8216;/g, "'") // Left single quotation mark
-      .replace(/&#8220;/g, '"') // Left double quotation mark
-      .replace(/&#8221;/g, '"') // Right double quotation mark
-      .replace(/&#8211;/g, "–") // En dash
-      .replace(/&#8212;/g, "—") // Em dash
-      .replace(/&#8230;/g, "…") // Horizontal ellipsis
-      .replace(/&amp;/g, "&") // Ampersand
-      .replace(/&lt;/g, "<") // Less than
-      .replace(/&gt;/g, ">") // Greater than
-      .replace(/&quot;/g, '"') // Quotation mark
-      .replace(/&#39;/g, "'") // Apostrophe
-      .replace(/&nbsp;/g, " "); // Non-breaking space
-  }
+  return text.replace(
+    /&(#x[0-9a-f]+|#\d+|[a-z]+);/gi,
+    (match, entity: string) => {
+      if (entity[0] === "#") {
+        const code =
+          entity[1].toLowerCase() === "x"
+            ? parseInt(entity.slice(2), 16)
+            : parseInt(entity.slice(1), 10);
+        return code >= 0 && code <= 0x10ffff
+          ? String.fromCodePoint(code)
+          : match;
+      }
+      return NAMED_ENTITIES[entity.toLowerCase()] ?? match;
+    },
+  );
 }
 
 function mapSubstackToNews(item: SubstackRSSItem): News {
