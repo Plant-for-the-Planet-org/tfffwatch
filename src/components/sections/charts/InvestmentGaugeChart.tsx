@@ -1,3 +1,4 @@
+import { getInvestorLabel } from "@/components/sections/features/investment/CountryListChips";
 import { toReadableAmount, toReadableAmountLong } from "@/lib/format";
 import { InvestmentTrackerCapitals } from "@/utils/types";
 import Image from "next/image";
@@ -218,7 +219,10 @@ function CustomPieTooltip({
     return (
       <div className="bg-background border border-primary-light rounding-lg p-2 px-4">
         <p className="font-semibold text-sm whitespace-nowrap">
-          {data.country?.replaceAll("_", " ") || data.label}
+          {(data.country &&
+            (getInvestorLabel(data.country) ??
+              data.country.replaceAll("_", " "))) ||
+            data.label}
         </p>
         <p className="text-sm">
           {toReadableAmountLong(data.value, true, true).toLowerCase()}

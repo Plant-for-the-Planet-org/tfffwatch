@@ -26,5 +26,4 @@ export const investingCountries = [
   "5_Foundations",
   "CIFF",
   // "Philanthropies",
-  "Others",
 ];
