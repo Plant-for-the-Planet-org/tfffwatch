@@ -17,6 +17,15 @@ export const GEOFENCE = turf.polygon([
   ],
 ]);
 
+// Tropical forest belt: from Mexico / Central America (west) to Papua New
+// Guinea (east), southern Brazil (south) to the Sahel / northern India (north).
+// Most TFFF countries sit inside this box. WorldMap fits to it once and stays
+// static.
+export const TROPICAL_BOUNDS: [[number, number], [number, number]] = [
+  [-112, -36],
+  [156, 30],
+];
+
 // Shared MapLibre boot for the interactive maps (WorldMap, EndorsementMap):
 // responsive zoom by viewport width, geofenced pan clamp, and the compact
 // AttributionControl added on load. Each map keeps its own onClick (layer ids
