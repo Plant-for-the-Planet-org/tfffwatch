@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { DatasetType, WorldMapState } from "../components/maps/shared/types";
 import { Country } from "@/domain/country.types";
+import { DATASET_LATEST_YEAR } from "@/domain/dataset";
 import { CountryForestRecord } from "@/domain/forest-record.types";
 
 interface WorldMapStore extends WorldMapState {
@@ -12,19 +13,19 @@ interface WorldMapStore extends WorldMapState {
   setIsLoading: (loading: boolean) => void;
   getCurrentForestData: () => CountryForestRecord[];
   getSelectedCountryData: () => CountryForestRecord | null;
-  datasetFetched: { GFW: boolean; JRC: boolean };
+  datasetFetched: { MMU: boolean };
   markDatasetFetched: (dataset: DatasetType) => void;
   resetDatasetFetched: () => void;
 }
 
 export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
   selectedCountry: null,
-  selectedYear: "2024",
-  selectedDataset: "JRC",
+  selectedYear: String(DATASET_LATEST_YEAR),
+  selectedDataset: "MMU",
   clickPosition: null,
-  forestData: { GFW: [], JRC: [] },
+  forestData: { MMU: [] },
   isLoading: false,
-  datasetFetched: { GFW: false, JRC: false },
+  datasetFetched: { MMU: false },
 
   setSelectedCountry: (country) => set({ selectedCountry: country }),
   setSelectedYear: (year) =>
@@ -48,7 +49,7 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
     })),
   resetDatasetFetched: () =>
     set({
-      datasetFetched: { GFW: false, JRC: false },
+      datasetFetched: { MMU: false },
     }),
 
   getCurrentForestData: () => {

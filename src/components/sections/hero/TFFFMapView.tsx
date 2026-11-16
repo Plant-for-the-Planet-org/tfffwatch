@@ -6,14 +6,13 @@ import {
   LazyCountryMap as CountryMap,
   LazyWorldMap as WorldMap,
 } from "@/components/maps/lazy";
-import DatasetTabs from "@/components/maps/shared/DatasetTabsWrapper";
+import { useDatasetData } from "@/components/maps/shared/useDatasetData";
 import { useWorldMapStore } from "@/stores/map.store";
 import CountryMapCard from "@/components/maps/country/CountryMapCard";
 import { ClickTooltip } from "@/components/maps/base/ClickTooltip";
 import {
   CountryMapLegends,
-  LegendsForGFW,
-  LegendsForJRC,
+  LegendsForMMU,
 } from "@/components/maps/MapLegends";
 import {
   CountryMapHeaderContent,
@@ -21,16 +20,18 @@ import {
 } from "@/components/sections/hero/TFFFMapViewContent";
 import { Spacer } from "@/components/ui/layout";
 import { CountryDetails } from "@/domain/country.types";
+import {
+  DATASET_LATEST_YEAR,
+  DatasetType,
+  DEFAULT_DATASET,
+} from "@/domain/dataset";
 import { asCountrySlug } from "@/domain/brand";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import RewardsChart from "../charts/RewardsChart";
 import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
-import {
-  GFWTop10CountriesChart,
-  JRC10CountriesChart,
-} from "../charts/Top10BarChart";
+import { Top10CountriesChart } from "../charts/Top10BarChart";
 import HeaderCountry from "@/components/HeaderCountry";
 
 export function TFFFWorldMapView() {
@@ -40,48 +41,40 @@ export function TFFFWorldMapView() {
   // New map store integration
   const {
     selectedDataset,
-    setForestData,
     selectedYear,
     setSelectedYear,
     resetDatasetFetched,
   } = useWorldMapStore();
 
-  // Reset dataset fetched flags when component mounts (returning to home page)
+  // On mount (e.g. returning to home): refetch data, and show the latest
+  // year, since Home has no year picker and a country page may have changed it.
   useEffect(() => {
     resetDatasetFetched();
-  }, [resetDatasetFetched]);
+    setSelectedYear(String(DATASET_LATEST_YEAR));
+  }, [resetDatasetFetched, setSelectedYear]);
+
+  // Load the full MMU series (all years) into the map store.
+  useDatasetData();
 
   useEffect(() => {
     const _yearWise = forestCoverChangeData.filter(
       (el) => el.year == selectedYear
     );
     setForestCoverChangeDataByYear(_yearWise);
-
-    // Update new store with forest data for both datasets initially
-    // This provides immediate data for map rendering, specific data will be fetched by DatasetTabs
-    setForestData("GFW", _yearWise);
-    setForestData("JRC", _yearWise); // Use as fallback until JRC-specific data is fetched
   }, [
     forestCoverChangeData,
     selectedYear,
     setForestCoverChangeDataByYear,
-    setForestData,
-    setSelectedYear,
   ]);
 
   return (
     <WorldMapViewContainer>
-      <div className="h-full flex flex-col">
-        {/* Dataset Tabs */}
-        <div className="flex justify-between mb-4">
-          <div className="hidden md:block w-10"></div>
-          <DatasetTabs />
-          <div className="hidden md:block">
-            <ClickTooltip />
-          </div>
+      <div className="relative h-full flex flex-col">
+        {/* Floats top-right so it does not push the title down. */}
+        <div className="hidden md:block absolute top-0 right-0 z-20">
+          <ClickTooltip />
         </div>
 
-        <Spacer />
         <div className="relative z-10">
           <div className="bg-primary-light">
             <WorldMapHeaderContent />
@@ -101,7 +94,7 @@ export function TFFFWorldMapView() {
 
           <div className="mb-8 md:mb-0 md:absolute left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
             <Spacer className="md:hidden" />
-            {selectedDataset === "JRC" ? <LegendsForJRC /> : <LegendsForGFW />}
+            <LegendsForMMU />
             <Spacer />
           </div>
         </div>
@@ -109,27 +102,21 @@ export function TFFFWorldMapView() {
       <Spacer />
       <Spacer />
       <RewardsChart />
-      {selectedDataset === "JRC" ? (
-        <JRC10CountriesChart />
-      ) : (
-        <GFWTop10CountriesChart />
-      )}
+      <Top10CountriesChart />
     </WorldMapViewContainer>
   );
 }
 
 type TFFFCountryMapViewProps = CountryDetails & {
   year: string;
-  dataset?: "GFW" | "JRC";
+  dataset?: DatasetType;
 };
 
 function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
   const { country } = useParams();
-  const searchParams = useSearchParams();
-
-  // Get dataset from URL params, fallback to props or default
-  const selectedDataset =
-    (searchParams.get("dataset") as "GFW" | "JRC") || props.dataset || "JRC";
+  // Single dataset mode; the ?dataset URL param is ignored.
+  const selectedDataset = DEFAULT_DATASET;
+  useDatasetData();
 
   useEffect(() => {
     if (props.name && props.iso2) {
@@ -155,12 +142,8 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
 
   return (
     <div>
-      <div className="flex justify-between md:px-4 lg:px-5 xl:px-6">
-        <div className="hidden md:block">
-          <HeaderCountry />
-        </div>
-        {/* Dataset Tabs */}
-        <DatasetTabs />
+      <div className="hidden md:flex md:px-4 lg:px-5 xl:px-6">
+        <HeaderCountry />
       </div>
       <Spacer />
 
