@@ -114,14 +114,8 @@ the current analysis.`;
         <Spacer />
         <CountryListChips country={country} capitalsData={capitalsData} />
         <Spacer />
-        {country === investingCountries.at(-1) ? (
-          <></>
-        ) : (
-          <>
-            <InvestmentProgress investment_stage={richData.investment_stage} />
-            <Spacer />
-          </>
-        )}
+        <InvestmentProgress investment_stage={richData.investment_stage} />
+        <Spacer />
         <TrackerContent
           last_updated={richData?.last_updated}
           status={richData?.status ?? ""}
