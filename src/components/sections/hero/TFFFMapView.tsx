@@ -99,7 +99,8 @@ export function TFFFWorldMapView() {
             variant="hero"
           />
 
-          <div className="mb-8 md:mb-0 md:absolute left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
+          {/* z-20 keeps the legend above the map's edge fades */}
+          <div className="mb-8 md:mb-0 md:absolute z-20 left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
             <Spacer className="md:hidden" />
             {selectedDataset === "JRC" ? <LegendsForJRC /> : <LegendsForGFW />}
             <Spacer />

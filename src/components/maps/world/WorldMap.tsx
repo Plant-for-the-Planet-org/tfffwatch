@@ -25,7 +25,7 @@ import countries from "../countries-optimized.geo.json";
 import { WorldMapProps } from "../shared/types";
 import WorldMapCard from "./WorldMapCard";
 import { ClickTooltip } from "../base/ClickTooltip";
-import { useMapEngine } from "../base/useMapEngine";
+import { TROPICAL_BOUNDS, useMapEngine } from "../base/useMapEngine";
 
 export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   const {
@@ -36,7 +36,9 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     setClickPosition,
   } = useWorldMapStore();
 
-  const { mapRef, viewState, onMove, onLoad } = useMapEngine();
+  // Only mapRef and onLoad are used: the camera is static (fit to the
+  // tropical belt), so there is no controlled viewState or pan handling.
+  const { mapRef, onLoad } = useMapEngine();
 
   const allCountries = useMemo(() => {
     const countriesData = countries as unknown as {
@@ -123,8 +125,22 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     const countrySlug = features?.[0]?.properties?.countrySlug;
     const countryISO2 = features?.[0]?.properties?.["iso_a2"];
 
-    // If clicked outside of any country, clear selection
-    if (!features || features.length === 0 || !country || !countryISO2) {
+    // Only countries with TFFF Watch data for the current dataset and year
+    // open the card
+    const hasData = (forestData[selectedDataset] || []).some(
+      (item) =>
+        item["country-iso2"] === countryISO2 &&
+        String(item.year) === String(selectedYear)
+    );
+
+    // Clicked outside a country, or on a country without data: clear selection
+    if (
+      !features ||
+      features.length === 0 ||
+      !country ||
+      !countryISO2 ||
+      !hasData
+    ) {
       setSelectedCountry(null);
       setClickPosition(null);
       return;
@@ -150,14 +166,27 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   // Always render the map - no loading state needed
   return (
     <>
-      <div className="relative mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
+      <div className="relative mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 lg:w-full object-contain">
         <div className="md:hidden absolute z-40 bottom-0 left-0">
           <ClickTooltip />
         </div>
-        <div className="aspect-[1.75] w-full -translate-y-12 -z-10">
+        {/* Wide frame crops the far north/south so the tropical belt fills it.
+            Mobile/tablet: lifted under the header fade.
+            Desktop (lg+): wider (zoomed in), sits lower and a bit taller to use
+            the free space below. */}
+        {/* Desktop: top fade so the map blends into the header. On mobile/tablet
+            the map is lifted under the header's own gradient instead. */}
+        <div className="hidden lg:block absolute inset-x-0 top-0 h-24 z-10 pointer-events-none bg-gradient-to-b from-primary-light to-transparent" />
+        {/* Desktop: side fades so the left/right edges blend too */}
+        <div className="hidden lg:block absolute inset-y-0 left-0 w-16 z-10 pointer-events-none bg-gradient-to-r from-primary-light to-transparent" />
+        <div className="hidden lg:block absolute inset-y-0 right-0 w-16 z-10 pointer-events-none bg-gradient-to-l from-primary-light to-transparent" />
+        <div className="aspect-[2.4] w-full -translate-y-12 -z-10 lg:aspect-[2.2] lg:translate-y-0">
           <Map
             ref={mapRef}
-            {...viewState}
+            initialViewState={{
+              bounds: TROPICAL_BOUNDS,
+              fitBoundsOptions: { padding: 8 },
+            }}
             cursor="default"
             keyboard={false}
             scrollZoom={false}
@@ -169,7 +198,14 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
             interactive={true}
             attributionControl={false}
             renderWorldCopies={false}
-            onMove={onMove}
+            // Keep the same framing when the container resizes. No animation,
+            // and fitBounds does not resize the canvas, so this cannot loop.
+            onResize={(e) =>
+              e.target.fitBounds(TROPICAL_BOUNDS, {
+                padding: 8,
+                animate: false,
+              })
+            }
             onClick={onClick}
             onLoad={onLoad}
           >
