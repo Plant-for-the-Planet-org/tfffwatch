@@ -48,6 +48,8 @@ export function TFFFWorldMapView() {
     setSelectedYear,
     resetDatasetFetched,
     setFocusIso2,
+    setSelectedCountry,
+    setClickPosition,
   } = useWorldMapStore();
   const router = useRouter();
 
@@ -101,15 +103,22 @@ export function TFFFWorldMapView() {
           </div>
         </div>
 
-        {/* Country search, top-centre */}
-        <div className="relative z-20 flex justify-center">
-          <CountrySearch onSelect={onSearchSelect} />
-        </div>
-
         <Spacer />
         <div className="relative z-10">
           <div className="bg-primary-light">
             <WorldMapHeaderContent />
+            <Spacer />
+            {/* Country search, below the subheading */}
+            <div className="relative z-20 flex justify-center">
+              <CountrySearch
+                onSelect={onSearchSelect}
+                onOpen={() => {
+                  // Hide any open country popup so it does not overlap.
+                  setSelectedCountry(null);
+                  setClickPosition(null);
+                }}
+              />
+            </div>
           </div>
           <div className="bg-gradient-to-b from-primary-light to-transparent">
             <Spacer />
@@ -192,7 +201,10 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
 
       <CountryMapViewContainer>
         <div className="h-full flex flex-col">
-          {/* Country search, top-centre */}
+          <Spacer />
+          <CountryMapHeaderContent year={props.year} />
+          <Spacer />
+          {/* Country search, below the subheading */}
           <div className="relative z-20 flex justify-center">
             <CountrySearch
               currentIso2={props.iso2}
@@ -205,8 +217,6 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
               }}
             />
           </div>
-          <Spacer />
-          <CountryMapHeaderContent year={props.year} />
           <Spacer />
 
           <div className="grow grid grid-cols-1 md:grid-cols-2">

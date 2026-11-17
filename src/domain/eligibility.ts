@@ -56,7 +56,7 @@ export function statusLabel(status: CountryStatus): string {
     case "ALMOST_ELIGIBLE":
       return "Almost eligible";
     case "INELIGIBLE":
-      return "Ineligible";
+      return "Currently ineligible";
     default:
       return "No data";
   }

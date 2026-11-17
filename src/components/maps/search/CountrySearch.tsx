@@ -33,6 +33,8 @@ type Props = {
   onSelect: (country: SearchableCountry, status: CountryStatus) => void;
   // ISO2 of the country already shown (country page); marked "Current".
   currentIso2?: string;
+  // Called when the panel opens (e.g. to hide the map popup).
+  onOpen?: () => void;
   className?: string;
 };
 
@@ -42,6 +44,7 @@ type Props = {
 export default function CountrySearch({
   onSelect,
   currentIso2,
+  onOpen,
   className,
 }: Props) {
   const [active, setActive] = useState(false);
@@ -101,9 +104,7 @@ export default function CountrySearch({
       <div
         ref={panelRef}
         className={twMerge(
-          "absolute top-0 inset-x-0 mx-auto z-40 w-full md:w-96",
-          // Closed: only the CTA label takes clicks.
-          !active && "pointer-events-none",
+          "group absolute top-0 inset-x-0 mx-auto z-40 w-full md:w-96",
         )}
         onBlur={(e) => {
           // Close when focus leaves the panel by keyboard (Tab).
@@ -111,15 +112,16 @@ export default function CountrySearch({
           if (next && !e.currentTarget.contains(next)) close();
         }}
       >
-        {/* Card surface: scales and fades in behind the input and list */}
+        {/* Card surface: a white pill when closed, grows into the panel
+            (list scales and fades in) and lifts with a shadow when open */}
         <div
           aria-hidden
           className={twMerge(
-            "absolute inset-0 rounded-2xl bg-white border border-primary-medium-light shadow-custom origin-top",
-            "transition-[opacity,scale] motion-reduce:transition-none",
+            "absolute inset-0 rounded-[20px] bg-white border origin-top",
+            "transition-[border-color,box-shadow] duration-200 ease-out motion-reduce:transition-none",
             active
-              ? "opacity-100 scale-100 duration-200 ease-out"
-              : "opacity-0 scale-[0.96] duration-150 ease-in",
+              ? "border-primary-medium-light shadow-custom"
+              : "border-primary-medium-light group-hover:border-primary shadow-none",
           )}
         />
 
@@ -143,9 +145,11 @@ export default function CountrySearch({
               className={twMerge(
                 "absolute top-0 h-full flex items-center gap-2 text-sm whitespace-nowrap",
                 "transition-[left,translate,color] duration-200 ease-out motion-reduce:transition-none",
+                // The input underneath takes the clicks (whole pill is clickable).
+                "pointer-events-none text-primary",
                 active
-                  ? "left-3.5 translate-x-0 pointer-events-none text-primary"
-                  : "left-1/2 -translate-x-1/2 pointer-events-auto cursor-pointer text-primary hover:text-primary-dark",
+                  ? "left-3.5 translate-x-0"
+                  : "left-1/2 -translate-x-1/2 group-hover:text-primary-dark",
               )}
             >
               <Search
@@ -170,7 +174,10 @@ export default function CountrySearch({
               autoComplete="off"
               spellCheck={false}
               value={query}
-              onFocus={() => setActive(true)}
+              onFocus={() => {
+                if (!active) onOpen?.();
+                setActive(true);
+              }}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Escape") close();
@@ -180,6 +187,7 @@ export default function CountrySearch({
                 "relative w-full h-full bg-transparent pl-[38px] pr-10 text-left outline-none caret-primary-dark",
                 // 16px on mobile stops iOS from zooming on focus.
                 "text-base md:text-sm text-base-text",
+                !active && "cursor-pointer",
               )}
             />
             <button
