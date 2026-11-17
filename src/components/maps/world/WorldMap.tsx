@@ -20,7 +20,10 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import * as turf from "@turf/turf";
+import { asCountrySlug, asIso2 } from "@/domain/brand";
+import type { Feature, MultiPolygon, Polygon } from "geojson";
 import countries from "../countries-optimized.geo.json";
 import { WorldMapProps } from "../shared/types";
 import WorldMapCard from "./WorldMapCard";
@@ -34,6 +37,9 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     forestData,
     setSelectedCountry,
     setClickPosition,
+    focusIso2,
+    setFocusIso2,
+    selectedCountry,
   } = useWorldMapStore();
 
   const { mapRef, viewState, onMove, onLoad } = useMapEngine();
@@ -112,6 +118,46 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
       features: featuresWithColors,
     };
   }, [selectedYear, forestData]);
+
+  // Country picked from the search: open its popup as if it were clicked.
+  // Uses a point inside the largest polygon so overseas islands are skipped.
+  useEffect(() => {
+    if (!focusIso2) return;
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+
+    const feature = (
+      countries as unknown as {
+        features: Feature<
+          Polygon | MultiPolygon,
+          { iso_a2: string; name_long: string }
+        >[];
+      }
+    ).features.find((f) => f.properties.iso_a2 === focusIso2);
+
+    setFocusIso2(null);
+    if (!feature) return;
+
+    const geom = feature.geometry;
+    const polygons =
+      geom.type === "MultiPolygon"
+        ? geom.coordinates.map((c) => turf.polygon(c))
+        : [turf.polygon(geom.coordinates)];
+    const largest = polygons.reduce((a, b) =>
+      turf.area(b) > turf.area(a) ? b : a,
+    );
+    const [lng, lat] = turf.pointOnFeature(largest).geometry.coordinates;
+    const point = map.project([lng, lat]);
+
+    setSelectedCountry({
+      iso2: asIso2(focusIso2),
+      iso3: "",
+      name: feature.properties.name_long,
+      slug: asCountrySlug(getCountrySlugByIso2(focusIso2) || ""),
+      flagImgUrl: `http://purecatamphetamine.github.io/country-flag-icons/3x2/${focusIso2}.svg`,
+    });
+    setClickPosition({ x: point.x, y: point.y });
+  }, [focusIso2, mapRef, setFocusIso2, setSelectedCountry, setClickPosition]);
 
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
@@ -206,8 +252,17 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                   "line-width": 1.5,
                 }}
               />
+              {/* Outline of the selected country, so small ones stand out */}
+              <Layer
+                id="country-selected-line"
+                type="line"
+                filter={["==", ["get", "iso_a2"], selectedCountry?.iso2 ?? ""]}
+                paint={{
+                  "line-color": "#27AE60",
+                  "line-width": 2,
+                }}
+              />
             </Source>
-
           </Map>
         </div>
         <WorldMapCard />
@@ -251,7 +306,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                 filename: `tfff-world-map-${selectedDataset}-${selectedYear}.svg`,
                 backgroundColor: "#F0FAF4",
                 strokeWidth: 1,
-              }
+              },
             );
           }}
         >
