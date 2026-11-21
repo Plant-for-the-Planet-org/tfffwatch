@@ -30,6 +30,18 @@ import WorldMapCard from "./WorldMapCard";
 import { ClickTooltip } from "../base/ClickTooltip";
 import { TROPICAL_BOUNDS, useMapEngine } from "../base/useMapEngine";
 
+// On desktop the legend sits over the map's bottom-left corner. Extra left
+// padding shifts the fitted view right, so South America stays clear of it.
+const LEGEND_CLEARANCE = 240;
+function fitPadding() {
+  const isDesktop =
+    typeof window !== "undefined" &&
+    window.matchMedia("(min-width: 1024px)").matches;
+  return isDesktop
+    ? { top: 8, right: 8, bottom: 8, left: LEGEND_CLEARANCE }
+    : 8;
+}
+
 export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   const {
     selectedDataset,
@@ -231,7 +243,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
             ref={mapRef}
             initialViewState={{
               bounds: TROPICAL_BOUNDS,
-              fitBoundsOptions: { padding: 8 },
+              fitBoundsOptions: { padding: fitPadding() },
             }}
             cursor="default"
             keyboard={false}
@@ -248,7 +260,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
             // and fitBounds does not resize the canvas, so this cannot loop.
             onResize={(e) =>
               e.target.fitBounds(TROPICAL_BOUNDS, {
-                padding: 8,
+                padding: fitPadding(),
                 animate: false,
               })
             }

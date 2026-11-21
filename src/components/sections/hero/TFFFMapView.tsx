@@ -104,7 +104,9 @@ export function TFFFWorldMapView() {
         </div>
 
         <Spacer />
-        <div className="relative z-10">
+        {/* z-30 keeps the open search panel above the map's edge fades (z-10)
+            and the legend (z-20), which come later in the DOM. */}
+        <div className="relative z-30">
           <div className="bg-primary-light">
             <WorldMapHeaderContent />
             <Spacer />
