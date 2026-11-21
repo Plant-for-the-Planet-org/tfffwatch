@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="bg-base-gray/30 outer-rounding outer-padding-3">
       <div className="flex flex-col lg:flex-row justify-between items-center gap-y-4 flex-wrap typo-p">
         <div className="flex justify-center gap-2 items-center">
-          <span>By</span>
+          <span>Built by</span>
           <Link
             className="flex items-center gap-2 group"
             href="https://www.plant-for-the-planet.org"
@@ -73,9 +73,9 @@ export default function Footer() {
           </div>
           <div className="lg:ml-2">
             <Button
-              cn="min-w-40"
               type="link"
               external
+              icon="chevron"
               href="https://donate.plant-for-the-planet.org/?to=proj_bFH0BU0Qw02RuetpQlLOMVYX&callback_url=https://www.plant-for-the-planet.org/"
             >
               Donate

@@ -16,6 +16,8 @@
   --primary-medium-light: rgba(111, 207, 151, 0.2);
   --secondary-light: rgba(246, 250, 255, 1);
   --secondary: rgba(47, 128, 237, 1);
+  /* Planet corporate green. CTA buttons and header hover, shared with Cali Watch. */
+  --primary-planet-green: #007a49;
 
   --danger-light: rgba(255, 230, 230, 1);
   --danger: rgba(235, 87, 87, 1);
@@ -60,6 +62,7 @@
   --color-primary-medium-light: var(--primary-medium-light);
   --color-secondary-light: var(--secondary-light);
   --color-secondary: var(--secondary);
+  --color-primary-planet-green: var(--primary-planet-green);
 
   --color-danger-light: var(--danger-light);
   --color-danger: var(--danger);
