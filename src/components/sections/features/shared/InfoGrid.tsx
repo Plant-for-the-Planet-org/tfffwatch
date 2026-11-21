@@ -19,7 +19,7 @@ export default function InfoGrid() {
           <Button type="link" href="/the-tfff-explained" external>
             About the Facility
           </Button>
-          <Button type="link" href="/about-tfff-watch" external>
+          <Button type="link" href="/about-tfff-watch" external variant="soft">
             Our Methodology
           </Button>
         </div>

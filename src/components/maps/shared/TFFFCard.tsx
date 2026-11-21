@@ -3,6 +3,7 @@
 import { Spacer } from "@/components/ui/layout";
 import LinkWithParams from "@/components/ui/LinkWithParams";
 import { toReadable } from "@/lib/format";
+import { Check, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { TFFFCardProps } from "./types";
@@ -55,15 +56,7 @@ export default function TFFFCard({
         {/* A <div>, not a <p>: it holds the criteria popover, whose block
             content is invalid inside a <p> and breaks hydration. */}
         <div className="flex items-center gap-2 relative group cursor-default">
-          <Image
-            className="h-4 w-4 rounded-full"
-            width={12}
-            height={12}
-            src={
-              data.eligibility_combined ? "/assets/check.svg" : "/assets/x.svg"
-            }
-            alt="Meets minimum requirement"
-          />
+          <StatusIcon pass={data.eligibility_combined} />
           <span className="underline underline-offset-4 decoration-dashed decoration decoration-base-gray">
             {data.eligibility_combined ? "Meets" : "Fails"} minimum requirements
           </span>
@@ -158,18 +151,15 @@ export default function TFFFCard({
           <LinkWithParams
             href={`/${country?.slug || slugify(country.name)}/${data?.year}`}
             preserveParams={["dataset"]}
-            className="inline-block bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl cursor-pointer transition-colors min-w-32 rounded-t-none md:rounded-xl w-full"
+            // Same CTA pill as ui/Button: Planet green, chevron for an in-site link.
+            // Mobile: flush with the card bottom, so only the bottom corners round.
+            className="inline-block w-full bg-primary-planet-green hover:bg-primary-planet-green/85 text-white px-5 py-3 rounded-b-xl rounded-t-none md:rounded-full cursor-pointer transition-colors"
           >
             <span className="flex justify-between items-center flex-nowrap">
               <span></span>
-              <span className="font-semibold typo-p px-4">All Data</span>
+              <span className="font-semibold typo-p px-3">All Data</span>
               <span>
-                <Image
-                  width={12}
-                  height={12}
-                  src="/assets/ui/Arrow.svg"
-                  alt="External Arrow"
-                />
+                <ChevronRight aria-hidden strokeWidth={3} className="size-4" />
               </span>
             </span>
           </LinkWithParams>
@@ -189,34 +179,49 @@ function MinimumCriteria({
   return (
     <div>
       <p className="flex items-center gap-2">
-        <Image
-          className="h-4 w-4 rounded-full p-0.5"
-          width={12}
-          height={12}
-          src={
-            eligibility_deforestation_rate_below_half_percent
-              ? "/assets/check.svg"
-              : "/assets/x.svg"
-          }
-          alt="Three-year average deforestation rate less than 0.5%"
+        <StatusIcon
+          pass={eligibility_deforestation_rate_below_half_percent}
+          size="sm"
         />
         Three-year average deforestation rate less than 0.5%
       </p>
       <div className="my-1"></div>
       <p className="flex items-center gap-2">
-        <Image
-          className="h-4 w-4 rounded-full p-0.5"
-          width={8}
-          height={8}
-          src={
-            eligibility_decreasing_trend_of_deforestation
-              ? "/assets/check.svg"
-              : "/assets/x.svg"
-          }
-          alt="Deforestation lower than previous year"
+        <StatusIcon
+          pass={eligibility_decreasing_trend_of_deforestation}
+          size="sm"
         />
         Deforestation lower than previous year
       </p>
     </div>
+  );
+}
+
+// Pass / fail mark: one filled circle, white glyph. Green for pass (same as
+// the old check.svg), theme red (`danger`) for fail.
+function StatusIcon({
+  pass,
+  size = "md",
+}: {
+  pass: boolean;
+  size?: "sm" | "md";
+}) {
+  const Glyph = pass ? Check : X;
+  return (
+    <span
+      role="img"
+      aria-label={pass ? "Meets" : "Fails"}
+      className={twMerge(
+        "inline-flex shrink-0 items-center justify-center rounded-full text-white",
+        pass ? "bg-primary" : "bg-danger",
+        size === "md" ? "size-4" : "size-3.5",
+      )}
+    >
+      <Glyph
+        aria-hidden
+        strokeWidth={3.5}
+        className={size === "md" ? "size-2.5" : "size-2"}
+      />
+    </span>
   );
 }

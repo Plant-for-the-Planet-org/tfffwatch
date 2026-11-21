@@ -8,6 +8,9 @@ interface WorldMapStore extends WorldMapState {
   setSelectedYear: (year: string) => void;
   setSelectedDataset: (dataset: DatasetType) => void;
   setClickPosition: (position: { x: number; y: number } | null) => void;
+  // ISO2 picked from the country search; WorldMap opens its popup, then clears it.
+  focusIso2: string | null;
+  setFocusIso2: (iso2: string | null) => void;
   setForestData: (dataset: DatasetType, data: CountryForestRecord[]) => void;
   setIsLoading: (loading: boolean) => void;
   getCurrentForestData: () => CountryForestRecord[];
@@ -22,6 +25,7 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
   selectedYear: "2024",
   selectedDataset: "JRC",
   clickPosition: null,
+  focusIso2: null,
   forestData: { GFW: [], JRC: [] },
   isLoading: false,
   datasetFetched: { GFW: false, JRC: false },
@@ -34,6 +38,7 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
     })),
   setSelectedDataset: (dataset) => set({ selectedDataset: dataset }),
   setClickPosition: (position) => set({ clickPosition: position }),
+  setFocusIso2: (iso2) => set({ focusIso2: iso2 }),
   setForestData: (dataset, data) =>
     set((state) => ({
       forestData: { ...state.forestData, [dataset]: data },

@@ -62,24 +62,26 @@ export default function HeaderLinks() {
   }, [pathname]);
 
   return (
-    <div className="flex gap-6 lg:gap-8 xl:gap-10 items-center">
+    // Dark pill bar, shared with Cali Watch's header.
+    <nav
+      aria-label="Primary navigation"
+      className="flex items-center gap-3 xl:gap-5 2xl:gap-6 whitespace-nowrap rounded-full bg-base-text/80 px-5 xl:px-7 py-3 text-sm font-semibold backdrop-blur-md"
+    >
       {options.map((option) => (
-        <div
+        <Link
           key={option.id}
+          href={option.href}
+          target={option.external ? "_blank" : undefined}
+          rel={option.external ? "noopener noreferrer" : undefined}
+          aria-current={option.isActive ? "page" : undefined}
           className={twJoin(
-            "typo-p",
-            option.isActive ? "font-semibold" : "font-regular",
+            "rounded-md px-1 transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary",
+            option.isActive ? "text-primary" : "text-white",
           )}
         >
-          <Link
-            href={option.href}
-            target={option.external ? "_blank" : undefined}
-            rel={option.external ? "noopener noreferrer" : undefined}
-          >
-            {option.label}
-          </Link>
-        </div>
+          {option.label}
+        </Link>
       ))}
-    </div>
+    </nav>
   );
 }
