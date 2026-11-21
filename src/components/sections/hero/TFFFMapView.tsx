@@ -135,11 +135,11 @@ export function TFFFWorldMapView() {
             variant="hero"
           />
 
-          {/* z-20 keeps the legend above the map's edge fades */}
-          <div className="mb-8 md:mb-0 md:absolute z-20 left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
-            <Spacer className="md:hidden" />
+          {/* Legend cards below the map. z-20 keeps them above the map's
+              edge fades; the bottom padding leaves room for the version and
+              citation line, which WorldMap pins to this box's bottom-right. */}
+          <div className="relative z-20 pb-16 md:pb-12">
             {selectedDataset === "JRC" ? <LegendsForJRC /> : <LegendsForGFW />}
-            <Spacer />
           </div>
         </div>
       </div>
