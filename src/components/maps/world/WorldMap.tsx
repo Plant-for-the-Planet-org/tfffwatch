@@ -51,7 +51,6 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     setClickPosition,
     focusIso2,
     setFocusIso2,
-    selectedCountry,
   } = useWorldMapStore();
 
   // Only mapRef and onLoad are used: the camera is static (fit to the
@@ -298,16 +297,6 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                 paint={{
                   "line-color": "#F0FAF4",
                   "line-width": 1.5,
-                }}
-              />
-              {/* Outline of the selected country, so small ones stand out */}
-              <Layer
-                id="country-selected-line"
-                type="line"
-                filter={["==", ["get", "iso_a2"], selectedCountry?.iso2 ?? ""]}
-                paint={{
-                  "line-color": "#27AE60",
-                  "line-width": 2,
                 }}
               />
             </Source>
