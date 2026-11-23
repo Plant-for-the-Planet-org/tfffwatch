@@ -39,9 +39,8 @@
 .rounding-xl {
   @apply rounded-xl md:rounded-2xl lg:rounded-3xl;
 }
-/* Section bands sit flush against each other, so they are not rounded. */
 .outer-rounding {
-  border-radius: 0;
+  @apply xl:rounded-2xl;
 }
 
 .shadow-custom {
