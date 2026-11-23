@@ -5,12 +5,13 @@ export default function TFFFHero() {
     <div data-hero className="relative hero-under-header">
       <div className="website-container relative md:absolute z-20 inset-x-0 bottom-0">
         <div className="outer-padding-3 h-full">
-          <div className="grid gap-4 xl:gap-5 grid-cols-1 md:grid-cols-2 mt-64 sm:mt-42 md:mt-0">
-            <div className="text-white rounding-xl padding-3 bg-black/50 backdrop-blur-xl">
+          {/* One frosted strip as the backdrop, with the two items side by side on it. */}
+          <div className="grid gap-4 xl:gap-5 grid-cols-1 md:grid-cols-2 mt-64 sm:mt-42 md:mt-0 rounding-xl padding-3 bg-black/50 backdrop-blur-xl border border-white/10">
+            <div className="text-white">
               <div className="flex gap-4 items-center">
                 <div className="shrink-0 aspect-square">
                   <Image
-                    className="p-3 aspect-square rounding-lg bg-black/25 backdrop-blur-2xl"
+                    className="p-3 aspect-square rounding-lg bg-white/5 border border-white/5"
                     height={64}
                     width={64}
                     src={"/assets/TFFF-logo-white.svg"}
@@ -27,11 +28,11 @@ export default function TFFFHero() {
                 </div>
               </div>
             </div>
-            <div className="text-white rounding-xl padding-3 bg-black/50 backdrop-blur-xl">
+            <div className="text-white">
               <div className="flex gap-4 items-center">
                 <div className="shrink-0 aspect-square">
                   <Image
-                    className="p-3 aspect-square rounding-lg bg-black/25 backdrop-blur-2xl"
+                    className="p-3 aspect-square rounding-lg bg-white/5 border border-white/5"
                     height={64}
                     width={64}
                     src={"/assets/tf-white.svg"}
