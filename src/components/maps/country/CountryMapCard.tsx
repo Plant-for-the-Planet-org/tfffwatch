@@ -75,12 +75,12 @@ export default function CountryMapCard({
           {/* Header with flag and country name */}
           <div className="p-2 px-4 sm:px-2 md:p-0 flex gap-2 justify-between items-center flex-wrap rounded-t-lg bg-primary-light md:bg-white">
             <div className="flex gap-2 items-center animate-pulse">
-              <div className="w-4 h-3 bg-gray-200 rounded"></div>
-              <div className="h-4 bg-gray-200 rounded w-24"></div>
+              <div className="w-4 h-3 bg-base-gray/50 rounded"></div>
+              <div className="h-4 bg-base-gray/50 rounded w-24"></div>
             </div>
             <div className="flex items-center gap-2 animate-pulse">
-              <div className="h-4 w-4 bg-gray-200 rounded-full"></div>
-              <div className="h-4 bg-gray-200 rounded w-32"></div>
+              <div className="h-4 w-4 bg-base-gray/50 rounded-full"></div>
+              <div className="h-4 bg-base-gray/50 rounded w-32"></div>
             </div>
           </div>
 
@@ -88,16 +88,16 @@ export default function CountryMapCard({
             <div className="animate-pulse space-y-3">
               {/* 3 full lines for reward/discount data */}
               <div className="flex justify-between items-center">
-                <div className="h-4 bg-gray-200 rounded w-64"></div>
-                <div className="h-4 bg-gray-200 rounded w-16"></div>
+                <div className="h-4 bg-base-gray/50 rounded w-64"></div>
+                <div className="h-4 bg-base-gray/50 rounded w-16"></div>
               </div>
               <div className="flex justify-between items-center">
-                <div className="h-4 bg-gray-200 rounded w-72"></div>
-                <div className="h-4 bg-gray-200 rounded w-20"></div>
+                <div className="h-4 bg-base-gray/50 rounded w-72"></div>
+                <div className="h-4 bg-base-gray/50 rounded w-20"></div>
               </div>
               <div className="flex justify-between items-center">
-                <div className="h-4 bg-gray-200 rounded w-68"></div>
-                <div className="h-4 bg-gray-200 rounded w-18"></div>
+                <div className="h-4 bg-base-gray/50 rounded w-68"></div>
+                <div className="h-4 bg-base-gray/50 rounded w-18"></div>
               </div>
             </div>
           </div>
@@ -107,12 +107,12 @@ export default function CountryMapCard({
             <div className="animate-pulse space-y-2">
               {/* 2 full lines for estimated reward */}
               <div className="flex justify-between items-center">
-                <div className="h-4 bg-gray-200 rounded w-56"></div>
-                <div className="h-4 bg-gray-200 rounded w-20"></div>
+                <div className="h-4 bg-base-gray/50 rounded w-56"></div>
+                <div className="h-4 bg-base-gray/50 rounded w-20"></div>
               </div>
               <div className="flex justify-between items-center">
-                <div className="h-4 bg-gray-200 rounded w-64"></div>
-                <div className="h-4 bg-gray-200 rounded w-16"></div>
+                <div className="h-4 bg-base-gray/50 rounded w-64"></div>
+                <div className="h-4 bg-base-gray/50 rounded w-16"></div>
               </div>
             </div>
           </div>

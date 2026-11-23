@@ -192,8 +192,8 @@ export default function EndorsementMap({
       )}
 
       {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-red-50 bg-opacity-90 z-50 rounded-lg">
-          <div className="text-red-600 text-center p-4">{error}</div>
+        <div className="absolute inset-0 flex items-center justify-center bg-danger-light/90 z-50 rounded-lg">
+          <div className="text-danger text-center p-4">{error}</div>
         </div>
       )}
 
