@@ -169,14 +169,14 @@ function DatasetTabsInfoContent() {
         deforestation classifications. Our Standard Estimate is based on the{" "}
         <Link
           href={"https://www.science.org/doi/10.1126/sciadv.abe1603"}
-          className="text-blue-500"
+          className="text-secondary"
         >
           JRC’s Tropical Moist Forest dataset (JRC)
         </Link>
         , supplemented by{" "}
         <Link
           href={"https://www.science.org/doi/10.1126/science.1244693"}
-          className="text-blue-500"
+          className="text-secondary"
         >
           Hansen/Global Forest Watch (GFW)
         </Link>{" "}
