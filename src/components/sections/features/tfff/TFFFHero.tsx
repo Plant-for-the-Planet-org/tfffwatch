@@ -6,7 +6,7 @@ export default function TFFFHero() {
       <div className="website-container relative md:absolute z-20 inset-x-0 bottom-0">
         <div className="outer-padding-3 h-full">
           {/* One frosted strip as the backdrop, with the two items side by side on it. */}
-          <div className="grid gap-4 xl:gap-5 grid-cols-1 md:grid-cols-2 mt-64 sm:mt-42 md:mt-0 rounding-xl padding-3 bg-black/50 backdrop-blur-xl border border-white/10">
+          <div data-hero-content className="grid gap-4 xl:gap-5 grid-cols-1 md:grid-cols-2 mt-64 sm:mt-42 md:mt-0 rounding-xl padding-3 bg-black/50 backdrop-blur-xl border border-white/10">
             <div className="text-white">
               <div className="flex gap-4 items-center">
                 <div className="shrink-0 aspect-square">

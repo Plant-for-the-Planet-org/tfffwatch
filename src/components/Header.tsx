@@ -43,11 +43,22 @@ export default function Header() {
     const resize = new ResizeObserver(setHeight);
     resize.observe(header);
 
+    // Stay transparent only until the hero's text reaches the header, so the
+    // header never sits on top of it. The text is `[data-hero-content]`, or
+    // the hero's h1 (secondary heroes); without either, use the hero itself.
     const hero = document.querySelector("[data-hero]");
-    const update = () =>
+    const text =
+      hero?.querySelector("[data-hero-content]") ?? hero?.querySelector("h1");
+    const GAP = 8;
+    const update = () => {
+      if (!hero) return setOverHero(false);
+      const limit = header.offsetHeight + GAP;
       setOverHero(
-        !!hero && hero.getBoundingClientRect().bottom > header.offsetHeight,
+        text
+          ? text.getBoundingClientRect().top > limit
+          : hero.getBoundingClientRect().bottom > limit,
       );
+    };
     update();
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
