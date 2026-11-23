@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function TFFFHero() {
   return (
-    <div className="relative -mt-3 md:-mt-4 xl:-mt-5">
+    <div className="relative">
       <div className="website-container relative md:absolute z-20 inset-x-0 bottom-0">
         <div className="outer-padding-3 h-full">
           <div className="grid gap-4 xl:gap-5 grid-cols-1 md:grid-cols-2 mt-64 sm:mt-42 md:mt-0">

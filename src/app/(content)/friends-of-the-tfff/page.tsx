@@ -3,7 +3,6 @@ import FriendsInGermany from "@/components/sections/features/partners/FriendsInG
 import SecondaryHero, {
   OverlayFriendsOfTheTFFF,
 } from "@/components/sections/hero/SecondaryHero";
-import { Spacer } from "@/components/ui/layout";
 import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 
@@ -25,11 +24,8 @@ export default function Page() {
     // <div className="extra-padding-x-4">
     <div>
       <SecondaryHero OverlayComponent={<OverlayFriendsOfTheTFFF />} />
-      <Spacer />
       <EngagingNGOs />
-      <Spacer />
       <FriendsInGermany />
-      <Spacer />
     </div>
   );
 }
