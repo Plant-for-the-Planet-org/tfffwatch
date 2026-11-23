@@ -11,7 +11,7 @@ type Props = {
 
 const COLORS = {
   pledged: "#2D9CDB",
-  invested: "#6fcf97",
+  invested: "#007A49",
   target: "#C4C4C4",
   norway2026: "#C4C4C4",
 };

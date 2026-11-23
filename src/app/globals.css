@@ -12,7 +12,7 @@
   /* Color scheme */
   --primary-light: #2196530d;
   --primary-dark: #007a49;
-  --primary: rgba(111, 207, 151, 1);
+  --primary: #007a49;
   --primary-medium-light: #6fcf9726;
   --secondary-light: #eff6ff;
   --secondary: #2d9cdb;
@@ -24,7 +24,7 @@
 
   /* Theme colors as per favicon */
   --theme-base: rgba(8, 36, 71, 1);
-  --theme-text: rgba(111, 207, 151, 1);
+  --theme-text: #007a49;
 
   /* Component colors */
   --chip-selected-background: rgba(62, 62, 62, 1);

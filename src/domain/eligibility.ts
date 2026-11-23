@@ -36,7 +36,7 @@ export function eligibilityColor(eligibility: Eligibility | string): string {
     case "ALMOST_ELIGIBLE":
       return "#2D9CDB";
     case "ELIGIBLE":
-      return "#6FCF97";
+      return "#007A49";
     default:
       return "#FFFFFF";
   }
@@ -44,7 +44,7 @@ export function eligibilityColor(eligibility: Eligibility | string): string {
 
 // Endorsement fill color (separate concept; preserved from getEndorsementColorKey).
 export function endorsementColor(hasEndorsed: boolean): string {
-  return hasEndorsed ? "#6FCF97" : "#FFFFFF";
+  return hasEndorsed ? "#007A49" : "#FFFFFF";
 }
 
 // Country status shown in search results: an eligibility verdict, or

@@ -61,7 +61,7 @@ export function CountryMapLegends() {
     <div className="flex typo-p">
       <div className="font-thin">
         <div className="flex gap-2 items-center">
-          <div className={twMerge("w-6 h-4", `bg-[#6FCF97]`)}></div>
+          <div className={twMerge("w-6 h-4", `bg-[#007A49]`)}></div>
           <p>Intact Forest</p>
         </div>
         <div className="flex gap-2 items-center">
