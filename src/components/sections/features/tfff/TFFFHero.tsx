@@ -59,10 +59,12 @@ export default function TFFFHero() {
           width="1440"
           loading="lazy"
           decoding="async"
+          // Serve the original file as-is: no resize to 1920px, no q=75 WebP.
+          unoptimized
           // priority
           // fetchPriority="high"
           className="w-full h-full md:max-h-[64vh] object-cover object-center"
-          src="/assets/home-hero-forest.webp"
+          src="/assets/home-hero-forest.jpg"
           alt="Tropical rainforest canopy seen from above"
         />
       </div>
