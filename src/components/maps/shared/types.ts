@@ -20,32 +20,12 @@ export interface MmuLayer {
   palette: string[];
 }
 
-// Area numbers for a country and year (30 m), computed by the Layers API.
-// On failure it holds only `error` and `computedAt`.
-export interface LayerAreaStats {
-  country?: string;
-  year?: number;
-  forest2020Ha?: number;
-  forestRemainingHa?: number;
-  deforestedHa?: number;
-  fireDegradedHa?: number;
-  lossTotalHa?: number;
-  deforestationRatePct?: number;
-  degradationRatePct?: number;
-  forest2020Source?: string;
-  loss2025Source?: string;
-  scale?: number;
-  error?: string;
-  computedAt: string;
-}
-
 // Shape returned by our /api/layers proxy. A slot is null when that layer
 // is not generated or not published yet.
 export interface LayerData {
   forest: MmuLayer | null; // remaining forest (tfff_forest)
   deforestation: MmuLayer | null; // forest loss, not fire (tfff_deforestation)
   degradation: MmuLayer | null; // fire loss (tfff_degradation)
-  areaStats: LayerAreaStats | null;
 }
 
 // World Map State

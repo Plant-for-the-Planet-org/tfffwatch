@@ -1,9 +1,5 @@
 import { NextResponse } from "next/server";
-import type {
-  LayerAreaStats,
-  LayerData,
-  MmuLayer,
-} from "@/components/maps/shared/types";
+import type { LayerData, MmuLayer } from "@/components/maps/shared/types";
 
 // Proxies the Layers public TFFF API (MMU layers) so the API key stays on
 // the server. Docs: layers repo,
@@ -18,7 +14,6 @@ type TfffLayerItem = {
   layerKey?: string;
   tileUrl?: string;
   visParams?: { palette?: string | string[] };
-  areaStats?: LayerAreaStats;
 };
 
 function toLayer(item: TfffLayerItem | undefined): MmuLayer | null {
@@ -89,8 +84,6 @@ export async function POST(request: Request) {
       forest: toLayer(byKey("tfff_forest")),
       deforestation: toLayer(byKey("tfff_deforestation")),
       degradation: toLayer(byKey("tfff_degradation")),
-      // Same numbers on all three layers of a country and year.
-      areaStats: items.find((item) => item.areaStats)?.areaStats ?? null,
     };
 
     return NextResponse.json(result);
