@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function TFFFHero() {
   return (
-    <div className="relative -mt-3 md:-mt-4 xl:-mt-5">
+    <div data-hero className="relative hero-under-header">
       <div className="website-container relative md:absolute z-20 inset-x-0 bottom-0">
         <div className="outer-padding-3 h-full">
           <div className="grid gap-4 xl:gap-5 grid-cols-1 md:grid-cols-2 mt-64 sm:mt-42 md:mt-0">
@@ -53,16 +53,19 @@ export default function TFFFHero() {
         </div>
       </div>
 
+      {/* Darkens the top so the white header logo and menu read on the image. */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 z-[11] h-32 pointer-events-none bg-gradient-to-b from-black/40 to-transparent"
+      />
       <div className="absolute inset-0 z-10 md:relative">
         <Image
           height="700"
           width="1440"
-          loading="lazy"
-          decoding="async"
+          // Top of the page and behind the header: load it first (LCP).
+          priority
           // Serve the original file as-is: no resize to 1920px, no q=75 WebP.
           unoptimized
-          // priority
-          // fetchPriority="high"
           className="w-full h-full md:max-h-[64vh] object-cover object-center"
           src="/assets/home-hero-forest.jpg"
           alt="Tropical rainforest canopy seen from above"

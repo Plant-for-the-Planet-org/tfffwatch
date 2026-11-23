@@ -6,7 +6,7 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import LinkWithParams from "./ui/LinkWithParams";
 
-export default function HeaderMenu() {
+export default function HeaderMenu({ light = false }: { light?: boolean }) {
   const [customOpen, setCustomOpen] = useState(false);
   const [options] = useState([
     { id: 0, href: "/", label: "Home" },
@@ -36,7 +36,8 @@ export default function HeaderMenu() {
             }}
           >
             <Image
-              className="w-[24px] h-[24px]"
+              // White icon while the header sits over a hero image.
+              className={twMerge("w-[24px] h-[24px]", light && "invert")}
               width={32}
               height={32}
               src="/assets/menu.svg"
