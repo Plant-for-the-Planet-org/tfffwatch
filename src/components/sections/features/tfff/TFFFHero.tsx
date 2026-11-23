@@ -62,8 +62,8 @@ export default function TFFFHero() {
           // priority
           // fetchPriority="high"
           className="w-full h-full md:max-h-[64vh] object-cover object-center"
-          src="/assets/tropical-rainforest.webp"
-          alt="Tropical Rainforest with Big Trees"
+          src="/assets/home-hero-forest.webp"
+          alt="Tropical rainforest canopy seen from above"
         />
       </div>
     </div>
