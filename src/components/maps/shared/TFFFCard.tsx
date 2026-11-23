@@ -82,7 +82,7 @@ export default function TFFFCard({
             Reward for <b>{toReadable(data.intact_forest_ha) ?? "?"} ha</b>{" "}
             intact forest
           </span>
-          <span className={twMerge("text-[#219653]", "text-sm")}>
+          <span className={twMerge("text-primary-planet-green", "text-sm")}>
             <b>${toReadable(data.base_reward_usd) ?? "?"}</b>
           </span>
         </div>

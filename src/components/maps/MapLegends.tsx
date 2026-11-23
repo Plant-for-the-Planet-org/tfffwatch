@@ -33,7 +33,7 @@ function EligibilityLegend() {
       {ELIGIBILITY_LEGEND.map((item) => (
         <li
           key={item.status}
-          className="rounded-2xl bg-primary/10 padding-3 typo-p"
+          className="rounded-2xl bg-primary-medium-light padding-3 typo-p"
         >
           <span
             aria-hidden
@@ -73,7 +73,7 @@ export function CountryMapLegends() {
           <p>Degraded</p>
         </div>
         {/* <div className="flex gap-2 items-center">
-          <div className={twMerge("w-6 h-4", `bg-[#2C9CDB]`)}></div>
+          <div className={twMerge("w-6 h-4", `bg-[#2D9CDB]`)}></div>
           <p>Restored</p>
         </div> */}
       </div>

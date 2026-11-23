@@ -200,7 +200,7 @@ export default function EndorsementMap({
       <Spacer />
       <Spacer />
       <div className="relative z-10">
-        <div className="bg-primary-light">
+        <div>
           <div className="flex flex-col items-center">
             <h2 className="font-bold text-sm md:text-xl lg:text-2xl">
               Countries that signed the TFFF Declaration
@@ -210,10 +210,8 @@ export default function EndorsementMap({
             </p> */}
           </div>
         </div>
-        <div className="bg-gradient-to-b from-primary-light to-transparent">
-          <Spacer />
-          <Spacer />
-        </div>
+        <Spacer />
+        <Spacer />
       </div>
 
       <div className="aspect-[2] w-full -z-10">

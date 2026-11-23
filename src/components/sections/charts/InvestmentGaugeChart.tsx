@@ -10,10 +10,10 @@ type Props = {
 };
 
 const COLORS = {
-  pledged: "#90BDF2",
+  pledged: "#2D9CDB",
   invested: "#6fcf97",
-  target: "#DFE5ED",
-  norway2026: "#DFE5ED",
+  target: "#C4C4C4",
+  norway2026: "#C4C4C4",
 };
 
 const TARGET = 25000000000;

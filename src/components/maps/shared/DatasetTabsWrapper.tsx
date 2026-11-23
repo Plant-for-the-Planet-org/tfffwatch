@@ -14,7 +14,7 @@ interface DatasetTabsWrapperProps {
 
 function DatasetTabsFallback() {
   return (
-    <div className="flex gap-1 p-1 bg-[#E4F6EB] rounded-xl border border-primary-light">
+    <div className="flex gap-1 p-1 bg-primary-medium-light rounded-xl border border-primary-light">
       <div className="px-4 py-2 typo-p font-medium rounded-lg bg-white text-[#333333] shadow-sm">
         Standard Estimate (JRC + GFW)
       </div>

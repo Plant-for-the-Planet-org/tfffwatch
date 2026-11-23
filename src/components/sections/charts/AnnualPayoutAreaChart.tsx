@@ -7,7 +7,7 @@ import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 const chartColor = {
   stroke: "#6FCF97",
-  fill: "#9EEEC0",
+  fill: "#6FCF97",
 };
 
 type ChartData = {

@@ -14,13 +14,13 @@ import {
 import { twMerge } from "tailwind-merge";
 
 const strokes = {
-  restoration: "#2C9CDB",
+  restoration: "#2D9CDB",
   deforestation: "#EB5756",
   degradation: "#F1994A",
 };
 
 const fills = {
-  restoration: "#E9F7FF",
+  restoration: "#EFF6FF",
   deforestation: "#FFE6E6",
   degradation: "#FFF0E3",
 };

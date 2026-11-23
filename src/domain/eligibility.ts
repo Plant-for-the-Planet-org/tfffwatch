@@ -23,6 +23,9 @@ export function classify(
   return "INELIGIBLE";
 }
 
+// Blank country fill: Lighter over Light, the section background.
+export const NO_DATA_FILL = "#E9F6EE";
+
 // Map an eligibility verdict to its map/legend fill color.
 // Hex values preserved verbatim from the former getJRCColorKey/getGFWColorKey.
 // Accepts unknown strings (e.g. "NA"/"") which fall through to white.
@@ -31,7 +34,7 @@ export function eligibilityColor(eligibility: Eligibility | string): string {
     case "INELIGIBLE":
       return "#C4C4C4";
     case "ALMOST_ELIGIBLE":
-      return "#8FBDF1";
+      return "#2D9CDB";
     case "ELIGIBLE":
       return "#6FCF97";
     default:
@@ -64,5 +67,5 @@ export function statusLabel(status: CountryStatus): string {
 
 // Dot color for each status. "No data" uses the map's blank fill.
 export function statusColor(status: CountryStatus): string {
-  return status === "NO_DATA" ? "#E1EBE5" : eligibilityColor(status);
+  return status === "NO_DATA" ? NO_DATA_FILL : eligibilityColor(status);
 }

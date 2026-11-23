@@ -74,7 +74,7 @@ export function downloadGeoJsonAsSvg(
     }
 
     const fill =
-      (feat.properties as NaturalEarthGeoJSONProperties).colorKey || "#E1EBE5";
+      (feat.properties as NaturalEarthGeoJSONProperties).colorKey || "#E9F6EE";
 
     const geom = feat.geometry;
     if (!isPolygon(geom) && !isMultiPolygon(geom)) return;

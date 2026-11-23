@@ -104,7 +104,7 @@ export function TFFFWorldMapView() {
         {/* z-30 keeps the open search panel above the map's edge fades (z-10)
             and the legend (z-20), which come later in the DOM. */}
         <div className="relative z-30">
-          <div className="bg-primary-light">
+          <div>
             <WorldMapHeaderContent />
             <Spacer />
             {/* Country search, below the subheading */}
@@ -119,10 +119,8 @@ export function TFFFWorldMapView() {
               />
             </div>
           </div>
-          <div className="bg-gradient-to-b from-primary-light to-transparent">
-            <Spacer />
-            <Spacer />
-          </div>
+          <Spacer />
+          <Spacer />
         </div>
 
         <div className="grow relative flex flex-col">

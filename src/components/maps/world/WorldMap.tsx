@@ -7,7 +7,7 @@ import {
 } from "@/domain/country";
 import { downloadGeoJsonAsSvg } from "@/utils/download-map";
 import { env } from "@/utils/env";
-import { eligibilityColor } from "@/domain/eligibility";
+import { eligibilityColor, NO_DATA_FILL } from "@/domain/eligibility";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
 import {
   Layer,
@@ -78,9 +78,9 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
       ...country,
       properties: {
         ...country.properties,
-        colorKey: "#E1EBE5", // Blank/neutral color
-        JRCColorKey: "#E1EBE5",
-        GFWColorKey: "#E1EBE5",
+        colorKey: NO_DATA_FILL, // Blank/neutral color
+        JRCColorKey: NO_DATA_FILL,
+        GFWColorKey: NO_DATA_FILL,
         countrySlug: "",
       },
     }));
@@ -235,13 +235,9 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
             Mobile/tablet: lifted under the header fade.
             Desktop (lg+): wider (zoomed in), sits lower and a bit taller to use
             the free space below. */}
-        {/* Desktop: top fade so the map blends into the header. On mobile/tablet
-            the map is lifted under the header's own gradient instead. */}
-        <div className="hidden lg:block absolute inset-x-0 top-0 h-24 z-10 pointer-events-none bg-gradient-to-b from-primary-light to-transparent" />
-        {/* Desktop: side fades so the left/right edges blend too */}
-        <div className="hidden lg:block absolute inset-y-0 left-0 w-16 z-10 pointer-events-none bg-gradient-to-r from-primary-light to-transparent" />
-        <div className="hidden lg:block absolute inset-y-0 right-0 w-16 z-10 pointer-events-none bg-gradient-to-l from-primary-light to-transparent" />
-        <div className="aspect-[2.4] w-full -translate-y-12 -z-10 lg:aspect-[2.2] lg:translate-y-0">
+        {/* Desktop: top and side edges fade out with a mask, so the map blends
+            into the section without painting a second green over it. */}
+        <div className="aspect-[2.4] w-full -translate-y-12 -z-10 lg:aspect-[2.2] lg:translate-y-0 lg:[mask-composite:intersect] lg:[-webkit-mask-composite:source-in] lg:[mask-image:linear-gradient(to_bottom,transparent,black_6rem),linear-gradient(to_right,transparent,black_4rem,black_calc(100%-4rem),transparent)] lg:[-webkit-mask-image:linear-gradient(to_bottom,transparent,black_6rem),linear-gradient(to_right,transparent,black_4rem,black_calc(100%-4rem),transparent)]">
           <Map
             ref={mapRef}
             initialViewState={{
