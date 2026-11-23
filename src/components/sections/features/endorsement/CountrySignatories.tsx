@@ -19,7 +19,7 @@ export default function CountrySignatories({
   };
 
   return (
-    <div className="border border-base-gray rounded-xl padding-3">
+    <div className="rounded-xl padding-3">
       <div className="flex flex-col divide-y divide-base-gray">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="font-bold typo-h2 flex items-center gap-2">

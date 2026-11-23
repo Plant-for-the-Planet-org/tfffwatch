@@ -14,7 +14,7 @@ const cardVariants = cva("", {
       // white + subtle border (news/policy/press content cards)
       content: "bg-white border border-primary-medium-light rounding-xl padding-3",
       // neutral bordered
-      bordered: "border border-base-gray rounding-xl padding-3",
+      bordered: "rounding-xl padding-3",
       // chart surface
       chart: "bg-background border border-primary-light rounding-lg outer-padding-3",
       plain: "",

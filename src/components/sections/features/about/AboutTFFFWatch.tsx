@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function AboutTFFFWatch() {
   return (
-    <div className="border border-base-gray rounding-xl padding-3">
+    <div className="rounding-xl padding-3">
       <Spacer className="hidden lg:block" />
       <div className="extra-padding-x-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
