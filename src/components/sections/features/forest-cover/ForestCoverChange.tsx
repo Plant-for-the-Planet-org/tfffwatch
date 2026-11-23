@@ -3,7 +3,7 @@ import { LazyForestCoverChangeAreaChart as ForestCoverChangeAreaChart } from "..
 
 export default function ForestCoverChange() {
   return (
-    <div className="rounding-xl padding-3">
+    <div className="border border-base-gray/50 rounding-xl padding-3">
       <Spacer />
       <div className="text-center">
         <h2 className="typo-h2">

@@ -22,7 +22,7 @@ export default function TrackerContent({
 }: Props) {
   const financialDetailsImages = parseImageUrls(images_post_financial_details);
   return (
-    <div className="rounded-xl padding-3">
+    <div className="border border-base-gray/50 rounded-xl padding-3">
       <div className="text-end text-[#828282] italic">
         <p>Updated {formatDateAgo(last_updated!)}</p>
       </div>
