@@ -8,7 +8,7 @@ import LinkWithParams from "./ui/LinkWithParams";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-30 bg-white/75 backdrop-blur-lg">
+    <header className="sticky top-0 z-40 bg-white/75 backdrop-blur-lg">
       <Spacer className="h-3 md:h-2 xl:h-3" />
       <div className="website-container padding-x-3">
         <div className="flex justify-between items-center ">

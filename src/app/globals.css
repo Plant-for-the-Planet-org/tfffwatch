@@ -6,16 +6,16 @@
   --foreground: #171717;
 
   /* base colors */
-  --base-gray: rgba(227, 227, 227, 1);
+  --base-gray: #c4c4c4;
   --base-text: rgba(51, 51, 51, 1);
 
   /* Color scheme */
-  --primary-light: rgba(240, 250, 244, 1);
-  --primary-dark: rgba(39, 174, 96, 1);
+  --primary-light: #2196530d;
+  --primary-dark: #007a49;
   --primary: rgba(111, 207, 151, 1);
-  --primary-medium-light: rgba(111, 207, 151, 0.2);
-  --secondary-light: rgba(246, 250, 255, 1);
-  --secondary: rgba(47, 128, 237, 1);
+  --primary-medium-light: #6fcf9726;
+  --secondary-light: #eff6ff;
+  --secondary: #2d9cdb;
   /* Planet corporate green. CTA buttons and header hover, shared with Cali Watch. */
   --primary-planet-green: #007a49;
 

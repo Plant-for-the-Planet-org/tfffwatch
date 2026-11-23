@@ -264,7 +264,7 @@ export default function EndorsementMap({
               id="countries-outline"
               type="line"
               paint={{
-                "line-color": "#F0FAF4",
+                "line-color": "#F4FAF6",
                 "line-width": 1.5,
               }}
             />

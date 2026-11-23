@@ -46,7 +46,7 @@ export function downloadGeoJsonAsSvg(
     width,
     height,
     filename = "map.svg",
-    backgroundColor = "#F0FAF4",
+    backgroundColor = "#F4FAF6",
     strokeWidth = 1,
   } = opts;
 

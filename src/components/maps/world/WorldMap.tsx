@@ -20,7 +20,7 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import * as turf from "@turf/turf";
 import { asCountrySlug, asIso2 } from "@/domain/brand";
 import type { Feature, MultiPolygon, Polygon } from "geojson";
@@ -44,6 +44,26 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   // Only mapRef and onLoad are used: the camera is static (fit to the
   // tropical belt), so there is no controlled viewState or pan handling.
   const { mapRef, onLoad } = useMapEngine();
+
+  // Pointer only over countries that have TFFF Watch data (they open the card).
+  const [cursor, setCursor] = useState<"default" | "pointer">("default");
+
+  const hasDataFor = (iso2: unknown) =>
+    (forestData[selectedDataset] || []).some(
+      (item) =>
+        item["country-iso2"] === iso2 &&
+        String(item.year) === String(selectedYear),
+    );
+
+  const onMouseMove = (event: maplibregl.MapLayerMouseEvent) => {
+    const features = event.target.queryRenderedFeatures(event.point, {
+      layers: ["country-fill-jrc", "country-fill-gfw"],
+    });
+    const next = hasDataFor(features[0]?.properties?.["iso_a2"])
+      ? "pointer"
+      : "default";
+    setCursor((prev) => (prev === next ? prev : next));
+  };
 
   const allCountries = useMemo(() => {
     const countriesData = countries as unknown as {
@@ -172,11 +192,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
 
     // Only countries with TFFF Watch data for the current dataset and year
     // open the card
-    const hasData = (forestData[selectedDataset] || []).some(
-      (item) =>
-        item["country-iso2"] === countryISO2 &&
-        String(item.year) === String(selectedYear)
-    );
+    const hasData = hasDataFor(countryISO2);
 
     // Clicked outside a country, or on a country without data: clear selection
     if (
@@ -232,7 +248,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
               bounds: TROPICAL_BOUNDS,
               fitBoundsOptions: { padding: 8 },
             }}
-            cursor="default"
+            cursor={cursor}
             keyboard={false}
             scrollZoom={false}
             dragPan={false}
@@ -252,6 +268,8 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
               })
             }
             onClick={onClick}
+            onMouseMove={onMouseMove}
+            onMouseLeave={() => setCursor("default")}
             onLoad={onLoad}
           >
             <Source
@@ -283,7 +301,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                 id="country-line"
                 type="line"
                 paint={{
-                  "line-color": "#F0FAF4",
+                  "line-color": "#F4FAF6",
                   "line-width": 1.5,
                 }}
               />
@@ -333,7 +351,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                 width: 800,
                 height: 800,
                 filename: `tfff-world-map-${selectedDataset}-${selectedYear}.svg`,
-                backgroundColor: "#F0FAF4",
+                backgroundColor: "#F4FAF6",
                 strokeWidth: 1,
               },
             );

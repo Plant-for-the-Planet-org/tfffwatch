@@ -23,9 +23,12 @@ import { Spacer } from "@/components/ui/layout";
 import { CountryDetails } from "@/domain/country.types";
 import { asCountrySlug } from "@/domain/brand";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import CountrySearch from "@/components/maps/search/CountrySearch";
-import type { SearchableCountry } from "@/domain/country-search";
+import {
+  openCountryPage,
+  type SearchableCountry,
+} from "@/domain/country-search";
 import type { CountryStatus } from "@/domain/eligibility";
 import { Suspense, useEffect } from "react";
 import RewardsChart from "../charts/RewardsChart";
@@ -51,21 +54,15 @@ export function TFFFWorldMapView() {
     setSelectedCountry,
     setClickPosition,
   } = useWorldMapStore();
-  const router = useRouter();
 
-  // Countries with data open the map popup; others go to their page,
-  // since the popup has nothing to show for them.
+  // Every pick opens the country page in a new tab. Countries with data
+  // also open the map popup here.
   const onSearchSelect = (
     country: SearchableCountry,
     status: CountryStatus,
   ) => {
-    if (status === "NO_DATA") {
-      router.push(
-        `/${country.slug}/${selectedYear}?dataset=${selectedDataset}`,
-      );
-      return;
-    }
-    setFocusIso2(country.iso2);
+    openCountryPage(country.slug, selectedYear, selectedDataset);
+    if (status !== "NO_DATA") setFocusIso2(country.iso2);
   };
 
   // Reset dataset fetched flags when component mounts (returning to home page)
@@ -163,7 +160,6 @@ type TFFFCountryMapViewProps = CountryDetails & {
 function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
   const { country } = useParams();
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   // Get dataset from URL params, fallback to props or default
   const selectedDataset =
@@ -213,10 +209,7 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
               currentIso2={props.iso2}
               onSelect={(c) => {
                 if (c.iso2 === props.iso2) return;
-                router.push(
-                  `/${c.slug}/${props.year}?dataset=${selectedDataset}`,
-                  { scroll: false },
-                );
+                openCountryPage(c.slug, props.year, selectedDataset);
               }}
             />
           </div>
@@ -251,8 +244,8 @@ export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
 
 function WorldMapViewContainer({ children }: { children: React.ReactNode }) {
   return (
-    // <div className="bg-primary-light outer-rounding outer-padding-3 h-[90vh] md:h-[85vh] lg:h-[80vh] xl:h-[75vh] min-h-fit">
-    <div className="bg-primary-light outer-rounding outer-padding-3 max-h-full">
+    // <div className="isolate bg-primary-light outer-rounding outer-padding-3 h-[90vh] md:h-[85vh] lg:h-[80vh] xl:h-[75vh] min-h-fit">
+    <div className="isolate bg-primary-light outer-rounding outer-padding-3 max-h-full">
       {children}
     </div>
   );
@@ -260,7 +253,7 @@ function WorldMapViewContainer({ children }: { children: React.ReactNode }) {
 
 function CountryMapViewContainer({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-primary-light outer-rounding outer-padding-3 h-[90vh] md:h-[85vh] lg:h-[80vh] xl:h-[75vh] min-h-fit">
+    <div className="isolate bg-primary-light outer-rounding outer-padding-3 h-[90vh] md:h-[85vh] lg:h-[80vh] xl:h-[75vh] min-h-fit">
       {children}
     </div>
   );

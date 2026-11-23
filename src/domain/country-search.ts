@@ -45,10 +45,16 @@ export function searchCountries(query: string): SearchableCountry[] {
   const q = normalize(query);
   if (!q) return searchableCountries;
 
+  const exact: SearchableCountry[] = [];
   const prefix: SearchableCountry[] = [];
   const contains: SearchableCountry[] = [];
 
   for (const country of searchableCountries) {
+    // An exact name, alias or code ("DRC", "PRC", "BRA") always ranks first.
+    if (country.keys.includes(q)) {
+      exact.push(country);
+      continue;
+    }
     const startsWith = country.keys.some(
       (key) => key.startsWith(q) || key.split(" ").some((w) => w.startsWith(q)),
     );
@@ -57,5 +63,19 @@ export function searchCountries(query: string): SearchableCountry[] {
       contains.push(country);
   }
 
-  return [...prefix, ...contains];
+  return [...exact, ...prefix, ...contains];
+}
+
+// Opens a country page in a new tab. Call it synchronously from the click
+// or key handler so popup blockers allow it.
+export function openCountryPage(
+  slug: string,
+  year: string | number,
+  dataset: string,
+) {
+  window.open(
+    `/${slug}/${year}?dataset=${dataset}`,
+    "_blank",
+    "noopener,noreferrer",
+  );
 }
