@@ -4,6 +4,7 @@ import CountrySingnatories from "@/components/sections/features/endorsement/Coun
 import CountryPayoutSummary from "@/components/sections/features/forest-cover/CountryPayoutSummary";
 import ForestCoverChange from "@/components/sections/features/forest-cover/ForestCoverChange";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
+import { Spacer } from "@/components/ui/layout";
 import {
   findCountryBySlug,
   getCountryDetails,
@@ -101,10 +102,13 @@ export default async function Page({ params, searchParams }: PageProps) {
         flagImgUrl={details.flagImgUrl}
         dataset={validDataset}
       />
+      <Spacer />
       <ForestCoverChange />
+      <Spacer />
       <AnnualPayout />
       {isSignatory !== null && (
         <>
+          <Spacer />
           <CountrySingnatories isSignatory={isSignatory} />
         </>
       )}

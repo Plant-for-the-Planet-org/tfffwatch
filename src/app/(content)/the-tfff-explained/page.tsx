@@ -3,6 +3,7 @@ import InterestedInDivingDeeper from "@/components/sections/features/tfff/Intere
 import SecondaryHero, {
   OverlayTheTFFFIdea,
 } from "@/components/sections/hero/SecondaryHero";
+import { Spacer } from "@/components/ui/layout";
 import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 
@@ -20,7 +21,9 @@ export default function Page() {
     <div>
       <div>
         <SecondaryHero OverlayComponent={<OverlayTheTFFFIdea />} />
+        <Spacer />
         <HowTFFFWorks />
+        <Spacer />
         <InterestedInDivingDeeper />
       </div>
     </div>

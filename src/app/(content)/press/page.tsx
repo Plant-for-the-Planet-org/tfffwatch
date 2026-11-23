@@ -4,6 +4,7 @@ import PressReleases from "@/components/sections/features/press/PressReleases";
 import SecondaryHero, {
   OverlayPressTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
+import { Spacer } from "@/components/ui/layout";
 import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 
@@ -21,10 +22,12 @@ export default function Page() {
     <div>
       <div>
         <SecondaryHero OverlayComponent={<OverlayPressTFFFWatch />} />
+        <Spacer />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <PressAnalysts />
           <PressContacts />
         </div>
+        <Spacer />
         <PressReleases />
       </div>
     </div>

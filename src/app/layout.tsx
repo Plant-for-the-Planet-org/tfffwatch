@@ -66,7 +66,9 @@ export default function RootLayout({
         ></Script>
         <CookieConsentBanner />
         <Header />
+        <Spacer />
         {children}
+        <Spacer />
         <div className="website-container">
           <Footer />
         </div>

@@ -2,6 +2,7 @@ import AllNews from "@/components/sections/features/news/AllNews";
 import SecondaryHero, {
   OverlayNewsTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
+import { Spacer } from "@/components/ui/layout";
 import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 
@@ -20,7 +21,9 @@ export default function Page() {
     <div>
       <div>
         <SecondaryHero OverlayComponent={<OverlayNewsTFFFWatch />} />
+        <Spacer />
         <AllNews />
+        <Spacer />
       </div>
     </div>
   );

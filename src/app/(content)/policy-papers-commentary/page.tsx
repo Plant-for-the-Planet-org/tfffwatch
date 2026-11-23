@@ -2,6 +2,7 @@ import AllPolicies from "@/components/sections/features/policies/AllPolicies";
 import SecondaryHero, {
   OverlayPoliciesTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
+import { Spacer } from "@/components/ui/layout";
 import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 
@@ -20,7 +21,9 @@ export default function Page() {
     <div>
       <div>
         <SecondaryHero OverlayComponent={<OverlayPoliciesTFFFWatch />} />
+        <Spacer />
         <AllPolicies />
+        <Spacer />
       </div>
     </div>
   );

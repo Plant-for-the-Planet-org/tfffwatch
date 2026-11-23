@@ -2,6 +2,7 @@ import CountryListChips from "@/components/sections/features/investment/CountryL
 import InvestmentProgress from "@/components/sections/features/investment/InvestmentProgress";
 import InvestmentTracker from "@/components/sections/features/investment/InvestmentTracker";
 import TrackerContent from "@/components/sections/features/investment/TrackerContent";
+import { Spacer } from "@/components/ui/layout";
 import { api, urls } from "@/lib/http";
 import { PageError } from "@/utils/errors";
 import {
@@ -110,12 +111,15 @@ the current analysis.`;
           {countryName} Investment Tracker
         </h1>
         <InvestmentTracker />
+        <Spacer />
         <CountryListChips country={country} capitalsData={capitalsData} />
+        <Spacer />
         {country === investingCountries.at(-1) ? (
           <></>
         ) : (
           <>
             <InvestmentProgress investment_stage={richData.investment_stage} />
+            <Spacer />
           </>
         )}
         <TrackerContent
@@ -136,6 +140,7 @@ the current analysis.`;
             richData?.responsibile_government_office ?? ""
           }
         />
+        <Spacer />
       </div>
     </div>
   );
