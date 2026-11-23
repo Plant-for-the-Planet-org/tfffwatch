@@ -76,7 +76,6 @@ export default function HeaderLinks() {
           aria-current={option.isActive ? "page" : undefined}
           className={twJoin(
             "rounded-md px-1 transition-colors text-white hover:text-white/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary",
-            option.isActive && "underline underline-offset-6 decoration-2",
           )}
         >
           {option.label}
