@@ -33,10 +33,7 @@ import type { CountryStatus } from "@/domain/eligibility";
 import { Suspense, useEffect } from "react";
 import RewardsChart from "../charts/RewardsChart";
 import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
-import {
-  GFWTop10CountriesChart,
-  JRC10CountriesChart,
-} from "../charts/Top10BarChart";
+import { Top10CountriesChart } from "../charts/Top10BarChart";
 import HeaderCountry from "@/components/HeaderCountry";
 
 export function TFFFWorldMapView() {
@@ -141,11 +138,7 @@ export function TFFFWorldMapView() {
       <Spacer />
       <Spacer />
       <RewardsChart />
-      {selectedDataset === "JRC" ? (
-        <JRC10CountriesChart />
-      ) : (
-        <GFWTop10CountriesChart />
-      )}
+      <Top10CountriesChart />
     </WorldMapViewContainer>
   );
 }

@@ -27,10 +27,22 @@ const ELIGIBILITY_LEGEND: {
 // Eligibility legend as in the Figma design: three tinted cards in a row
 // below the map (stacked on mobile), each with a colour chip, a title and an
 // italic note. Chip colours come from the same helper as the map fills.
-function EligibilityLegend() {
+export function EligibilityLegend({
+  statuses = ["ELIGIBLE", "ALMOST_ELIGIBLE", "INELIGIBLE"],
+}: {
+  statuses?: Eligibility[];
+} = {}) {
+  const items = ELIGIBILITY_LEGEND.filter((item) =>
+    statuses.includes(item.status)
+  );
   return (
-    <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
-      {ELIGIBILITY_LEGEND.map((item) => (
+    <ul
+      className={twMerge(
+        "grid grid-cols-1 gap-3 md:gap-4",
+        items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"
+      )}
+    >
+      {items.map((item) => (
         <li
           key={item.status}
           className="rounded-2xl bg-primary-medium-light padding-3 typo-p"
