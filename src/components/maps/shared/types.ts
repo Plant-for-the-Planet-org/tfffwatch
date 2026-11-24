@@ -13,33 +13,19 @@ export interface MapViewport {
   zoom: number;
 }
 
-// Layer configuration for satellite data
-export interface LayerConfig {
-  name: string;
+// One MMU raster layer from the Layers TFFF API. Tiles come pre-coloured
+// from the Layers tiler; palette is kept for legends.
+export interface MmuLayer {
   tileUrl: string;
-  visParams: {
-    palette: string;
-  };
+  palette: string[];
 }
 
-// Layer data from API
+// Shape returned by our /api/layers proxy. A slot is null when that layer
+// is not generated or not published yet.
 export interface LayerData {
-  id: string;
-  country: string;
-  analysisYear: number;
-  // GFW layers
-  currentForestLayer: LayerConfig;
-  lossInYearLayer: LayerConfig;
-  fireLossLayer: LayerConfig;
-  // JRC layers
-  totalTropicalForestLayer: LayerConfig;
-  tropicalDeforestationLayer: LayerConfig;
-  tropicalDegradationLayer: LayerConfig;
-  subtropicalForestLayer: LayerConfig;
-  subtropicalDeforestationLayer: LayerConfig;
-  subtropicalDegradationLayer: LayerConfig;
-  createdAt: string;
-  updatedAt: string;
+  forest: MmuLayer | null; // remaining forest (mmu_forest)
+  deforestation: MmuLayer | null; // forest loss, not fire (mmu_deforestation)
+  degradation: MmuLayer | null; // fire loss (mmu_degradation)
 }
 
 // World Map State
@@ -49,24 +35,7 @@ export interface WorldMapState {
   selectedDataset: DatasetType;
   clickPosition: { x: number; y: number } | null;
   forestData: {
-    GFW: CountryForestRecord[];
-    JRC: CountryForestRecord[];
-  };
-  isLoading: boolean;
-}
-
-// Country Map State
-export interface CountryMapState {
-  country: Country;
-  year: string;
-  dataset: DatasetType;
-  layerData: {
-    GFW: LayerData | null;
-    JRC: LayerData | null;
-  };
-  tfffData: {
-    GFW: CountryForestRecord | null;
-    JRC: CountryForestRecord | null;
+    MMU: CountryForestRecord[];
   };
   isLoading: boolean;
 }
@@ -120,14 +89,6 @@ export interface MapContainerProps {
   padding?: "none" | "small" | "medium" | "large";
 }
 
-// DatasetTabs component props (now URL-driven)
-export interface DatasetTabsProps {
-  tabsClassName?: string;
-  activeTabClassName?: string;
-  inactiveTabClassName?: string;
-  disabled?: boolean;
-  defaultDataset?: DatasetType;
-}
 
 // Map click event interface
 export interface MapCountryClickEvent {

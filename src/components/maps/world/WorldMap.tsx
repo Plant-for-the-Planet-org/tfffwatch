@@ -46,66 +46,25 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
       }>;
     };
 
-    // Always start with blank map
-    const blankFeatures = countriesData.features.map((country) => ({
-      ...country,
-      properties: {
-        ...country.properties,
-        colorKey: "#E1EBE5", // Blank/neutral color
-        JRCColorKey: "#E1EBE5",
-        GFWColorKey: "#E1EBE5",
-        countrySlug: "",
-      },
-    }));
+    // Year-filtered MMU records, keyed by ISO2 with eligibility.
+    const mmuData = (forestData.MMU || []).filter(
+      (item) => item.year == selectedYear
+    );
+    const transformed = transformAllForestCoverChangeData(mmuData);
 
-    // Filter JRC data by selected year
-    const jrcDataAll = forestData.JRC || [];
-    const jrcData = jrcDataAll.filter((item) => item.year == selectedYear);
-
-    // Filter GFW data by selected year
-    const gfwDataAll = forestData.GFW || [];
-    const gfwData = gfwDataAll.filter((item) => item.year == selectedYear);
-
-    // Update JRC colors if we have JRC data
-    let featuresWithColors = blankFeatures;
-    if (jrcData.length > 0) {
-      const transformedJRC = transformAllForestCoverChangeData(jrcData);
-      featuresWithColors = featuresWithColors.map((country) => {
-        const countrySlug = country.properties.countrySlug as string;
-        const countyISO2 = country.properties.iso_a2 as string;
-        const jrcEligibility = transformedJRC[countyISO2]?.eligibility;
-        const jrcColorKey = eligibilityColor(jrcEligibility || "NA");
-
-        return {
-          ...country,
-          properties: {
-            ...country.properties,
-            countrySlug,
-            JRCColorKey: jrcColorKey,
-          },
-        };
-      });
-    }
-
-    // Update GFW colors if we have GFW data
-    if (gfwData.length > 0) {
-      const transformedGFW = transformAllForestCoverChangeData(gfwData);
-      featuresWithColors = featuresWithColors.map((country) => {
-        const countrySlug = country.properties.countrySlug as string;
-        const countyISO2 = country.properties.iso_a2 as string;
-        const gfwEligibility = transformedGFW[countyISO2]?.eligibility;
-        const gfwColorKey = eligibilityColor(gfwEligibility || "NA");
-
-        return {
-          ...country,
-          properties: {
-            ...country.properties,
-            countrySlug,
-            GFWColorKey: gfwColorKey,
-          },
-        };
-      });
-    }
+    const featuresWithColors = countriesData.features.map((country) => {
+      const iso2 = country.properties.iso_a2 as string;
+      const eligibility = transformed[iso2]?.eligibility;
+      return {
+        ...country,
+        properties: {
+          ...country.properties,
+          // No-data countries fall through to white (matches prod).
+          colorKey: eligibilityColor(eligibility || "NA"),
+          countrySlug: "",
+        },
+      };
+    });
 
     return {
       ...countries,
@@ -116,7 +75,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
     const features = map?.queryRenderedFeatures(event.point, {
-      layers: ["country-fill-jrc", "country-fill-gfw"],
+      layers: ["country-fill"],
     });
     const { point } = event;
     const country = features?.[0]?.properties?.name_long;
@@ -180,23 +139,10 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                 allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>
               }
             >
-              {/* JRC Layer */}
               <Layer
-                id="country-fill-jrc"
+                id="country-fill"
                 type="fill"
-                paint={{
-                  "fill-color": ["get", "JRCColorKey"],
-                  "fill-opacity": selectedDataset === "JRC" ? 1 : 0,
-                }}
-              />
-              {/* GFW Layer */}
-              <Layer
-                id="country-fill-gfw"
-                type="fill"
-                paint={{
-                  "fill-color": ["get", "GFWColorKey"],
-                  "fill-opacity": selectedDataset === "GFW" ? 1 : 0,
-                }}
+                paint={{ "fill-color": ["get", "colorKey"] }}
               />
               <Layer
                 id="country-line"
@@ -228,23 +174,8 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
         <button
           className="bg-white p-2 rounded-lg cursor-pointer"
           onClick={() => {
-            // Create a version with the correct colorKey based on selected dataset
-            const downloadData = {
-              ...allCountries,
-              features: allCountries.features.map((feature) => ({
-                ...feature,
-                properties: {
-                  ...feature.properties,
-                  colorKey:
-                    selectedDataset === "JRC"
-                      ? feature.properties.JRCColorKey
-                      : feature.properties.GFWColorKey,
-                },
-              })),
-            };
-
             downloadGeoJsonAsSvg(
-              downloadData as unknown as NaturalEarthCountryFeatureCollection,
+              allCountries as unknown as NaturalEarthCountryFeatureCollection,
               {
                 width: 800,
                 height: 800,
