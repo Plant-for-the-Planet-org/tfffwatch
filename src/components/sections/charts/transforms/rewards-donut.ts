@@ -6,6 +6,9 @@ import { classify, eligibilityColor, type Eligibility } from "@/domain/eligibili
 // verbatim from the former inline useMemo blocks.
 export type RewardField = "base_reward_usd" | "reward_after_deductions_usd";
 
+// Data year shown by the reward charts and the Top 10 chart.
+export const REWARDS_YEAR = "2024";
+
 export interface DonutDatum {
   name: string;
   iso2: string;
@@ -36,8 +39,10 @@ export function buildRewardsDonut(
 ): RewardsDonut {
   const { rewardField, includeIneligible } = opts;
 
-  // Filter for 2024 data only
-  const data2024 = records.filter((item) => String(item.year) === "2024");
+  // Filter for the rewards year only
+  const data2024 = records.filter(
+    (item) => String(item.year) === REWARDS_YEAR
+  );
   if (data2024.length === 0) return { sum: 0, countries: [], legendGroups: [] };
 
   const order: Eligibility[] = includeIneligible

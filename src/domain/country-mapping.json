@@ -1,156 +1,743 @@
 [
-  { "country": "Angola", "countrySlug": "angola", "countryIso2": "AO" },
+  {
+    "country": "Angola",
+    "countrySlug": "angola",
+    "countryIso2": "AO",
+    "aliases": [
+      "AO",
+      "AGO"
+    ]
+  },
   {
     "country": "Antigua and Barbuda",
     "countrySlug": "antigua-and-barbuda",
     "countryIso2": "AG",
-    "aliases": ["antigua-and-barb"]
+    "aliases": [
+      "antigua-and-barb",
+      "Antigua",
+      "Barbuda",
+      "AG",
+      "ATG"
+    ]
   },
-  { "country": "Argentina", "countrySlug": "argentina", "countryIso2": "AR" },
-  { "country": "Bangladesh", "countrySlug": "bangladesh", "countryIso2": "BD" },
-  { "country": "Belize", "countrySlug": "belize", "countryIso2": "BZ" },
-  { "country": "Benin", "countrySlug": "benin", "countryIso2": "BJ" },
-  { "country": "Bhutan", "countrySlug": "bhutan", "countryIso2": "BT" },
-  { "country": "Bolivia", "countrySlug": "bolivia", "countryIso2": "BO" },
-  { "country": "Brazil", "countrySlug": "brazil", "countryIso2": "BR" },
-  { "country": "Burundi", "countrySlug": "burundi", "countryIso2": "BI" },
-  { "country": "Cambodia", "countrySlug": "cambodia", "countryIso2": "KH" },
-  { "country": "Cameroon", "countrySlug": "cameroon", "countryIso2": "CM" },
+  {
+    "country": "Argentina",
+    "countrySlug": "argentina",
+    "countryIso2": "AR",
+    "aliases": [
+      "AR",
+      "ARG"
+    ]
+  },
+  {
+    "country": "Bangladesh",
+    "countrySlug": "bangladesh",
+    "countryIso2": "BD",
+    "aliases": [
+      "Bangla Desh",
+      "BD",
+      "BGD"
+    ]
+  },
+  {
+    "country": "Belize",
+    "countrySlug": "belize",
+    "countryIso2": "BZ",
+    "aliases": [
+      "British Honduras",
+      "BZ",
+      "BLZ"
+    ]
+  },
+  {
+    "country": "Benin",
+    "countrySlug": "benin",
+    "countryIso2": "BJ",
+    "aliases": [
+      "BJ",
+      "BEN"
+    ]
+  },
+  {
+    "country": "Bhutan",
+    "countrySlug": "bhutan",
+    "countryIso2": "BT",
+    "aliases": [
+      "BT",
+      "BTN"
+    ]
+  },
+  {
+    "country": "Bolivia",
+    "countrySlug": "bolivia",
+    "countryIso2": "BO",
+    "aliases": [
+      "Plurinational State of Bolivia",
+      "BO",
+      "BOL"
+    ]
+  },
+  {
+    "country": "Brazil",
+    "countrySlug": "brazil",
+    "countryIso2": "BR",
+    "aliases": [
+      "Brasil",
+      "BR",
+      "BRA"
+    ]
+  },
+  {
+    "country": "Burundi",
+    "countrySlug": "burundi",
+    "countryIso2": "BI",
+    "aliases": [
+      "BI",
+      "BDI"
+    ]
+  },
+  {
+    "country": "Cambodia",
+    "countrySlug": "cambodia",
+    "countryIso2": "KH",
+    "aliases": [
+      "Kampuchea",
+      "KH",
+      "KHM"
+    ]
+  },
+  {
+    "country": "Cameroon",
+    "countrySlug": "cameroon",
+    "countryIso2": "CM",
+    "aliases": [
+      "Cameroun",
+      "CM",
+      "CMR"
+    ]
+  },
   {
     "country": "Central African Republic",
     "countrySlug": "central-african-republic",
     "countryIso2": "CF",
-    "aliases": ["central-african-rep"]
+    "aliases": [
+      "central-african-rep",
+      "CAR",
+      "CF",
+      "CAF"
+    ]
   },
-  { "country": "China", "countrySlug": "china", "countryIso2": "CN" },
-  { "country": "Colombia", "countrySlug": "colombia", "countryIso2": "CO" },
-  { "country": "Congo", "countrySlug": "congo", "countryIso2": "CG" },
-  { "country": "Costa Rica", "countrySlug": "costa-rica", "countryIso2": "CR" },
-  { "country": "Cuba", "countrySlug": "cuba", "countryIso2": "CU" },
+  {
+    "country": "China",
+    "countrySlug": "china",
+    "countryIso2": "CN",
+    "aliases": [
+      "PRC",
+      "People's Republic of China",
+      "Peoples Republic of China",
+      "Mainland China",
+      "CN",
+      "CHN"
+    ]
+  },
+  {
+    "country": "Colombia",
+    "countrySlug": "colombia",
+    "countryIso2": "CO",
+    "aliases": [
+      "CO",
+      "COL"
+    ]
+  },
+  {
+    "country": "Congo",
+    "countrySlug": "congo",
+    "countryIso2": "CG",
+    "aliases": [
+      "Republic of the Congo",
+      "Congo Brazzaville",
+      "Congo-Brazzaville",
+      "ROC",
+      "RoC",
+      "CG",
+      "COG"
+    ]
+  },
+  {
+    "country": "Costa Rica",
+    "countrySlug": "costa-rica",
+    "countryIso2": "CR",
+    "aliases": [
+      "CR",
+      "CRI"
+    ]
+  },
+  {
+    "country": "Cuba",
+    "countrySlug": "cuba",
+    "countryIso2": "CU",
+    "aliases": [
+      "Republic of Cuba",
+      "CU",
+      "CUB"
+    ]
+  },
   {
     "country": "Democratic Republic of the Congo",
     "countrySlug": "democratic-republic-of-the-congo",
     "countryIso2": "CD",
-    "aliases": ["dem-rep-congo"]
+    "aliases": [
+      "dem-rep-congo",
+      "DRC",
+      "DR Congo",
+      "DRC Congo",
+      "D.R. Congo",
+      "Congo Kinshasa",
+      "Congo-Kinshasa",
+      "Zaire",
+      "CD",
+      "COD"
+    ]
   },
-  { "country": "Dominica", "countrySlug": "dominica", "countryIso2": "DM" },
+  {
+    "country": "Dominica",
+    "countrySlug": "dominica",
+    "countryIso2": "DM",
+    "aliases": [
+      "Commonwealth of Dominica",
+      "DM",
+      "DMA"
+    ]
+  },
   {
     "country": "Dominican Republic",
     "countrySlug": "dominican-republic",
     "countryIso2": "DO",
-    "aliases": ["dominican-rep"]
+    "aliases": [
+      "dominican-rep",
+      "DR",
+      "Dom Rep",
+      "DO",
+      "DOM"
+    ]
   },
-  { "country": "Ecuador", "countrySlug": "ecuador", "countryIso2": "EC" },
+  {
+    "country": "Ecuador",
+    "countrySlug": "ecuador",
+    "countryIso2": "EC",
+    "aliases": [
+      "EC",
+      "ECU"
+    ]
+  },
   {
     "country": "El Salvador",
     "countrySlug": "el-salvador",
-    "countryIso2": "SV"
+    "countryIso2": "SV",
+    "aliases": [
+      "SV",
+      "SLV"
+    ]
   },
   {
     "country": "Equatorial Guinea",
     "countrySlug": "equatorial-guinea",
     "countryIso2": "GQ",
-    "aliases": ["eq-guinea"]
+    "aliases": [
+      "eq-guinea",
+      "Eq Guinea",
+      "Spanish Guinea",
+      "GQ",
+      "GNQ"
+    ]
   },
-  { "country": "Ethiopia", "countrySlug": "ethiopia", "countryIso2": "ET" },
-  { "country": "Gabon", "countrySlug": "gabon", "countryIso2": "GA" },
-  { "country": "Ghana", "countrySlug": "ghana", "countryIso2": "GH" },
-  { "country": "Guatemala", "countrySlug": "guatemala", "countryIso2": "GT" },
-  { "country": "Guinea", "countrySlug": "guinea", "countryIso2": "GN" },
-  { "country": "Guyana", "countrySlug": "guyana", "countryIso2": "GY" },
-  { "country": "Haiti", "countrySlug": "haiti", "countryIso2": "HT" },
-  { "country": "Honduras", "countrySlug": "honduras", "countryIso2": "HN" },
-  { "country": "India", "countrySlug": "india", "countryIso2": "IN" },
-  { "country": "Indonesia", "countrySlug": "indonesia", "countryIso2": "ID" },
-  { "country": "Jamaica", "countrySlug": "jamaica", "countryIso2": "JM" },
-  { "country": "Kenya", "countrySlug": "kenya", "countryIso2": "KE" },
+  {
+    "country": "Ethiopia",
+    "countrySlug": "ethiopia",
+    "countryIso2": "ET",
+    "aliases": [
+      "Abyssinia",
+      "ET",
+      "ETH"
+    ]
+  },
+  {
+    "country": "Gabon",
+    "countrySlug": "gabon",
+    "countryIso2": "GA",
+    "aliases": [
+      "GA",
+      "GAB"
+    ]
+  },
+  {
+    "country": "Ghana",
+    "countrySlug": "ghana",
+    "countryIso2": "GH",
+    "aliases": [
+      "GH",
+      "GHA"
+    ]
+  },
+  {
+    "country": "Guatemala",
+    "countrySlug": "guatemala",
+    "countryIso2": "GT",
+    "aliases": [
+      "GT",
+      "GTM"
+    ]
+  },
+  {
+    "country": "Guinea",
+    "countrySlug": "guinea",
+    "countryIso2": "GN",
+    "aliases": [
+      "Guinea Conakry",
+      "GN",
+      "GIN"
+    ]
+  },
+  {
+    "country": "Guyana",
+    "countrySlug": "guyana",
+    "countryIso2": "GY",
+    "aliases": [
+      "Co-operative Republic of Guyana",
+      "GY",
+      "GUY"
+    ]
+  },
+  {
+    "country": "Haiti",
+    "countrySlug": "haiti",
+    "countryIso2": "HT",
+    "aliases": [
+      "HT",
+      "HTI"
+    ]
+  },
+  {
+    "country": "Honduras",
+    "countrySlug": "honduras",
+    "countryIso2": "HN",
+    "aliases": [
+      "Republic of Honduras",
+      "HN",
+      "HND"
+    ]
+  },
+  {
+    "country": "India",
+    "countrySlug": "india",
+    "countryIso2": "IN",
+    "aliases": [
+      "Bharat",
+      "IN",
+      "IND"
+    ]
+  },
+  {
+    "country": "Indonesia",
+    "countrySlug": "indonesia",
+    "countryIso2": "ID",
+    "aliases": [
+      "ID",
+      "IDN"
+    ]
+  },
+  {
+    "country": "Jamaica",
+    "countrySlug": "jamaica",
+    "countryIso2": "JM",
+    "aliases": [
+      "JM",
+      "JAM"
+    ]
+  },
+  {
+    "country": "Kenya",
+    "countrySlug": "kenya",
+    "countryIso2": "KE",
+    "aliases": [
+      "KE",
+      "KEN"
+    ]
+  },
   {
     "country": "Lao Peoples Democratic Republic",
     "countrySlug": "lao-peoples-democratic-republic",
     "countryIso2": "LA",
-    "aliases": ["laos", "lao-pdr"]
+    "aliases": [
+      "laos",
+      "lao-pdr",
+      "Laos",
+      "Lao PDR",
+      "Lao People's Democratic Republic",
+      "LA",
+      "LAO"
+    ]
   },
-  { "country": "Liberia", "countrySlug": "liberia", "countryIso2": "LR" },
-  { "country": "Madagascar", "countrySlug": "madagascar", "countryIso2": "MG" },
-  { "country": "Malaysia", "countrySlug": "malaysia", "countryIso2": "MY" },
-  { "country": "Mauritius", "countrySlug": "mauritius", "countryIso2": "MU" },
-  { "country": "Mexico", "countrySlug": "mexico", "countryIso2": "MX" },
-  { "country": "Mozambique", "countrySlug": "mozambique", "countryIso2": "MZ" },
-  { "country": "Myanmar", "countrySlug": "myanmar", "countryIso2": "MM" },
-  { "country": "Nepal", "countrySlug": "nepal", "countryIso2": "NP" },
-  { "country": "Nicaragua", "countrySlug": "nicaragua", "countryIso2": "NI" },
-  { "country": "Nigeria", "countrySlug": "nigeria", "countryIso2": "NG" },
-  { "country": "Palau", "countrySlug": "palau", "countryIso2": "PW" },
-  { "country": "Panama", "countrySlug": "panama", "countryIso2": "PA" },
+  {
+    "country": "Liberia",
+    "countrySlug": "liberia",
+    "countryIso2": "LR",
+    "aliases": [
+      "LR",
+      "LBR"
+    ]
+  },
+  {
+    "country": "Madagascar",
+    "countrySlug": "madagascar",
+    "countryIso2": "MG",
+    "aliases": [
+      "MG",
+      "MDG"
+    ]
+  },
+  {
+    "country": "Malaysia",
+    "countrySlug": "malaysia",
+    "countryIso2": "MY",
+    "aliases": [
+      "Federation of Malaysia",
+      "MY",
+      "MYS"
+    ]
+  },
+  {
+    "country": "Mauritius",
+    "countrySlug": "mauritius",
+    "countryIso2": "MU",
+    "aliases": [
+      "Republic of Mauritius",
+      "MU",
+      "MUS"
+    ]
+  },
+  {
+    "country": "Mexico",
+    "countrySlug": "mexico",
+    "countryIso2": "MX",
+    "aliases": [
+      "United Mexican States",
+      "MX",
+      "MEX"
+    ]
+  },
+  {
+    "country": "Mozambique",
+    "countrySlug": "mozambique",
+    "countryIso2": "MZ",
+    "aliases": [
+      "Mocambique",
+      "MZ",
+      "MOZ"
+    ]
+  },
+  {
+    "country": "Myanmar",
+    "countrySlug": "myanmar",
+    "countryIso2": "MM",
+    "aliases": [
+      "Burma",
+      "MM",
+      "MMR"
+    ]
+  },
+  {
+    "country": "Nepal",
+    "countrySlug": "nepal",
+    "countryIso2": "NP",
+    "aliases": [
+      "NP",
+      "NPL"
+    ]
+  },
+  {
+    "country": "Nicaragua",
+    "countrySlug": "nicaragua",
+    "countryIso2": "NI",
+    "aliases": [
+      "Republic of Nicaragua",
+      "NI",
+      "NIC"
+    ]
+  },
+  {
+    "country": "Nigeria",
+    "countrySlug": "nigeria",
+    "countryIso2": "NG",
+    "aliases": [
+      "Federal Republic of Nigeria",
+      "NG",
+      "NGA"
+    ]
+  },
+  {
+    "country": "Palau",
+    "countrySlug": "palau",
+    "countryIso2": "PW",
+    "aliases": [
+      "Belau",
+      "PW",
+      "PLW"
+    ]
+  },
+  {
+    "country": "Panama",
+    "countrySlug": "panama",
+    "countryIso2": "PA",
+    "aliases": [
+      "PA",
+      "PAN"
+    ]
+  },
   {
     "country": "Papua New Guinea",
     "countrySlug": "papua-new-guinea",
-    "countryIso2": "PG"
+    "countryIso2": "PG",
+    "aliases": [
+      "PNG",
+      "PG",
+      "PNG"
+    ]
   },
-  { "country": "Paraguay", "countrySlug": "paraguay", "countryIso2": "PY" },
-  { "country": "Peru", "countrySlug": "peru", "countryIso2": "PE" },
+  {
+    "country": "Paraguay",
+    "countrySlug": "paraguay",
+    "countryIso2": "PY",
+    "aliases": [
+      "PY",
+      "PRY"
+    ]
+  },
+  {
+    "country": "Peru",
+    "countrySlug": "peru",
+    "countryIso2": "PE",
+    "aliases": [
+      "PE",
+      "PER"
+    ]
+  },
   {
     "country": "Philippines",
     "countrySlug": "philippines",
-    "countryIso2": "PH"
+    "countryIso2": "PH",
+    "aliases": [
+      "Philippine",
+      "Pilipinas",
+      "PH",
+      "PHL"
+    ]
   },
-  { "country": "Rwanda", "countrySlug": "rwanda", "countryIso2": "RW" },
+  {
+    "country": "Rwanda",
+    "countrySlug": "rwanda",
+    "countryIso2": "RW",
+    "aliases": [
+      "Republic of Rwanda",
+      "RW",
+      "RWA"
+    ]
+  },
   {
     "country": "Sao Tome and Principe",
     "countrySlug": "sao-tome-and-principe",
-    "countryIso2": "ST"
+    "countryIso2": "ST",
+    "aliases": [
+      "Sao Tome",
+      "STP",
+      "ST",
+      "STP"
+    ]
   },
   {
     "country": "Sierra Leone",
     "countrySlug": "sierra-leone",
-    "countryIso2": "SL"
+    "countryIso2": "SL",
+    "aliases": [
+      "Salone",
+      "SL",
+      "SLE"
+    ]
   },
   {
     "country": "Solomon Islands",
     "countrySlug": "solomon-islands",
     "countryIso2": "SB",
-    "aliases": ["solomon-is"]
+    "aliases": [
+      "solomon-is",
+      "Solomons",
+      "SB",
+      "SLB"
+    ]
   },
-  { "country": "Somalia", "countrySlug": "somalia", "countryIso2": "SO" },
+  {
+    "country": "Somalia",
+    "countrySlug": "somalia",
+    "countryIso2": "SO",
+    "aliases": [
+      "SO",
+      "SOM"
+    ]
+  },
   {
     "country": "South Africa",
     "countrySlug": "south-africa",
-    "countryIso2": "ZA"
+    "countryIso2": "ZA",
+    "aliases": [
+      "RSA",
+      "Republic of South Africa",
+      "ZA",
+      "ZAF"
+    ]
   },
   {
     "country": "South Sudan",
     "countrySlug": "south-sudan",
     "countryIso2": "SS",
-    "aliases": ["s-sudan"]
+    "aliases": [
+      "s-sudan",
+      "RSS",
+      "Republic of South Sudan",
+      "SS",
+      "SSD"
+    ]
   },
-  { "country": "Sri Lanka", "countrySlug": "sri-lanka", "countryIso2": "LK" },
-  { "country": "Suriname", "countrySlug": "suriname", "countryIso2": "SR" },
+  {
+    "country": "Sri Lanka",
+    "countrySlug": "sri-lanka",
+    "countryIso2": "LK",
+    "aliases": [
+      "Ceylon",
+      "LK",
+      "LKA"
+    ]
+  },
+  {
+    "country": "Suriname",
+    "countrySlug": "suriname",
+    "countryIso2": "SR",
+    "aliases": [
+      "Dutch Guiana",
+      "SR",
+      "SUR"
+    ]
+  },
   {
     "country": "Swaziland",
     "countrySlug": "eswatini",
     "countryIso2": "SZ",
-    "aliases": ["kingdom-of-eswatini", "swaziland"]
+    "aliases": [
+      "kingdom-of-eswatini",
+      "swaziland",
+      "Eswatini",
+      "Kingdom of Eswatini",
+      "SZ",
+      "SWZ"
+    ]
   },
-  { "country": "Thailand", "countrySlug": "thailand", "countryIso2": "TH" },
-  { "country": "Togo", "countrySlug": "togo", "countryIso2": "TG" },
+  {
+    "country": "Thailand",
+    "countrySlug": "thailand",
+    "countryIso2": "TH",
+    "aliases": [
+      "TH",
+      "THA"
+    ]
+  },
+  {
+    "country": "Togo",
+    "countrySlug": "togo",
+    "countryIso2": "TG",
+    "aliases": [
+      "Togolese Republic",
+      "TG",
+      "TGO"
+    ]
+  },
   {
     "country": "Trinidad and Tobago",
     "countrySlug": "trinidad-and-tobago",
-    "countryIso2": "TT"
+    "countryIso2": "TT",
+    "aliases": [
+      "Trinidad",
+      "Tobago",
+      "T&T",
+      "TT",
+      "TTO"
+    ]
   },
-  { "country": "Uganda", "countrySlug": "uganda", "countryIso2": "UG" },
+  {
+    "country": "Uganda",
+    "countrySlug": "uganda",
+    "countryIso2": "UG",
+    "aliases": [
+      "UG",
+      "UGA"
+    ]
+  },
   {
     "country": "United Republic of Tanzania",
     "countrySlug": "united-republic-of-tanzania",
-    "countryIso2": "TZ"
+    "countryIso2": "TZ",
+    "aliases": [
+      "Tanzania",
+      "Tanganyika",
+      "URT",
+      "TZ",
+      "TZA"
+    ]
   },
-  { "country": "Vanuatu", "countrySlug": "vanuatu", "countryIso2": "VU" },
-  { "country": "Venezuela", "countrySlug": "venezuela", "countryIso2": "VE" },
-  { "country": "Viet Nam", "countrySlug": "viet-nam", "countryIso2": "VN" },
-  { "country": "Zimbabwe", "countrySlug": "zimbabwe", "countryIso2": "ZW" },
+  {
+    "country": "Vanuatu",
+    "countrySlug": "vanuatu",
+    "countryIso2": "VU",
+    "aliases": [
+      "VU",
+      "VUT"
+    ]
+  },
+  {
+    "country": "Venezuela",
+    "countrySlug": "venezuela",
+    "countryIso2": "VE",
+    "aliases": [
+      "Bolivarian Republic of Venezuela",
+      "VE",
+      "VEN"
+    ]
+  },
+  {
+    "country": "Viet Nam",
+    "countrySlug": "viet-nam",
+    "countryIso2": "VN",
+    "aliases": [
+      "Vietnam",
+      "VN",
+      "VNM"
+    ]
+  },
+  {
+    "country": "Zimbabwe",
+    "countrySlug": "zimbabwe",
+    "countryIso2": "ZW",
+    "aliases": [
+      "ZW",
+      "ZWE"
+    ]
+  },
   {
     "country": "Côte d'Ivoire",
     "countrySlug": "cote-d-ivoire",
-    "countryIso2": "CI"
+    "countryIso2": "CI",
+    "aliases": [
+      "Ivory Coast",
+      "CI",
+      "CIV"
+    ]
   }
 ]

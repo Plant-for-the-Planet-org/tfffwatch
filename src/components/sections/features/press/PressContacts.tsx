@@ -60,7 +60,7 @@ export default function PressContacts() {
             <div className="flex gap-2 justify-center items-center">
               {el.linkedin && (
                 <Link
-                  className="rounded-full bg-[#219653] p-1.5 transition-transform hover:-translate-y-1"
+                  className="rounded-full bg-primary-planet-green p-1.5 transition-transform hover:-translate-y-1"
                   href={el.linkedin ?? "#"}
                   target="_blank"
                   rel="noreferrer"
@@ -75,7 +75,7 @@ export default function PressContacts() {
               )}
               {el.email && (
                 <Link
-                  className="rounded-full bg-[#219653] p-1.5 py-2 transition-transform hover:-translate-y-1"
+                  className="rounded-full bg-primary-planet-green p-1.5 py-2 transition-transform hover:-translate-y-1"
                   href={el.email ?? "#"}
                   target="_blank"
                   rel="noreferrer"
@@ -90,7 +90,7 @@ export default function PressContacts() {
               )}
               {el.phone && (
                 <Link
-                  className="rounded-full bg-[#219653] p-1.5 transition-transform hover:-translate-y-1"
+                  className="rounded-full bg-primary-planet-green p-1.5 transition-transform hover:-translate-y-1"
                   href={el.phone ?? "#"}
                   target="_blank"
                   rel="noreferrer"

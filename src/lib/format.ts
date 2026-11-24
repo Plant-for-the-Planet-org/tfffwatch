@@ -18,6 +18,22 @@ export function toReadableAmount(n: number | string, decimal: boolean = true) {
   );
 }
 
+// Short dollar amount with 3 significant digits: $1.30bn, $841m, $89.5m, $0.
+export function toShortUsd(n: number): string {
+  if (!n || n <= 0) return "$0";
+  const units = [
+    { v: 1e12, s: "t" },
+    { v: 1e9, s: "bn" },
+    { v: 1e6, s: "m" },
+    { v: 1e3, s: "k" },
+  ];
+  const unit = units.find((u) => n >= u.v);
+  if (!unit) return `$${Math.round(n)}`;
+  const x = n / unit.v;
+  const digits = x >= 100 ? 0 : x >= 10 ? 1 : 2;
+  return `$${x.toFixed(digits)}${unit.s}`;
+}
+
 export function toReadableAmountLong(
   n: number | string,
   withSymbol = true,

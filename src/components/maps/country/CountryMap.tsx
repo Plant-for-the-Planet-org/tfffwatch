@@ -319,7 +319,7 @@ export default function CountryMap({
             id="mask-layer"
             type="fill"
             paint={{
-              "fill-color": "#F0FAF4",
+              "fill-color": "#F4FAF6",
               "fill-opacity": 1,
             }}
           />

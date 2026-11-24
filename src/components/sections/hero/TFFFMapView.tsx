@@ -24,13 +24,16 @@ import { CountryDetails } from "@/domain/country.types";
 import { asCountrySlug } from "@/domain/brand";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
 import { useParams, useSearchParams } from "next/navigation";
+import CountrySearch from "@/components/maps/search/CountrySearch";
+import {
+  openCountryPage,
+  type SearchableCountry,
+} from "@/domain/country-search";
+import type { CountryStatus } from "@/domain/eligibility";
 import { Suspense, useEffect } from "react";
 import RewardsChart from "../charts/RewardsChart";
 import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
-import {
-  GFWTop10CountriesChart,
-  JRC10CountriesChart,
-} from "../charts/Top10BarChart";
+import { Top10CountriesChart } from "../charts/Top10BarChart";
 import HeaderCountry from "@/components/HeaderCountry";
 
 export function TFFFWorldMapView() {
@@ -44,7 +47,20 @@ export function TFFFWorldMapView() {
     selectedYear,
     setSelectedYear,
     resetDatasetFetched,
+    setFocusIso2,
+    setSelectedCountry,
+    setClickPosition,
   } = useWorldMapStore();
+
+  // Every pick opens the country page in a new tab. Countries with data
+  // also open the map popup here.
+  const onSearchSelect = (
+    country: SearchableCountry,
+    status: CountryStatus,
+  ) => {
+    openCountryPage(country.slug, selectedYear, selectedDataset);
+    if (status !== "NO_DATA") setFocusIso2(country.iso2);
+  };
 
   // Reset dataset fetched flags when component mounts (returning to home page)
   useEffect(() => {
@@ -53,7 +69,7 @@ export function TFFFWorldMapView() {
 
   useEffect(() => {
     const _yearWise = forestCoverChangeData.filter(
-      (el) => el.year == selectedYear
+      (el) => el.year == selectedYear,
     );
     setForestCoverChangeDataByYear(_yearWise);
 
@@ -82,14 +98,26 @@ export function TFFFWorldMapView() {
         </div>
 
         <Spacer />
-        <div className="relative z-10">
-          <div className="bg-primary-light">
+        {/* z-30 keeps the open search panel above the map's edge fades (z-10)
+            and the legend (z-20), which come later in the DOM. */}
+        <div className="relative z-30">
+          <div>
             <WorldMapHeaderContent />
-          </div>
-          <div className="bg-gradient-to-b from-primary-light to-transparent">
             <Spacer />
-            <Spacer />
+            {/* Country search, below the subheading */}
+            <div className="relative z-20 flex justify-center">
+              <CountrySearch
+                onSelect={onSearchSelect}
+                onOpen={() => {
+                  // Hide any open country popup so it does not overlap.
+                  setSelectedCountry(null);
+                  setClickPosition(null);
+                }}
+              />
+            </div>
           </div>
+          <Spacer />
+          <Spacer />
         </div>
 
         <div className="grow relative flex flex-col">
@@ -99,21 +127,18 @@ export function TFFFWorldMapView() {
             variant="hero"
           />
 
-          <div className="mb-8 md:mb-0 md:absolute left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
-            <Spacer className="md:hidden" />
+          {/* Legend cards below the map. z-20 keeps them above the map's
+              edge fades; the bottom padding leaves room for the version and
+              citation line, which WorldMap pins to this box's bottom-right. */}
+          <div className="relative z-20 pb-16 md:pb-12">
             {selectedDataset === "JRC" ? <LegendsForJRC /> : <LegendsForGFW />}
-            <Spacer />
           </div>
         </div>
       </div>
       <Spacer />
       <Spacer />
       <RewardsChart />
-      {selectedDataset === "JRC" ? (
-        <JRC10CountriesChart />
-      ) : (
-        <GFWTop10CountriesChart />
-      )}
+      <Top10CountriesChart />
     </WorldMapViewContainer>
   );
 }
@@ -169,6 +194,17 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
           <Spacer />
           <CountryMapHeaderContent year={props.year} />
           <Spacer />
+          {/* Country search, below the subheading */}
+          <div className="relative z-20 flex justify-center">
+            <CountrySearch
+              currentIso2={props.iso2}
+              onSelect={(c) => {
+                if (c.iso2 === props.iso2) return;
+                openCountryPage(c.slug, props.year, selectedDataset);
+              }}
+            />
+          </div>
+          <Spacer />
 
           <div className="grow grid grid-cols-1 md:grid-cols-2">
             <div className="relative h-60 md:h-full">
@@ -199,8 +235,8 @@ export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
 
 function WorldMapViewContainer({ children }: { children: React.ReactNode }) {
   return (
-    // <div className="bg-primary-light outer-rounding outer-padding-3 h-[90vh] md:h-[85vh] lg:h-[80vh] xl:h-[75vh] min-h-fit">
-    <div className="bg-primary-light outer-rounding outer-padding-3 max-h-full">
+    // <div className="isolate bg-primary-light outer-rounding outer-padding-3 h-[90vh] md:h-[85vh] lg:h-[80vh] xl:h-[75vh] min-h-fit">
+    <div className="isolate bg-primary-light outer-rounding outer-padding-3 max-h-full">
       {children}
     </div>
   );
@@ -208,9 +244,8 @@ function WorldMapViewContainer({ children }: { children: React.ReactNode }) {
 
 function CountryMapViewContainer({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-primary-light outer-rounding outer-padding-3 h-[90vh] md:h-[85vh] lg:h-[80vh] xl:h-[75vh] min-h-fit">
+    <div className="isolate bg-primary-light outer-rounding outer-padding-3 h-[90vh] md:h-[85vh] lg:h-[80vh] xl:h-[75vh] min-h-fit">
       {children}
     </div>
   );
 }
-

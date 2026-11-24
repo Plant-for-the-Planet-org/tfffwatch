@@ -7,7 +7,7 @@ import {
 } from "@/domain/country";
 import { downloadGeoJsonAsSvg } from "@/utils/download-map";
 import { env } from "@/utils/env";
-import { eligibilityColor } from "@/domain/eligibility";
+import { eligibilityColor, NO_DATA_FILL } from "@/domain/eligibility";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
 import {
   Layer,
@@ -20,12 +20,15 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import * as turf from "@turf/turf";
+import { asCountrySlug, asIso2 } from "@/domain/brand";
+import type { Feature, MultiPolygon, Polygon } from "geojson";
 import countries from "../countries-optimized.geo.json";
 import { WorldMapProps } from "../shared/types";
 import WorldMapCard from "./WorldMapCard";
 import { ClickTooltip } from "../base/ClickTooltip";
-import { useMapEngine } from "../base/useMapEngine";
+import { TROPICAL_BOUNDS, useMapEngine } from "../base/useMapEngine";
 
 export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   const {
@@ -34,9 +37,33 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     forestData,
     setSelectedCountry,
     setClickPosition,
+    focusIso2,
+    setFocusIso2,
   } = useWorldMapStore();
 
-  const { mapRef, viewState, onMove, onLoad } = useMapEngine();
+  // Only mapRef and onLoad are used: the camera is static (fit to the
+  // tropical belt), so there is no controlled viewState or pan handling.
+  const { mapRef, onLoad } = useMapEngine();
+
+  // Pointer only over countries that have TFFF Watch data (they open the card).
+  const [cursor, setCursor] = useState<"default" | "pointer">("default");
+
+  const hasDataFor = (iso2: unknown) =>
+    (forestData[selectedDataset] || []).some(
+      (item) =>
+        item["country-iso2"] === iso2 &&
+        String(item.year) === String(selectedYear),
+    );
+
+  const onMouseMove = (event: maplibregl.MapLayerMouseEvent) => {
+    const features = event.target.queryRenderedFeatures(event.point, {
+      layers: ["country-fill-jrc", "country-fill-gfw"],
+    });
+    const next = hasDataFor(features[0]?.properties?.["iso_a2"])
+      ? "pointer"
+      : "default";
+    setCursor((prev) => (prev === next ? prev : next));
+  };
 
   const allCountries = useMemo(() => {
     const countriesData = countries as unknown as {
@@ -51,9 +78,9 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
       ...country,
       properties: {
         ...country.properties,
-        colorKey: "#E1EBE5", // Blank/neutral color
-        JRCColorKey: "#E1EBE5",
-        GFWColorKey: "#E1EBE5",
+        colorKey: NO_DATA_FILL, // Blank/neutral color
+        JRCColorKey: NO_DATA_FILL,
+        GFWColorKey: NO_DATA_FILL,
         countrySlug: "",
       },
     }));
@@ -113,6 +140,46 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     };
   }, [selectedYear, forestData]);
 
+  // Country picked from the search: open its popup as if it were clicked.
+  // Uses a point inside the largest polygon so overseas islands are skipped.
+  useEffect(() => {
+    if (!focusIso2) return;
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+
+    const feature = (
+      countries as unknown as {
+        features: Feature<
+          Polygon | MultiPolygon,
+          { iso_a2: string; name_long: string }
+        >[];
+      }
+    ).features.find((f) => f.properties.iso_a2 === focusIso2);
+
+    setFocusIso2(null);
+    if (!feature) return;
+
+    const geom = feature.geometry;
+    const polygons =
+      geom.type === "MultiPolygon"
+        ? geom.coordinates.map((c) => turf.polygon(c))
+        : [turf.polygon(geom.coordinates)];
+    const largest = polygons.reduce((a, b) =>
+      turf.area(b) > turf.area(a) ? b : a,
+    );
+    const [lng, lat] = turf.pointOnFeature(largest).geometry.coordinates;
+    const point = map.project([lng, lat]);
+
+    setSelectedCountry({
+      iso2: asIso2(focusIso2),
+      iso3: "",
+      name: feature.properties.name_long,
+      slug: asCountrySlug(getCountrySlugByIso2(focusIso2) || ""),
+      flagImgUrl: `http://purecatamphetamine.github.io/country-flag-icons/3x2/${focusIso2}.svg`,
+    });
+    setClickPosition({ x: point.x, y: point.y });
+  }, [focusIso2, mapRef, setFocusIso2, setSelectedCountry, setClickPosition]);
+
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
     const features = map?.queryRenderedFeatures(event.point, {
@@ -123,8 +190,18 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     const countrySlug = features?.[0]?.properties?.countrySlug;
     const countryISO2 = features?.[0]?.properties?.["iso_a2"];
 
-    // If clicked outside of any country, clear selection
-    if (!features || features.length === 0 || !country || !countryISO2) {
+    // Only countries with TFFF Watch data for the current dataset and year
+    // open the card
+    const hasData = hasDataFor(countryISO2);
+
+    // Clicked outside a country, or on a country without data: clear selection
+    if (
+      !features ||
+      features.length === 0 ||
+      !country ||
+      !countryISO2 ||
+      !hasData
+    ) {
       setSelectedCountry(null);
       setClickPosition(null);
       return;
@@ -150,15 +227,24 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   // Always render the map - no loading state needed
   return (
     <>
-      <div className="relative mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
+      <div className="relative mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 lg:w-full object-contain">
         <div className="md:hidden absolute z-40 bottom-0 left-0">
           <ClickTooltip />
         </div>
-        <div className="aspect-[1.75] w-full -translate-y-12 -z-10">
+        {/* Wide frame crops the far north/south so the tropical belt fills it.
+            Mobile/tablet: lifted under the header fade.
+            Desktop (lg+): wider (zoomed in), sits lower and a bit taller to use
+            the free space below. */}
+        {/* Desktop: top and side edges fade out with a mask, so the map blends
+            into the section without painting a second green over it. */}
+        <div className="aspect-[2.4] w-full -translate-y-12 -z-10 lg:aspect-[2.2] lg:translate-y-0 lg:[mask-composite:intersect] lg:[-webkit-mask-composite:source-in] lg:[mask-image:linear-gradient(to_bottom,transparent,black_6rem),linear-gradient(to_right,transparent,black_4rem,black_calc(100%-4rem),transparent)] lg:[-webkit-mask-image:linear-gradient(to_bottom,transparent,black_6rem),linear-gradient(to_right,transparent,black_4rem,black_calc(100%-4rem),transparent)]">
           <Map
             ref={mapRef}
-            {...viewState}
-            cursor="default"
+            initialViewState={{
+              bounds: TROPICAL_BOUNDS,
+              fitBoundsOptions: { padding: 8 },
+            }}
+            cursor={cursor}
             keyboard={false}
             scrollZoom={false}
             dragPan={false}
@@ -169,8 +255,17 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
             interactive={true}
             attributionControl={false}
             renderWorldCopies={false}
-            onMove={onMove}
+            // Keep the same framing when the container resizes. No animation,
+            // and fitBounds does not resize the canvas, so this cannot loop.
+            onResize={(e) =>
+              e.target.fitBounds(TROPICAL_BOUNDS, {
+                padding: 8,
+                animate: false,
+              })
+            }
             onClick={onClick}
+            onMouseMove={onMouseMove}
+            onMouseLeave={() => setCursor("default")}
             onLoad={onLoad}
           >
             <Source
@@ -202,23 +297,26 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                 id="country-line"
                 type="line"
                 paint={{
-                  "line-color": "#F0FAF4",
+                  "line-color": "#F4FAF6",
                   "line-width": 1.5,
                 }}
               />
             </Source>
-
           </Map>
         </div>
         <WorldMapCard />
       </div>
 
       <div className="absolute md:mt-auto right-0 bottom-0 text-xs flex items-end-safe">
-        <div className="mr-2 text-right pb-0.5">
+        {/* One line from md, as in the Figma design: "Version … | Please cite …" */}
+        <div className="mr-2 text-right pb-0.5 md:flex md:items-center md:gap-1">
           <VersionChip />
+          <span aria-hidden className="hidden md:inline">
+            |
+          </span>
           <div>
             Please cite data as{" "}
-            <Link className="text-primary italic" href="">
+            <Link className="text-primary-planet-green font-semibold italic" href="">
               tfffwatch.org
             </Link>{" "}
             <span className="italic"> by Plant-for-the-Planet</span>
@@ -249,9 +347,9 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
                 width: 800,
                 height: 800,
                 filename: `tfff-world-map-${selectedDataset}-${selectedYear}.svg`,
-                backgroundColor: "#F0FAF4",
+                backgroundColor: "#F4FAF6",
                 strokeWidth: 1,
-              }
+              },
             );
           }}
         >
