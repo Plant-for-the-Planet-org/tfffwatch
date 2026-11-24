@@ -24,3 +24,5 @@ Data are combined from public datasets and project disclosures, processed into m
 ## License
 
 See the included LICENSE file for license text and attribution requirements.
+
+---
