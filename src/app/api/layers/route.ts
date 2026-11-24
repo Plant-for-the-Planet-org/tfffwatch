@@ -4,6 +4,10 @@ import type { LayerData, MmuLayer } from "@/components/maps/shared/types";
 // Proxies the Layers public TFFF API (MMU layers) so the API key stays on
 // the server. Docs: layers repo,
 // apps/documentation/docs/layers-system/api-reference/tfff-endpoints.md
+// Staging Layers backend, hardcoded on this branch. For prod, switch to an
+// env variable (LAYERS_API_URL). The API key is NOT hardcoded: set
+// LAYERS_API_KEY (needs the `tfff` permission) on the host.
+const LAYERS_API_URL = "https://layers-v2-backend-1635093a7069.herokuapp.com";
 const ISO2_RE = /^[A-Z]{2}$/;
 const YEAR_RE = /^\d{4}$/;
 
@@ -46,9 +50,9 @@ export async function POST(request: Request) {
     );
   }
 
-  const baseUrl = process.env.LAYERS_API_URL;
+  const baseUrl = LAYERS_API_URL;
   const apiKey = process.env.LAYERS_API_KEY;
-  if (!baseUrl || !apiKey) {
+  if (!apiKey) {
     return NextResponse.json(
       { message: "Layers API is not configured" },
       { status: 500 }
