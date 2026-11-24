@@ -12,7 +12,7 @@ const ISO2_RE = /^[A-Z]{2}$/;
 const YEAR_RE = /^\d{4}$/;
 
 // Layers API layer keys: remaining forest, forest loss (not fire), fire loss.
-type TfffLayerKey = "tfff_forest" | "tfff_deforestation" | "tfff_degradation";
+type MmuLayerKey = "mmu_forest" | "mmu_deforestation" | "mmu_degradation";
 
 type TfffLayerItem = {
   layerKey?: string;
@@ -79,15 +79,15 @@ export async function POST(request: Request) {
       items?: TfffLayerItem[];
     };
 
-    const byKey = (key: TfffLayerKey) =>
+    const byKey = (key: MmuLayerKey) =>
       items.find((item) => item.layerKey === key);
 
     // Empty items = not generated or not published yet. That is a normal
     // empty state, not an error, so every slot is simply null.
     const result: LayerData = {
-      forest: toLayer(byKey("tfff_forest")),
-      deforestation: toLayer(byKey("tfff_deforestation")),
-      degradation: toLayer(byKey("tfff_degradation")),
+      forest: toLayer(byKey("mmu_forest")),
+      deforestation: toLayer(byKey("mmu_deforestation")),
+      degradation: toLayer(byKey("mmu_degradation")),
     };
 
     return NextResponse.json(result);

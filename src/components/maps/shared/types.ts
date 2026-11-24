@@ -23,9 +23,9 @@ export interface MmuLayer {
 // Shape returned by our /api/layers proxy. A slot is null when that layer
 // is not generated or not published yet.
 export interface LayerData {
-  forest: MmuLayer | null; // remaining forest (tfff_forest)
-  deforestation: MmuLayer | null; // forest loss, not fire (tfff_deforestation)
-  degradation: MmuLayer | null; // fire loss (tfff_degradation)
+  forest: MmuLayer | null; // remaining forest (mmu_forest)
+  deforestation: MmuLayer | null; // forest loss, not fire (mmu_deforestation)
+  degradation: MmuLayer | null; // fire loss (mmu_degradation)
 }
 
 // World Map State
