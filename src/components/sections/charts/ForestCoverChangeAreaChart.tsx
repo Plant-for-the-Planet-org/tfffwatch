@@ -33,8 +33,47 @@ type ChartData = {
   degradation: number;
 };
 
+const SERIES = [
+  { key: "deforestation", label: "Deforested" },
+  { key: "degradation", label: "Degraded" },
+] as const;
+
 function formatTickValue(value: number) {
   return `${toReadable(Math.abs(value))} ha`;
+}
+
+type TooltipProps = {
+  active?: boolean;
+  label?: string | number;
+  payload?: { dataKey?: string | number; value?: number }[];
+};
+
+// Hover tooltip: one row per series, with its colour swatch and the real
+// (positive) hectares.
+function ChartTooltip({ active, label, payload }: TooltipProps) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="rounded-lg border border-base-gray/50 bg-white p-3 text-sm shadow-custom">
+      <p className="font-semibold mb-1">{label}</p>
+      {SERIES.map(({ key, label: name }) => {
+        const item = payload.find((p) => p.dataKey === key);
+        if (!item) return null;
+        return (
+          <p key={key} className="flex items-center gap-2">
+            <span
+              aria-hidden
+              className="inline-block w-3 h-3 rounded-sm"
+              style={{ backgroundColor: strokes[key] }}
+            />
+            <span>{name}</span>
+            <span className="ml-auto pl-4 font-semibold">
+              {formatTickValue(Number(item.value))}
+            </span>
+          </p>
+        );
+      })}
+    </div>
+  );
 }
 
 export default function ForestCoverChangeAreaChart() {
@@ -44,8 +83,8 @@ export default function ForestCoverChangeAreaChart() {
   // Charts start at DATASET_MIN_YEAR (2022).
   const minYear = DATASET_MIN_YEAR - 1;
 
-  // Real hectares for each series, on one shared axis starting at 0, so the
-  // two lines can be compared directly.
+  // One shared axis. Values are negative so both series grow downward:
+  // deforestation sits next to 0 and degradation is stacked below it.
   useEffect(() => {
     if (!forestCoverChangeDataByCountry?.length) return;
 
@@ -54,8 +93,8 @@ export default function ForestCoverChangeAreaChart() {
         .filter((el) => +el.year > minYear)
         .map((el) => ({
           year: el.year,
-          deforestation: el.deforested_ha,
-          degradation: el.degraded_forest_ha,
+          deforestation: -el.deforested_ha,
+          degradation: -el.degraded_forest_ha,
         })),
     );
   }, [forestCoverChangeDataByCountry, minYear]);
@@ -80,45 +119,32 @@ export default function ForestCoverChangeAreaChart() {
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <YAxis
-              domain={[0, "auto"]}
+              domain={["auto", 0]}
               tickLine={false}
               tickFormatter={formatTickValue}
-              fontSize={13}
+              tick={{ fill: "currentColor", fontSize: 13 }}
               width={90}
             />
-            <XAxis dataKey="year" fontSize={14} tickLine={false} />
-            <Tooltip
-              formatter={(value, name) => [
-                formatTickValue(Number(value)),
-                name === "deforestation" ? "Deforested" : "Degraded",
-              ]}
+            <XAxis
+              dataKey="year"
+              tickLine={false}
+              tick={{ fill: "currentColor", fontSize: 14 }}
             />
-            <Area
-              type="monotone"
-              dataKey="deforestation"
-              stroke={strokes.deforestation}
-              strokeWidth={2}
-              fill={fills.deforestation}
-              fillOpacity={0.5}
-              dot={{
-                stroke: strokes.deforestation,
-                fill: fills.deforestation,
-                r: 4,
-              }}
-            />
-            <Area
-              type="monotone"
-              dataKey="degradation"
-              stroke={strokes.degradation}
-              strokeWidth={2}
-              fill={fills.degradation}
-              fillOpacity={0.5}
-              dot={{
-                stroke: strokes.degradation,
-                fill: fills.degradation,
-                r: 4,
-              }}
-            />
+            <Tooltip content={<ChartTooltip />} />
+            {SERIES.map(({ key }) => (
+              <Area
+                key={key}
+                type="linear"
+                stackId="forest"
+                dataKey={key}
+                stroke={strokes[key]}
+                strokeWidth={2}
+                fill={fills[key]}
+                fillOpacity={0.5}
+                dot={{ stroke: strokes[key], fill: strokes[key], r: 4 }}
+                activeDot={{ r: 5 }}
+              />
+            ))}
           </AreaChart>
         </ResponsiveContainer>
       </div>
