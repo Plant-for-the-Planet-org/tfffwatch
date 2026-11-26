@@ -2,7 +2,7 @@
 
 import { Spacer } from "@/components/ui/layout";
 import { countryPagePath } from "@/domain/dataset";
-import { classify } from "@/domain/eligibility";
+import { classify, payoutUsd } from "@/domain/eligibility";
 import { toReadable } from "@/lib/format";
 import { Check, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
@@ -142,14 +142,14 @@ export default function TFFFCard({
           >
             <b>
               $
-              {paid ? toReadable(data.reward_after_deductions_usd) : 0}
+              {toReadable(payoutUsd(data))}
             </b>
           </span>
         </p>
         <p className="flex justify-between items-center font-thin">
           <span>Of which 20% is designated for Indigenous Peoples</span>
           <span className="text-sm">
-            ${paid ? toReadable(data.iplc_reward_usd) : 0}
+            ${toReadable(payoutUsd(data, "iplc_reward_usd"))}
           </span>
         </p>
       </div>

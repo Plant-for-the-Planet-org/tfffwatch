@@ -31,6 +31,18 @@ export function isPaid(
   return classify(r) !== "INELIGIBLE";
 }
 
+// Payout shown for a record: 0 if not paid, and never negative (deductions
+// can exceed the base reward, but a country cannot owe money).
+export function payoutUsd(
+  r: Parameters<typeof classify>[0] & {
+    reward_after_deductions_usd: number;
+    iplc_reward_usd: number;
+  },
+  field: "reward_after_deductions_usd" | "iplc_reward_usd" = "reward_after_deductions_usd",
+): number {
+  return isPaid(r) ? Math.max(0, r[field]) : 0;
+}
+
 // Blank country fill: Lighter over Light, the section background.
 export const NO_DATA_FILL = "#E9F6EE";
 

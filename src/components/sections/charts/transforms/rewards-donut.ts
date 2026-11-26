@@ -65,13 +65,13 @@ export function buildRewardsDonut(
         countries.push({
           name: item.country,
           iso2: item["country-iso2"],
-          value: item[rewardField],
+          value: Math.max(0, item[rewardField]),
           color: eligibilityColor(group),
           eligibility: LABEL[group],
         });
       });
 
-    const groupSum = inGroup.reduce((acc, item) => acc + item[rewardField], 0);
+    const groupSum = inGroup.reduce((acc, item) => acc + Math.max(0, item[rewardField]), 0);
     sum += groupSum;
     if (groupSum > 0) {
       legendGroups.push({

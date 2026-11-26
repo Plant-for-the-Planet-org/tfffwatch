@@ -2,7 +2,7 @@
 
 import { toReadable } from "@/lib/format";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
-import { isPaid } from "@/domain/eligibility";
+import { payoutUsd } from "@/domain/eligibility";
 import { DATASET_MIN_YEAR } from "@/domain/dataset";
 import { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
@@ -33,7 +33,7 @@ export default function AnnualPayoutAreaChart() {
       .map((el) => ({
         year: el.year,
         value:
-          isPaid(el) ? el.reward_after_deductions_usd : 0,
+          payoutUsd(el),
       }));
 
     setChartData(_chartData);
