@@ -98,7 +98,7 @@ export default function DatasetTabs({
     "px-1 py-1 sm:px-2 sm:py-2 md:px-4 md:py-2 text-sm font-regular rounded-lg transition-colors duration-200 cursor-pointer outline-none";
   const defaultActiveClasses = "bg-white font-medium text-[#333333] shadow-sm";
   const defaultInactiveClasses =
-    "bg-transparent text-[#828282] hover:bg-[#E4F6EB]/50";
+    "bg-transparent text-[#828282] hover:bg-primary-medium-light/50";
   const disabledClasses = "opacity-50 cursor-not-allowed";
 
   const handleTabClick = useCallback(
@@ -115,7 +115,7 @@ export default function DatasetTabs({
   return (
     <div
       className={twMerge(
-        "flex gap-1 p-1 bg-[#E4F6EB] rounded-xl border border-primary-light",
+        "flex gap-1 p-1 bg-primary-medium-light rounded-xl border border-primary-light",
         tabsClassName
       )}
     >
@@ -169,14 +169,14 @@ function DatasetTabsInfoContent() {
         deforestation classifications. Our Standard Estimate is based on the{" "}
         <Link
           href={"https://www.science.org/doi/10.1126/sciadv.abe1603"}
-          className="text-blue-500"
+          className="text-secondary"
         >
           JRC’s Tropical Moist Forest dataset (JRC)
         </Link>
         , supplemented by{" "}
         <Link
           href={"https://www.science.org/doi/10.1126/science.1244693"}
-          className="text-blue-500"
+          className="text-secondary"
         >
           Hansen/Global Forest Watch (GFW)
         </Link>{" "}

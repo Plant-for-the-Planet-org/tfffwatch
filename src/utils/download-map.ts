@@ -46,7 +46,7 @@ export function downloadGeoJsonAsSvg(
     width,
     height,
     filename = "map.svg",
-    backgroundColor = "#F0FAF4",
+    backgroundColor = "#F4FAF6",
     strokeWidth = 1,
   } = opts;
 
@@ -74,7 +74,7 @@ export function downloadGeoJsonAsSvg(
     }
 
     const fill =
-      (feat.properties as NaturalEarthGeoJSONProperties).colorKey || "#E1EBE5";
+      (feat.properties as NaturalEarthGeoJSONProperties).colorKey || "#E9F6EE";
 
     const geom = feat.geometry;
     if (!isPolygon(geom) && !isMultiPolygon(geom)) return;

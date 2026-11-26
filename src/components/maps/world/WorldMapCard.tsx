@@ -91,8 +91,8 @@ export default function WorldMapCard() {
       >
         <div className="bg-white p-4 rounded-lg shadow-lg">
           <div className="animate-pulse">
-            <div className="h-4 bg-gray-200 rounded w-32 mb-2"></div>
-            <div className="h-3 bg-gray-200 rounded w-24"></div>
+            <div className="h-4 bg-base-gray/50 rounded w-32 mb-2"></div>
+            <div className="h-3 bg-base-gray/50 rounded w-24"></div>
           </div>
         </div>
       </div>

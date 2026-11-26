@@ -192,15 +192,15 @@ export default function EndorsementMap({
       )}
 
       {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-red-50 bg-opacity-90 z-50 rounded-lg">
-          <div className="text-red-600 text-center p-4">{error}</div>
+        <div className="absolute inset-0 flex items-center justify-center bg-danger-light/90 z-50 rounded-lg">
+          <div className="text-danger text-center p-4">{error}</div>
         </div>
       )}
 
       <Spacer />
       <Spacer />
       <div className="relative z-10">
-        <div className="bg-primary-light">
+        <div>
           <div className="flex flex-col items-center">
             <h2 className="font-bold text-sm md:text-xl lg:text-2xl">
               Countries that signed the TFFF Declaration
@@ -210,10 +210,8 @@ export default function EndorsementMap({
             </p> */}
           </div>
         </div>
-        <div className="bg-gradient-to-b from-primary-light to-transparent">
-          <Spacer />
-          <Spacer />
-        </div>
+        <Spacer />
+        <Spacer />
       </div>
 
       <div className="aspect-[2] w-full -z-10">
@@ -264,7 +262,7 @@ export default function EndorsementMap({
               id="countries-outline"
               type="line"
               paint={{
-                "line-color": "#F0FAF4",
+                "line-color": "#F4FAF6",
                 "line-width": 1.5,
               }}
             />

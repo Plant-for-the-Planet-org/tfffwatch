@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 export default function InfoGrid() {
   return (
     // <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 xl:gap-5 outer-rounding outer-padding-3">
-    <div className="border border-base-gray rounding-xl outer-rounding outer-padding-3">
+    <div className="border border-base-gray/50 rounding-xl outer-rounding outer-padding-3">
       <div className="text-center">
         <h2 className="font-bold typo-h2">What is TFFF?</h2>
         <Spacer />
@@ -19,7 +19,7 @@ export default function InfoGrid() {
           <Button type="link" href="/the-tfff-explained" external>
             About the Facility
           </Button>
-          <Button type="link" href="/about-tfff-watch" external>
+          <Button type="link" href="/about-tfff-watch" external variant="soft">
             Our Methodology
           </Button>
         </div>

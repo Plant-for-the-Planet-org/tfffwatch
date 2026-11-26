@@ -50,7 +50,7 @@ export default function Error({
           {details && <p className="mt-2 text-sm text-gray-500">{details}</p>}
           <button
             onClick={() => reset()}
-            className="mt-6 px-4 py-2 bg-blue-500 text-white rounded"
+            className="mt-6 px-4 py-2 bg-primary-planet-green text-white rounded-full"
           >
             Try Again
           </button> */}

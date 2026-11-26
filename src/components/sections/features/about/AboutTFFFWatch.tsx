@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function AboutTFFFWatch() {
   return (
-    <div className="border border-base-gray rounding-xl padding-3">
+    <div className="border border-base-gray/50 rounding-xl padding-3">
       <Spacer className="hidden lg:block" />
       <div className="extra-padding-x-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
@@ -67,7 +67,7 @@ export default function AboutTFFFWatch() {
               The baseline forest extent is calculated using the{" "}
               <Link
                 href="https://www.science.org/doi/10.1126/science.1244693"
-                className="underline text-blue-400"
+                className="underline text-secondary"
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -78,7 +78,7 @@ export default function AboutTFFFWatch() {
               countries are identified using the Ecoregion-Based Approach from{" "}
               <Link
                 href="https://academic.oup.com/bioscience/article/67/6/534/3102935"
-                className="underline text-blue-400"
+                className="underline text-secondary"
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -108,7 +108,7 @@ export default function AboutTFFFWatch() {
               fire-related forest loss dataset developed by{" "}
               <Link
                 href="https://www.frontiersin.org/journals/remote-sensing/articles/10.3389/frsen.2022.825190/full"
-                className="underline text-blue-400"
+                className="underline text-secondary"
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -134,7 +134,7 @@ export default function AboutTFFFWatch() {
               Tropical Moist Forest (TMF) dataset (
               <Link
                 href="https://www.science.org/doi/10.1126/sciadv.abe1603"
-                className="underline text-blue-400"
+                className="underline text-secondary"
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -185,7 +185,7 @@ export default function AboutTFFFWatch() {
               feedback at{" "}
               <Link
                 href="mailto:tushar.bharadwaj@plant-for-the-planet.org"
-                className="underline text-blue-400"
+                className="underline text-secondary"
                 rel="noopener noreferrer"
                 target="_blank"
               >

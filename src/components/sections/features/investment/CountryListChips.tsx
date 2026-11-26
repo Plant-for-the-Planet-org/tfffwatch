@@ -26,9 +26,9 @@ function chipStatusClasses(item: ChipItemType) {
     return "border border-primary bg-primary-light";
   }
   if (item.pledgedCapital) {
-    return "border border-[#90BDF2] bg-secondary-light";
+    return "border border-secondary bg-secondary-light";
   }
-  return "border border-[#C5CDD8] bg-[#F5F7FA]";
+  return "border border-base-gray bg-secondary-light";
 }
 
 const COUNTRY_LIST: readonly ChipItemType[] = [

@@ -61,7 +61,7 @@ function YearSelectContent({ initialValue, onChange }: Props) {
           <>
             <span>{options.find((el) => el.id === selectedId)?.label}</span>
             <Image
-              className={twMerge(open ? "text-[#307FED]" : "text-base-text")}
+              className={twMerge(open ? "text-secondary" : "text-base-text")}
               width={8}
               height={8}
               src="/assets/ui/select-arrow.svg"
