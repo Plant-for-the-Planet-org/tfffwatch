@@ -23,7 +23,10 @@ import { Spacer } from "@/components/ui/layout";
 import { CountryDetails } from "@/domain/country.types";
 import { asCountrySlug } from "@/domain/brand";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import CountrySearch from "@/components/maps/search/CountrySearch";
+import type { SearchableCountry } from "@/domain/country-search";
+import type { CountryStatus } from "@/domain/eligibility";
 import { Suspense, useEffect } from "react";
 import RewardsChart from "../charts/RewardsChart";
 import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
@@ -44,7 +47,26 @@ export function TFFFWorldMapView() {
     selectedYear,
     setSelectedYear,
     resetDatasetFetched,
+    setFocusIso2,
+    setSelectedCountry,
+    setClickPosition,
   } = useWorldMapStore();
+  const router = useRouter();
+
+  // Countries with data open the map popup; others go to their page,
+  // since the popup has nothing to show for them.
+  const onSearchSelect = (
+    country: SearchableCountry,
+    status: CountryStatus,
+  ) => {
+    if (status === "NO_DATA") {
+      router.push(
+        `/${country.slug}/${selectedYear}?dataset=${selectedDataset}`,
+      );
+      return;
+    }
+    setFocusIso2(country.iso2);
+  };
 
   // Reset dataset fetched flags when component mounts (returning to home page)
   useEffect(() => {
@@ -53,7 +75,7 @@ export function TFFFWorldMapView() {
 
   useEffect(() => {
     const _yearWise = forestCoverChangeData.filter(
-      (el) => el.year == selectedYear
+      (el) => el.year == selectedYear,
     );
     setForestCoverChangeDataByYear(_yearWise);
 
@@ -85,6 +107,18 @@ export function TFFFWorldMapView() {
         <div className="relative z-10">
           <div className="bg-primary-light">
             <WorldMapHeaderContent />
+            <Spacer />
+            {/* Country search, below the subheading */}
+            <div className="relative z-20 flex justify-center">
+              <CountrySearch
+                onSelect={onSearchSelect}
+                onOpen={() => {
+                  // Hide any open country popup so it does not overlap.
+                  setSelectedCountry(null);
+                  setClickPosition(null);
+                }}
+              />
+            </div>
           </div>
           <div className="bg-gradient-to-b from-primary-light to-transparent">
             <Spacer />
@@ -127,6 +161,7 @@ type TFFFCountryMapViewProps = CountryDetails & {
 function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
   const { country } = useParams();
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   // Get dataset from URL params, fallback to props or default
   const selectedDataset =
@@ -169,6 +204,20 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
         <div className="h-full flex flex-col">
           <Spacer />
           <CountryMapHeaderContent year={props.year} />
+          <Spacer />
+          {/* Country search, below the subheading */}
+          <div className="relative z-20 flex justify-center">
+            <CountrySearch
+              currentIso2={props.iso2}
+              onSelect={(c) => {
+                if (c.iso2 === props.iso2) return;
+                router.push(
+                  `/${c.slug}/${props.year}?dataset=${selectedDataset}`,
+                  { scroll: false },
+                );
+              }}
+            />
+          </div>
           <Spacer />
 
           <div className="grow grid grid-cols-1 md:grid-cols-2">
@@ -214,4 +263,3 @@ function CountryMapViewContainer({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
