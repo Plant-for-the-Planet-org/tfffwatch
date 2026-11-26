@@ -29,10 +29,9 @@ export default function HeaderLinks() {
     },
     {
       id: 4,
-      href: "https://plansfortheplanet.substack.com",
+      href: "/news",
       label: "News",
       isActive: false,
-      external: true,
     },
     { id: 5, href: "/about-tfff-watch", label: "About", isActive: false },
     { id: 6, href: "/press", label: "Press", isActive: false },
@@ -71,8 +70,6 @@ export default function HeaderLinks() {
         <Link
           key={option.id}
           href={option.href}
-          target={option.external ? "_blank" : undefined}
-          rel={option.external ? "noopener noreferrer" : undefined}
           aria-current={option.isActive ? "page" : undefined}
           className={twJoin(
             "rounded-md px-1 transition-colors text-white hover:text-white/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary",

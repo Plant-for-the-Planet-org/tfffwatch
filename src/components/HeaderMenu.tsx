@@ -14,12 +14,7 @@ export default function HeaderMenu({ light = false }: { light?: boolean }) {
     // { id: 2, href: "investment-tracker", label: "Investment Tracker" },
     { id: 2, href: "investment-tracker/Norway", label: "Investment Tracker" },
     // { id: 3, href: "friends-of-the-tfff", label: "Friends of the TFFF" },
-    {
-      id: 4,
-      external: true,
-      href: "https://plansfortheplanet.substack.com",
-      label: "News",
-    },
+    { id: 4, href: "news", label: "News" },
     { id: 5, href: "about-tfff-watch", label: "About TFFF Watch" },
     { id: 6, href: "press", label: "Press" },
   ]);
@@ -51,7 +46,7 @@ export default function HeaderMenu({ light = false }: { light?: boolean }) {
             {options.map((el, key) => (
               <MenuItem key={el.id} as="div">
                 <Link
-                  href={el?.external ? el?.href : `/${el.href}`}
+                  href={el.href.startsWith("/") ? el.href : `/${el.href}`}
                   className={twMerge(
                     "block w-full typo-p py-4",
                     key === 0 && "pt-0",
@@ -60,8 +55,6 @@ export default function HeaderMenu({ light = false }: { light?: boolean }) {
                   onClick={() => {
                     close();
                   }}
-                  target={el?.external ? "_blank" : undefined}
-                  rel={el?.external ? "noopener noreferrer" : undefined}
                 >
                   <span>{el.label}</span>
                 </Link>
