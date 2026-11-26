@@ -2,12 +2,14 @@
 
 import { toReadable } from "@/lib/format";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
+import { payoutUsd } from "@/domain/eligibility";
+import { DATASET_MIN_YEAR } from "@/domain/dataset";
 import { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 const chartColor = {
-  stroke: "#6FCF97",
-  fill: "#9EEEC0",
+  stroke: "#007A49",
+  fill: "#007A49",
 };
 
 type ChartData = {
@@ -20,21 +22,22 @@ export default function AnnualPayoutAreaChart() {
 
   const [chartData, setChartData] = useState<ChartData[]>([]);
 
+  // Charts start at DATASET_MIN_YEAR (2022).
+  const minYear = DATASET_MIN_YEAR - 1;
+
   useEffect(() => {
     if (!forestCoverChangeDataByCountry?.length) return;
 
     const _chartData = forestCoverChangeDataByCountry
-      .filter((el) => +el.year > 2018)
+      .filter((el) => +el.year > minYear)
       .map((el) => ({
         year: el.year,
         value:
-          el.eligibility_combined === false
-            ? 0
-            : el.reward_after_deductions_usd,
+          payoutUsd(el),
       }));
 
     setChartData(_chartData);
-  }, [forestCoverChangeDataByCountry]);
+  }, [forestCoverChangeDataByCountry, minYear]);
 
   return (
     <div>

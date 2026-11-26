@@ -2,7 +2,8 @@
 
 import { toReadable } from "@/lib/format";
 import { useForestCoverChangeData } from "@/stores/forest-cover.store";
-import { useEffect, useMemo, useState } from "react";
+import { DATASET_MIN_YEAR } from "@/domain/dataset";
+import { useEffect, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -10,17 +11,18 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
+  Tooltip,
 } from "recharts";
 import { twMerge } from "tailwind-merge";
 
 const strokes = {
-  restoration: "#2C9CDB",
+  restoration: "#2D9CDB",
   deforestation: "#EB5756",
   degradation: "#F1994A",
 };
 
 const fills = {
-  restoration: "#E9F7FF",
+  restoration: "#EFF6FF",
   deforestation: "#FFE6E6",
   degradation: "#FFF0E3",
 };
@@ -31,92 +33,71 @@ type ChartData = {
   degradation: number;
 };
 
+const SERIES = [
+  { key: "deforestation", label: "Deforested" },
+  { key: "degradation", label: "Degraded" },
+] as const;
+
 function formatTickValue(value: number) {
   return `${toReadable(Math.abs(value))} ha`;
 }
 
-type AxisTickProps = {
-  x: number;
-  y: number;
-  payload: { value: number };
+type TooltipProps = {
+  active?: boolean;
+  label?: string | number;
+  payload?: { dataKey?: string | number; value?: number }[];
 };
 
-/**
- * Custom tick components to avoid wrapping and enforce color per-axis.
- * Recharts passes { x, y, payload }.
- */
-const LeftYAxisTick = ({ x, y, payload }: AxisTickProps) => {
+// Hover tooltip: one row per series, with its colour swatch and the real
+// (positive) hectares.
+function ChartTooltip({ active, label, payload }: TooltipProps) {
+  if (!active || !payload?.length) return null;
   return (
-    <text
-      x={x - 6} // nudge left so ticks don't collide with axis
-      y={y + 4}
-      textAnchor="end"
-      fontSize={13}
-      style={{ whiteSpace: "nowrap" }}
-      fill={strokes.degradation}
-    >
-      {formatTickValue(payload.value)}
-    </text>
+    <div className="rounded-lg border border-base-gray/50 bg-white p-3 text-sm shadow-custom">
+      <p className="font-semibold mb-1">{label}</p>
+      {SERIES.map(({ key, label: name }) => {
+        const item = payload.find((p) => p.dataKey === key);
+        if (!item) return null;
+        return (
+          <p key={key} className="flex items-center gap-2">
+            <span
+              aria-hidden
+              className="inline-block w-3 h-3 rounded-sm"
+              style={{ backgroundColor: strokes[key] }}
+            />
+            <span>{name}</span>
+            <span className="ml-auto pl-4 font-semibold">
+              {formatTickValue(Number(item.value))}
+            </span>
+          </p>
+        );
+      })}
+    </div>
   );
-};
-
-const RightYAxisTick = ({ x, y, payload }: AxisTickProps) => {
-  return (
-    <text
-      x={x + 6} // nudge right so ticks don't collide with axis
-      y={y + 4}
-      textAnchor="start"
-      fontSize={13}
-      style={{ whiteSpace: "nowrap" }}
-      fill={strokes.deforestation}
-    >
-      {formatTickValue(payload.value)}
-    </text>
-  );
-};
+}
 
 export default function ForestCoverChangeAreaChart() {
   const { forestCoverChangeDataByCountry } = useForestCoverChangeData();
   const [chartData, setChartData] = useState<ChartData[]>([]);
 
+  // Charts start at DATASET_MIN_YEAR (2022).
+  const minYear = DATASET_MIN_YEAR - 1;
+
+  // One shared axis. Values are negative so both series grow downward:
+  // deforestation sits next to 0 and degradation is stacked below it.
   useEffect(() => {
     if (!forestCoverChangeDataByCountry?.length) return;
 
-    const _chartData = forestCoverChangeDataByCountry
-      .filter((el) => +el.year > 2018)
-      .map((el) => ({
-        year: el.year,
-        degradation: -el.degraded_forest_ha,
-        deforestation: -(el.degraded_forest_ha + el.deforested_ha),
-      }));
-
-    setChartData(_chartData);
-  }, [forestCoverChangeDataByCountry]);
-
-  const { leftDomainMin, rightDomainMin } = useMemo(() => {
-    if (!chartData.length)
-      return { leftDomainMin: "dataMin", rightDomainMin: "dataMin" };
-
-    const degradationValues = chartData
-      .map((d) => d.degradation)
-      .filter((v) => Number.isFinite(v));
-    const deforestationValues = chartData
-      .map((d) => d.deforestation)
-      .filter((v) => Number.isFinite(v));
-
-    const leftMin =
-      degradationValues.length > 0 ? Math.min(...degradationValues) : 0;
-    const rightMin =
-      deforestationValues.length > 0 ? Math.min(...deforestationValues) : 0;
-
-    const leftPadded = leftMin + leftMin * 0.15;
-    const rightPadded = rightMin + rightMin * 0.15;
-
-    return {
-      leftDomainMin: Number.isFinite(leftPadded) ? leftPadded : "dataMin",
-      rightDomainMin: Number.isFinite(rightPadded) ? rightPadded : "dataMin",
-    };
-  }, [chartData]);
+    setChartData(
+      forestCoverChangeDataByCountry
+        .filter((el) => +el.year > minYear)
+        .map((el) => ({
+          year: el.year,
+          deforestation: -el.deforested_ha,
+          degradation: -el.degraded_forest_ha,
+        })),
+    );
+  }, [forestCoverChangeDataByCountry, minYear]);
 
   return (
     <div>
@@ -137,90 +118,33 @@ export default function ForestCoverChangeAreaChart() {
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-
-            {/* LEFT Y: degradation (smaller-magnitude series) */}
             <YAxis
-              yAxisId="left"
-              orientation="left"
-              domain={[leftDomainMin as number, 0]}
+              domain={["auto", 0]}
               tickLine={false}
-              axisLine={{ stroke: strokes.degradation }}
-              // removed label prop (user requested no axis label text)
-              // custom tick component to prevent wrapping and color ticks
-              tick={(props) => <LeftYAxisTick {...props} />}
+              tickFormatter={formatTickValue}
+              tick={{ fill: "currentColor", fontSize: 13 }}
               width={90}
-              label={{
-                value: "Degraded (ha)",
-                angle: -90,
-                position: "insideLeft",
-                fill: strokes.degradation,
-                offset: 0,
-                style: {
-                  textAnchor: "middle",
-                  fontSize: 12,
-                  whiteSpace: "nowrap",
-                },
-              }}
             />
-
-            {/* RIGHT Y: deforestation (larger-magnitude series) */}
-            <YAxis
-              yAxisId="right"
-              orientation="right"
-              domain={[rightDomainMin as number, 0]}
+            <XAxis
+              dataKey="year"
               tickLine={false}
-              axisLine={{ stroke: strokes.deforestation }}
-              // removed label prop (user requested no axis label text)
-              tick={(props) => <RightYAxisTick {...props} />}
-              width={90}
-              label={{
-                value: "Deforested (ha)",
-                angle: 90,
-                position: "insideRight",
-                fill: strokes.deforestation,
-                offset: 0,
-                style: {
-                  textAnchor: "middle",
-                  fontSize: 12,
-                  whiteSpace: "nowrap",
-                },
-              }}
+              tick={{ fill: "currentColor", fontSize: 14 }}
             />
-
-            <XAxis dataKey="year" fontSize={14} tickLine={false} />
-
-            {/* IMPORTANT: changed type from "monotone" (smooth/rounded) to "linear" (straight lines / hard edges) */}
-            <Area
-              yAxisId="right"
-              // type="linear" // Was: "monotone" -> change removes curve smoothing
-              type="monotone" // Was: "monotone" -> change removes curve smoothing
-              dataKey="deforestation"
-              stroke={strokes.deforestation}
-              strokeWidth={2}
-              fill={fills.deforestation}
-              fillOpacity={0.5}
-              dot={{
-                stroke: strokes.deforestation,
-                fill: fills.deforestation,
-                r: 4,
-              }}
-            />
-
-            <Area
-              yAxisId="left"
-              // type="linear" // Was: "monotone" -> change removes curve smoothing
-              type="monotone" // Was: "monotone" -> change removes curve smoothing
-              dataKey="degradation"
-              stroke={strokes.degradation}
-              strokeWidth={2}
-              fill={fills.degradation}
-              fillOpacity={0.5}
-              dot={{
-                stroke: strokes.degradation,
-                fill: fills.degradation,
-                r: 4,
-              }}
-            />
+            <Tooltip content={<ChartTooltip />} />
+            {SERIES.map(({ key }) => (
+              <Area
+                key={key}
+                type="linear"
+                stackId="forest"
+                dataKey={key}
+                stroke={strokes[key]}
+                strokeWidth={2}
+                fill={fills[key]}
+                fillOpacity={0.5}
+                dot={{ stroke: strokes[key], fill: strokes[key], r: 4 }}
+                activeDot={{ r: 5 }}
+              />
+            ))}
           </AreaChart>
         </ResponsiveContainer>
       </div>

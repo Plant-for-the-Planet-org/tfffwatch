@@ -4,9 +4,9 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import LinkWithParams from "./ui/LinkWithParams";
+import Link from "next/link";
 
-export default function HeaderMenu() {
+export default function HeaderMenu({ light = false }: { light?: boolean }) {
   const [customOpen, setCustomOpen] = useState(false);
   const [options] = useState([
     { id: 0, href: "/", label: "Home" },
@@ -14,12 +14,7 @@ export default function HeaderMenu() {
     // { id: 2, href: "investment-tracker", label: "Investment Tracker" },
     { id: 2, href: "investment-tracker/Norway", label: "Investment Tracker" },
     // { id: 3, href: "friends-of-the-tfff", label: "Friends of the TFFF" },
-    {
-      id: 4,
-      external: true,
-      href: "https://plansfortheplanet.substack.com",
-      label: "News",
-    },
+    { id: 4, href: "news", label: "News" },
     { id: 5, href: "about-tfff-watch", label: "About TFFF Watch" },
     { id: 6, href: "press", label: "Press" },
   ]);
@@ -36,7 +31,8 @@ export default function HeaderMenu() {
             }}
           >
             <Image
-              className="w-[24px] h-[24px]"
+              // White icon while the header sits over a hero image.
+              className={twMerge("w-[24px] h-[24px]", light && "invert")}
               width={32}
               height={32}
               src="/assets/menu.svg"
@@ -49,22 +45,19 @@ export default function HeaderMenu() {
           >
             {options.map((el, key) => (
               <MenuItem key={el.id} as="div">
-                <LinkWithParams
-                  href={el?.external ? el?.href : `/${el.href}`}
+                <Link
+                  href={el.href.startsWith("/") ? el.href : `/${el.href}`}
                   className={twMerge(
                     "block w-full typo-p py-4",
                     key === 0 && "pt-0",
                     key === options.length - 1 && "pb-0",
                   )}
-                  preserveParams={["dataset"]}
                   onClick={() => {
                     close();
                   }}
-                  target={el?.external ? "_blank" : undefined}
-                  rel={el?.external ? "noopener noreferrer" : undefined}
                 >
                   <span>{el.label}</span>
-                </LinkWithParams>
+                </Link>
               </MenuItem>
             ))}
           </MenuItems>

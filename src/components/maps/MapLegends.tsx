@@ -1,92 +1,76 @@
 import { twMerge } from "tailwind-merge";
+import { DATASET_LATEST_YEAR } from "@/domain/dataset";
 
-export function LegendsForJRC() {
+import { eligibilityColor, type Eligibility } from "@/domain/eligibility";
+
+const ELIGIBILITY_LEGEND: {
+  status: Eligibility;
+  title: string;
+  note: string;
+}[] = [
+  {
+    status: "ELIGIBLE",
+    title: "Fully eligible countries",
+    note: "Pass both criteria",
+  },
+  {
+    status: "ALMOST_ELIGIBLE",
+    title: "Almost eligible",
+    note: `3-year average deforestation rate under 0.5% but deforestation increased from ${DATASET_LATEST_YEAR - 1} to ${DATASET_LATEST_YEAR}`,
+  },
+  {
+    status: "INELIGIBLE",
+    title: "Currently ineligible rainforest countries",
+    note: "3-year average deforestation rate over 0.5%",
+  },
+];
+
+// Eligibility legend as in the Figma design: three tinted cards in a row
+// below the map (stacked on mobile), each with a colour chip, a title and an
+// italic note. Chip colours come from the same helper as the map fills.
+export function EligibilityLegend({
+  statuses = ["ELIGIBLE", "ALMOST_ELIGIBLE", "INELIGIBLE"],
+}: {
+  statuses?: Eligibility[];
+} = {}) {
+  const items = ELIGIBILITY_LEGEND.filter((item) =>
+    statuses.includes(item.status)
+  );
   return (
-    <div className="text-center">
-      <div className="space-y-2">
-        <div className="flex items-start gap-2 text-sm">
-          <div className="shrink-0 w-8 h-6 border border-black bg-[#C4C4C4]"></div>
-          <div className="text-left md:max-w-1/2">
-            <p>Currently ineligible rainforest countries</p>
-            <p className="text-xs text-gray-600">
-              Deforestation rate over 0.5%
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-2 text-sm">
-          <div className="shrink-0 w-8 h-6 border border-black bg-[#8FBDF1]"></div>
-          <div className="text-left md:max-w-1/2">
-            <p>Almost eligible</p>
-            <p className="text-xs text-gray-600">
-              Deforestation rate under 0.5% but increase in deforestation rate
-              from 2023 to 2024
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-2 text-sm">
-          <div className="shrink-0 w-8 h-6 border border-black bg-[#6FCF97]"></div>
-          <div className="text-left md:max-w-1/2">
-            <p>Fully eligible countries</p>
-            <p className="text-xs text-gray-600">Pass both criteria</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ul
+      className={twMerge(
+        "grid grid-cols-1 gap-3 md:gap-4",
+        items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"
+      )}
+    >
+      {items.map((item) => (
+        <li
+          key={item.status}
+          className="rounded-2xl bg-primary-medium-light padding-3 typo-p"
+        >
+          <span
+            aria-hidden
+            className="block w-6 h-4 rounded"
+            style={{ backgroundColor: eligibilityColor(item.status) }}
+          />
+          <p className="mt-2">{item.title}</p>
+          <p className="text-sm italic text-base-text/60">{item.note}</p>
+        </li>
+      ))}
+    </ul>
   );
 }
 
-export function LegendsForGFW() {
-  return (
-    // <div className="text-center">
-    //   <p className="typo-p mb-2">% degraded or deforested</p>
-    //   <div className="rounded-full h-2 w-full  bg-[linear-gradient(90deg,_#FFFFFF_0%,_#F2994A_39.76%,_#EB5757_66.23%,_#C90F0F_100%)]"></div>
-    //   <div className="flex justify-between typo-p">
-    //     <span>0%</span>
-    //     <span>2%</span>
-    //   </div>
-    // </div>
-    <div className="text-center">
-      <div className="space-y-2">
-        <div className="flex items-start gap-2 text-sm">
-          <div className="shrink-0 w-8 h-6 border border-black bg-[#C4C4C4]"></div>
-          <div className="text-left md:max-w-1/2">
-            <p>Currently ineligible rainforest countries</p>
-            <p className="text-xs text-gray-600">
-              Deforestation rate over 0.5%
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-2 text-sm">
-          <div className="shrink-0 w-8 h-6 border border-black bg-[#8FBDF1]"></div>
-          <div className="text-left md:max-w-1/2">
-            <p>Almost eligible</p>
-            <p className="text-xs text-gray-600">
-              Deforestation rate under 0.5% but increase in deforestation rate
-              from 2023 to 2024
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-2 text-sm">
-          <div className="shrink-0 w-8 h-6 border border-black bg-[#6FCF97]"></div>
-          <div className="text-left md:max-w-1/2">
-            <p>Fully eligible countries</p>
-            <p className="text-xs text-gray-600">Pass both criteria</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+export function LegendsForMMU() {
+  return <EligibilityLegend />;
 }
+
 export function CountryMapLegends() {
   return (
     <div className="flex typo-p">
       <div className="font-thin">
         <div className="flex gap-2 items-center">
-          <div className={twMerge("w-6 h-4", `bg-[#6FCF97]`)}></div>
+          <div className={twMerge("w-6 h-4", `bg-[#007A49]`)}></div>
           <p>Intact Forest</p>
         </div>
         <div className="flex gap-2 items-center">
@@ -98,7 +82,7 @@ export function CountryMapLegends() {
           <p>Degraded</p>
         </div>
         {/* <div className="flex gap-2 items-center">
-          <div className={twMerge("w-6 h-4", `bg-[#2C9CDB]`)}></div>
+          <div className={twMerge("w-6 h-4", `bg-[#2D9CDB]`)}></div>
           <p>Restored</p>
         </div> */}
       </div>

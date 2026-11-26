@@ -39,7 +39,7 @@ export default function HowTFFFWorksFlowChart() {
               id="sponsors-to-tfif"
             ></div>
             <Image
-              className="flex-1/6 bg-[#EEF5FF] aspect-square p-2 rounded-md"
+              className="flex-1/6 bg-secondary-light aspect-square p-2 rounded-md"
               width={52}
               height={36}
               src="/assets/sponsors.svg"
@@ -56,7 +56,7 @@ export default function HowTFFFWorksFlowChart() {
               id="markets-to-tfif"
             ></div>
             <Image
-              className="flex-1/6 bg-[#EEF5FF] aspect-square p-2 rounded-md"
+              className="flex-1/6 bg-secondary-light aspect-square p-2 rounded-md"
               width={36}
               height={52}
               src="/assets/financial-markets.svg"

@@ -35,7 +35,7 @@ export default function HowTFFFWorks() {
       <div id="recipients-from-tfff"></div>
       <Spacer />
 
-      <div className="bg-[#E7F8EE] border-2 border-dashed border-[#6FCE97] rounding-lg padding-3">
+      <div className="bg-primary-light border-2 border-dashed border-primary rounding-lg padding-3">
         <div className="text-center">
           <h2 className="font-bold typo-h2">Example recipient country </h2>
           <p className="typo-p">74 countries are potentially eligible </p>

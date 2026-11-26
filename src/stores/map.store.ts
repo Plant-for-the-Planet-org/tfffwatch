@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { DatasetType, WorldMapState } from "../components/maps/shared/types";
 import { Country } from "@/domain/country.types";
+import { DATASET_LATEST_YEAR } from "@/domain/dataset";
 import { CountryForestRecord } from "@/domain/forest-record.types";
 
 interface WorldMapStore extends WorldMapState {
@@ -8,23 +9,27 @@ interface WorldMapStore extends WorldMapState {
   setSelectedYear: (year: string) => void;
   setSelectedDataset: (dataset: DatasetType) => void;
   setClickPosition: (position: { x: number; y: number } | null) => void;
+  // ISO2 picked from the country search; WorldMap opens its popup, then clears it.
+  focusIso2: string | null;
+  setFocusIso2: (iso2: string | null) => void;
   setForestData: (dataset: DatasetType, data: CountryForestRecord[]) => void;
   setIsLoading: (loading: boolean) => void;
   getCurrentForestData: () => CountryForestRecord[];
   getSelectedCountryData: () => CountryForestRecord | null;
-  datasetFetched: { GFW: boolean; JRC: boolean };
+  datasetFetched: { MMU: boolean };
   markDatasetFetched: (dataset: DatasetType) => void;
   resetDatasetFetched: () => void;
 }
 
 export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
   selectedCountry: null,
-  selectedYear: "2024",
-  selectedDataset: "JRC",
+  selectedYear: String(DATASET_LATEST_YEAR),
+  selectedDataset: "MMU",
   clickPosition: null,
-  forestData: { GFW: [], JRC: [] },
+  focusIso2: null,
+  forestData: { MMU: [] },
   isLoading: false,
-  datasetFetched: { GFW: false, JRC: false },
+  datasetFetched: { MMU: false },
 
   setSelectedCountry: (country) => set({ selectedCountry: country }),
   setSelectedYear: (year) =>
@@ -34,6 +39,7 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
     })),
   setSelectedDataset: (dataset) => set({ selectedDataset: dataset }),
   setClickPosition: (position) => set({ clickPosition: position }),
+  setFocusIso2: (iso2) => set({ focusIso2: iso2 }),
   setForestData: (dataset, data) =>
     set((state) => ({
       forestData: { ...state.forestData, [dataset]: data },
@@ -48,7 +54,7 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
     })),
   resetDatasetFetched: () =>
     set({
-      datasetFetched: { GFW: false, JRC: false },
+      datasetFetched: { MMU: false },
     }),
 
   getCurrentForestData: () => {

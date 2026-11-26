@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { DATASET_LATEST_YEAR } from "@/domain/dataset";
 import { Spacer } from "@/components/ui/layout";
 import { useWorldMapStore } from "@/stores/map.store";
+import { eligibilityColor } from "@/domain/eligibility";
 import { buildRewardsDonut } from "./transforms/rewards-donut";
 import { LazyDonutChart as DonutChart } from "./lazy";
 
@@ -32,7 +34,7 @@ export default function CurrentRewardsChart() {
         <div className="max-w-3xs mx-auto">
           <h2 className="typo-h2 font-bold text-center">Current Rewards</h2>
           <p className="text-sm text-center text-foreground">
-            if TFFF was already operational, based on 2024 data for fully and
+            if TFFF was already operational, based on {DATASET_LATEST_YEAR} data for fully and
             almost eligible countries
           </p>
         </div>
@@ -49,14 +51,18 @@ export default function CurrentRewardsChart() {
       <div className="max-w-3xs mx-auto">
         <h2 className="typo-h2 font-bold text-center">Current Rewards</h2>
         <p className="text-sm text-center text-foreground">
-          if TFFF was already operational, based on 2024 data for fully and
+          if TFFF was already operational, based on {DATASET_LATEST_YEAR} data for fully and
           almost eligible countries
         </p>
       </div>
       <Spacer />
       <Spacer />
       <DonutChart
-        data={chartData.countries}
+        // Every segment in the theme green.
+        data={chartData.countries.map((c) => ({
+          ...c,
+          color: eligibilityColor("ELIGIBLE"),
+        }))}
         centerLabel={`$${(chartData.sum / 1000000000).toFixed(1)}bn`}
       />
       <Spacer />

@@ -11,7 +11,7 @@ export function classify(
     CountryForestRecord,
     | "eligibility_deforestation_rate_below_half_percent"
     | "eligibility_decreasing_trend_of_deforestation"
-  >
+  >,
 ): Eligibility {
   if (r.eligibility_deforestation_rate_below_half_percent === true) {
     if (r.eligibility_decreasing_trend_of_deforestation === false) {
@@ -23,6 +23,29 @@ export function classify(
   return "INELIGIBLE";
 }
 
+// Same rule as the world map: only INELIGIBLE countries get no reward.
+// Fully and almost eligible countries are paid.
+export function isPaid(
+  r: Parameters<typeof classify>[0],
+): boolean {
+  return classify(r) !== "INELIGIBLE";
+}
+
+// Payout shown for a record: 0 if not paid, and never negative (deductions
+// can exceed the base reward, but a country cannot owe money).
+export function payoutUsd(
+  r: Parameters<typeof classify>[0] & {
+    reward_after_deductions_usd: number;
+    iplc_reward_usd: number;
+  },
+  field: "reward_after_deductions_usd" | "iplc_reward_usd" = "reward_after_deductions_usd",
+): number {
+  return isPaid(r) ? Math.max(0, r[field]) : 0;
+}
+
+// Blank country fill: Lighter over Light, the section background.
+export const NO_DATA_FILL = "#E9F6EE";
+
 // Map an eligibility verdict to its map/legend fill color.
 // Hex values preserved verbatim from the former getJRCColorKey/getGFWColorKey.
 // Accepts unknown strings (e.g. "NA"/"") which fall through to white.
@@ -31,9 +54,9 @@ export function eligibilityColor(eligibility: Eligibility | string): string {
     case "INELIGIBLE":
       return "#C4C4C4";
     case "ALMOST_ELIGIBLE":
-      return "#8FBDF1";
+      return "#2D9CDB";
     case "ELIGIBLE":
-      return "#6FCF97";
+      return "#007A49";
     default:
       return "#FFFFFF";
   }
@@ -41,5 +64,28 @@ export function eligibilityColor(eligibility: Eligibility | string): string {
 
 // Endorsement fill color (separate concept; preserved from getEndorsementColorKey).
 export function endorsementColor(hasEndorsed: boolean): string {
-  return hasEndorsed ? "#6FCF97" : "#FFFFFF";
+  return hasEndorsed ? "#007A49" : "#FFFFFF";
+}
+
+// Country status shown in search results: an eligibility verdict, or
+// "NO_DATA" when the country has no record for the chosen year/dataset.
+export type CountryStatus = Eligibility | "NO_DATA";
+
+// Short labels for each status (short forms of the map legend wording).
+export function statusLabel(status: CountryStatus): string {
+  switch (status) {
+    case "ELIGIBLE":
+      return "Eligible";
+    case "ALMOST_ELIGIBLE":
+      return "Almost eligible";
+    case "INELIGIBLE":
+      return "Currently ineligible";
+    default:
+      return "No data";
+  }
+}
+
+// Dot color for each status. "No data" uses the map's blank fill.
+export function statusColor(status: CountryStatus): string {
+  return status === "NO_DATA" ? NO_DATA_FILL : eligibilityColor(status);
 }

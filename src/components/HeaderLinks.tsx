@@ -29,10 +29,9 @@ export default function HeaderLinks() {
     },
     {
       id: 4,
-      href: "https://plansfortheplanet.substack.com",
+      href: "/news",
       label: "News",
       isActive: false,
-      external: true,
     },
     { id: 5, href: "/about-tfff-watch", label: "About", isActive: false },
     { id: 6, href: "/press", label: "Press", isActive: false },
@@ -62,24 +61,23 @@ export default function HeaderLinks() {
   }, [pathname]);
 
   return (
-    <div className="flex gap-6 lg:gap-8 xl:gap-10 items-center">
+    // Dark pill bar, shared with Cali Watch's header.
+    <nav
+      aria-label="Primary navigation"
+      className="flex items-center gap-3 xl:gap-5 2xl:gap-6 whitespace-nowrap rounded-full bg-base-text/80 px-5 xl:px-7 py-3 text-sm font-semibold backdrop-blur-md"
+    >
       {options.map((option) => (
-        <div
+        <Link
           key={option.id}
+          href={option.href}
+          aria-current={option.isActive ? "page" : undefined}
           className={twJoin(
-            "typo-p",
-            option.isActive ? "font-semibold" : "font-regular",
+            "rounded-md px-1 transition-colors text-white hover:text-white/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary",
           )}
         >
-          <Link
-            href={option.href}
-            target={option.external ? "_blank" : undefined}
-            rel={option.external ? "noopener noreferrer" : undefined}
-          >
-            {option.label}
-          </Link>
-        </div>
+          {option.label}
+        </Link>
       ))}
-    </div>
+    </nav>
   );
 }
