@@ -1,10 +1,11 @@
 "use client";
 
 import { Spacer } from "@/components/ui/layout";
-import LinkWithParams from "@/components/ui/LinkWithParams";
+import { countryPagePath } from "@/domain/dataset";
 import { toReadable } from "@/lib/format";
 import { Check, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { TFFFCardProps } from "./types";
 import { slugify } from "underscore.string";
@@ -101,7 +102,7 @@ export default function TFFFCard({
         <div className="flex justify-between items-center">
           <span>
             Discount for <b>{toReadable(data.degraded_forest_ha) ?? "?"} ha</b>{" "}
-            degradation in 2024 ({toReadable(data.percentage_degraded) ?? "?"}%)
+            degradation in {data.year} ({toReadable(data.percentage_degraded) ?? "?"}%)
           </span>
           <span className={twMerge("text-[#F2994A]", "text-sm")}>
             <b>-${toReadable(data.degradation_deduction_usd)}</b>
@@ -148,9 +149,11 @@ export default function TFFFCard({
       {showCTA && (
         <>
           <Spacer className="hidden md:block" />
-          <LinkWithParams
-            href={`/${country?.slug || slugify(country.name)}/${data?.year}`}
-            preserveParams={["dataset"]}
+          <Link
+            href={countryPagePath(
+              country?.slug || slugify(country.name),
+              data?.year
+            )}
             // Same CTA pill as ui/Button: Planet green, chevron for an in-site link.
             // Mobile: flush with the card bottom, so only the bottom corners round.
             className="inline-block w-full bg-primary-planet-green hover:bg-primary-planet-green/85 text-white px-5 py-3 rounded-b-xl rounded-t-none md:rounded-full cursor-pointer transition-colors"
@@ -162,7 +165,7 @@ export default function TFFFCard({
                 <ChevronRight aria-hidden strokeWidth={3} className="size-4" />
               </span>
             </span>
-          </LinkWithParams>
+          </Link>
         </>
       )}
     </div>

@@ -9,7 +9,6 @@ export { default as CountryMapCard } from "./country/CountryMapCard";
 // Shared Components
 export { default as TFFFCard } from "./shared/TFFFCard";
 export { default as MapContainer } from "./shared/MapContainer";
-export { default as DatasetTabs } from "./shared/DatasetTabsWrapper";
 
 // Types
 export type { DatasetType, LayerData, MapViewport } from "./shared/types";

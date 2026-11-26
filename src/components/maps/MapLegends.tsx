@@ -1,4 +1,5 @@
 import { twMerge } from "tailwind-merge";
+import { DATASET_LATEST_YEAR } from "@/domain/dataset";
 
 import { eligibilityColor, type Eligibility } from "@/domain/eligibility";
 
@@ -15,7 +16,7 @@ const ELIGIBILITY_LEGEND: {
   {
     status: "ALMOST_ELIGIBLE",
     title: "Almost eligible",
-    note: "Deforestation rate under 0.5% but increase in deforestation rate from 2023 to 2024",
+    note: `Deforestation rate under 0.5% but increase in deforestation rate from ${DATASET_LATEST_YEAR - 1} to ${DATASET_LATEST_YEAR}`,
   },
   {
     status: "INELIGIBLE",
@@ -60,11 +61,7 @@ export function EligibilityLegend({
   );
 }
 
-export function LegendsForJRC() {
-  return <EligibilityLegend />;
-}
-
-export function LegendsForGFW() {
+export function LegendsForMMU() {
   return <EligibilityLegend />;
 }
 

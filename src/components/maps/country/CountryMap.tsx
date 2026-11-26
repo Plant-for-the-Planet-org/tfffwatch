@@ -19,7 +19,7 @@ import type {
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
 import countries from "../countries-optimized.geo.json";
-import { CountryMapProps, LayerData } from "../shared/types";
+import { CountryMapProps, LayerData, MmuLayer } from "../shared/types";
 
 // Moved interfaces to shared/types.ts
 
@@ -36,13 +36,15 @@ function getCountryGeoJSON(iso2: string): FeatureCollection {
 export default function CountryMap({
   country,
   year,
-  dataset = "GFW",
   showLayers = true,
 }: CountryMapProps) {
   const { width = 0 } = useWindowSize();
 
   // Use local state only to avoid store loops
   const [layersData, setLayersData] = useState<LayerData | null>(null);
+  const [layersStatus, setLayersStatus] = useState<
+    "loading" | "ready" | "error"
+  >("loading");
 
   const mapRef = useRef<MapRef>(null);
 
@@ -93,25 +95,43 @@ export default function CountryMap({
   }
 
   useEffect(() => {
+    let cancelled = false;
+    setLayersData(null);
+    setLayersStatus("loading");
     (async () => {
       try {
         const result = await api<LayerData>({
           url: urls.layersProxyAPI,
           method: "POST",
           token: "",
-          body: {
-            name: country.name,
-            year,
-            iso2: country.iso2,
-            dataset, // Include dataset in API call
-          },
+          body: { iso2: country.iso2, year },
         });
+        if (cancelled) return;
         setLayersData(result);
+        setLayersStatus("ready");
       } catch (error) {
+        if (cancelled) return;
         console.error("Error fetching layers:", error);
+        setLayersStatus("error");
       }
     })();
-  }, [country.name, year, country.iso2, dataset]);
+    return () => {
+      cancelled = true;
+    };
+  }, [country.iso2, year]);
+
+  // Drawn bottom to top: forest, then forest loss, then fire loss.
+  const mmuLayers = [
+    { id: "mmu-forest", layer: layersData?.forest },
+    { id: "mmu-deforestation", layer: layersData?.deforestation },
+    { id: "mmu-degradation", layer: layersData?.degradation },
+  ].filter(
+    (entry): entry is { id: string; layer: MmuLayer } => !!entry.layer?.tileUrl
+  );
+
+  // Not generated or not published yet: show a note, not an error.
+  const showEmptyState =
+    showLayers && layersStatus === "ready" && mmuLayers.length === 0;
 
   return (
     <>
@@ -149,166 +169,22 @@ export default function CountryMap({
           </Source>
         )}
 
-        {showLayers && layersData && dataset === "GFW" && (
-          <>
-            {/* GFW Mode: Forest layer (bottom) */}
+        {showLayers &&
+          mmuLayers.map(({ id, layer }) => (
             <Source
-              key={`current-forest-${dataset}`}
-              id="current-forest-source"
+              key={`${id}-${year}`}
+              id={`${id}-source`}
               type="raster"
-              tiles={[layersData.currentForestLayer?.tileUrl]}
+              tiles={[layer.tileUrl]}
               tileSize={256}
             >
               <Layer
-                id="current-forest-layer"
+                id={`${id}-layer`}
                 type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
+                paint={{ "raster-opacity": 0.8 }}
               />
             </Source>
-
-            {/* GFW Mode: Deforestation layer (middle) */}
-            <Source
-              key={`loss-in-year-${dataset}`}
-              id="loss-in-year-source"
-              type="raster"
-              tiles={[layersData.lossInYearLayer?.tileUrl]}
-              tileSize={256}
-            >
-              <Layer
-                id="loss-in-year-layer"
-                type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-
-            {/* GFW Mode: Fire loss layer (top) */}
-            <Source
-              key={`fire-loss-${dataset}`}
-              id="fire-loss-source"
-              type="raster"
-              tiles={[layersData.fireLossLayer?.tileUrl]}
-              tileSize={256}
-            >
-              <Layer
-                id="fire-loss-layer"
-                type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-          </>
-        )}
-
-        {showLayers && layersData && dataset === "JRC" && (
-          <>
-            {/* JRC Mode: Tropical forest layer (bottom) */}
-            <Source
-              key={`total-tropical-forest-${dataset}`}
-              id="total-tropical-forest-source"
-              type="raster"
-              tiles={[layersData.totalTropicalForestLayer?.tileUrl]}
-              tileSize={256}
-            >
-              <Layer
-                id="total-tropical-forest-layer"
-                type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-
-            {/* JRC Mode: Subtropical forest layer (bottom) */}
-            <Source
-              key={`subtropical-forest-${dataset}`}
-              id="subtropical-forest-source"
-              type="raster"
-              tiles={[layersData.subtropicalForestLayer?.tileUrl]}
-              tileSize={256}
-            >
-              <Layer
-                id="subtropical-forest-layer"
-                type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-
-            {/* JRC Mode: Tropical deforestation layer (middle) */}
-            <Source
-              key={`tropical-deforestation-${dataset}`}
-              id="tropical-deforestation-source"
-              type="raster"
-              tiles={[layersData.tropicalDeforestationLayer?.tileUrl]}
-              tileSize={64}
-            >
-              <Layer
-                id="tropical-deforestation-layer"
-                type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-
-            {/* JRC Mode: Subtropical deforestation layer (middle) */}
-            <Source
-              key={`subtropical-deforestation-${dataset}`}
-              id="subtropical-deforestation-source"
-              type="raster"
-              tiles={[layersData.subtropicalDeforestationLayer?.tileUrl]}
-              tileSize={64}
-            >
-              <Layer
-                id="subtropical-deforestation-layer"
-                type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-
-            {/* JRC Mode: Tropical degradation layer (top) */}
-            <Source
-              key={`tropical-degradation-${dataset}`}
-              id="tropical-degradation-source"
-              type="raster"
-              tiles={[layersData.tropicalDegradationLayer?.tileUrl]}
-              tileSize={64}
-            >
-              <Layer
-                id="tropical-degradation-layer"
-                type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-
-            {/* JRC Mode: Subtropical degradation layer (top) */}
-            <Source
-              key={`subtropical-degradation-${dataset}`}
-              id="subtropical-degradation-source"
-              type="raster"
-              tiles={[layersData.subtropicalDegradationLayer?.tileUrl]}
-              tileSize={64}
-            >
-              <Layer
-                id="subtropical-degradation-layer"
-                type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-          </>
-        )}
+          ))}
 
         <Source
           id="mask"
@@ -325,6 +201,11 @@ export default function CountryMap({
           />
         </Source>
       </Map>
+      {showEmptyState && (
+        <p className="absolute top-2 left-0 right-0 text-center text-xs text-gray-600 pointer-events-none">
+          Map layers for {year} are not available yet.
+        </p>
+      )}
     </>
   );
 }

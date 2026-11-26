@@ -1,7 +1,7 @@
 "use client";
 
 import { useWorldMapStore } from "@/stores/map.store";
-import { api, urls } from "@/lib/http";
+import { fetchCountryRecords } from "@/lib/forest-records";
 import { useEffect, useState } from "react";
 import TFFFCard from "../shared/TFFFCard";
 import { DatasetType } from "../shared/types";
@@ -15,7 +15,7 @@ interface CountryMapCardProps {
 
 export default function CountryMapCard({
   country,
-  dataset = "JRC",
+  dataset = "MMU",
 }: CountryMapCardProps) {
   const { selectedYear } = useWorldMapStore();
   const [tfffData, setTfffData] = useState<CountryForestRecord | null>(null);
@@ -31,18 +31,12 @@ export default function CountryMapCard({
 
       try {
         setIsLoading(true);
-        const data = await api<CountryForestRecord[]>({
-          url: urls.forestChange,
-          method: "GET",
-          token: "",
-          query: {
-            "country-iso2": country.iso2, // Changed from 'country' to 'country-iso2'
-            source: activeDataset, // Dataset-specific data (JRC or GFW)
-            // Removed year parameter - will filter on client side
-          },
+        const data = await fetchCountryRecords({
+          iso2: country.iso2,
+          dataset: activeDataset,
         });
 
-        // Filter data by year on client side (API returns all years for this country)
+        // Filter by year on the client (all years come back for the country)
         const filteredData = data.filter(
           (item) => String(item.year) === String(selectedYear)
         );

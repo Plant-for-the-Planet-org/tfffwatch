@@ -1,5 +1,6 @@
 import type { CountryForestRecord } from "@/domain/forest-record.types";
 import { classify, eligibilityColor, type Eligibility } from "@/domain/eligibility";
+import { DATASET_LATEST_YEAR } from "@/domain/dataset";
 
 // The two reward donuts (Maximum / Current) differ only by which reward field
 // they sum and whether ineligible countries are included. Logic preserved
@@ -7,7 +8,7 @@ import { classify, eligibilityColor, type Eligibility } from "@/domain/eligibili
 export type RewardField = "base_reward_usd" | "reward_after_deductions_usd";
 
 // Data year shown by the reward charts and the Top 10 chart.
-export const REWARDS_YEAR = "2024";
+export const REWARDS_YEAR = String(DATASET_LATEST_YEAR);
 
 export interface DonutDatum {
   name: string;
@@ -39,11 +40,11 @@ export function buildRewardsDonut(
 ): RewardsDonut {
   const { rewardField, includeIneligible } = opts;
 
-  // Filter for the rewards year only
-  const data2024 = records.filter(
-    (item) => String(item.year) === REWARDS_YEAR
+  // Latest data year only
+  const latest = records.filter(
+    (item) => String(item.year) === String(DATASET_LATEST_YEAR)
   );
-  if (data2024.length === 0) return { sum: 0, countries: [], legendGroups: [] };
+  if (latest.length === 0) return { sum: 0, countries: [], legendGroups: [] };
 
   const order: Eligibility[] = includeIneligible
     ? ["ELIGIBLE", "ALMOST_ELIGIBLE", "INELIGIBLE"]
@@ -54,7 +55,7 @@ export function buildRewardsDonut(
   let sum = 0;
 
   for (const group of order) {
-    const inGroup = data2024.filter((item) => classify(item) === group);
+    const inGroup = latest.filter((item) => classify(item) === group);
 
     // Sort by reward (descending), take top 20, push to chart entries
     [...inGroup]
