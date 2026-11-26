@@ -16,12 +16,12 @@ const ELIGIBILITY_LEGEND: {
   {
     status: "ALMOST_ELIGIBLE",
     title: "Almost eligible",
-    note: `Deforestation rate under 0.5% but increase in deforestation rate from ${DATASET_LATEST_YEAR - 1} to ${DATASET_LATEST_YEAR}`,
+    note: `3-year average deforestation rate under 0.5% but deforestation increased from ${DATASET_LATEST_YEAR - 1} to ${DATASET_LATEST_YEAR}`,
   },
   {
     status: "INELIGIBLE",
     title: "Currently ineligible rainforest countries",
-    note: "Deforestation rate over 0.5%",
+    note: "3-year average deforestation rate over 0.5%",
   },
 ];
 

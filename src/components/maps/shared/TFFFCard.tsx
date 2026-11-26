@@ -80,6 +80,7 @@ export default function TFFFCard({
                 eligibility_decreasing_trend_of_deforestation={
                   data.eligibility_decreasing_trend_of_deforestation
                 }
+                avgRate={data["3yr_avg_deforestation"]}
               />
             </div>
           </div>
@@ -182,9 +183,11 @@ export default function TFFFCard({
 function MinimumCriteria({
   eligibility_deforestation_rate_below_half_percent,
   eligibility_decreasing_trend_of_deforestation,
+  avgRate,
 }: {
   eligibility_deforestation_rate_below_half_percent: boolean;
   eligibility_decreasing_trend_of_deforestation: boolean;
+  avgRate?: number | "";
 }) {
   return (
     <div>
@@ -194,6 +197,7 @@ function MinimumCriteria({
           size="sm"
         />
         Three-year average deforestation rate less than 0.5%
+        {typeof avgRate === "number" && ` (${toReadable(avgRate)}%)`}
       </p>
       <div className="my-1"></div>
       <p className="flex items-center gap-2">

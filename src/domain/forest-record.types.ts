@@ -9,6 +9,8 @@ export interface CountryForestRecord {
   "country-iso2": Iso2;
   "country-slug": CountrySlug;
   eligibility_combined: boolean;
+  // Average yearly deforestation rate (%) over the last 3 years. "" if unknown.
+  "3yr_avg_deforestation"?: number | "";
   intact_forest_ha: number;
   base_reward_usd: number;
   deforested_ha: number;
