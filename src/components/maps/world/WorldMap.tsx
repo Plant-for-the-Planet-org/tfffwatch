@@ -19,7 +19,6 @@ import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import * as turf from "@turf/turf";
 import { asCountrySlug, asIso2 } from "@/domain/brand";
@@ -254,18 +253,19 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
       </div>
 
       <div className="absolute md:mt-auto right-0 bottom-0 text-xs flex items-end-safe">
-        {/* One line from md, as in the Figma design: "Version … | Please cite …" */}
-        <div className="mr-2 text-right pb-0.5 md:flex md:items-center md:gap-1">
+        {/* Two lines, left of the download icon: version (from env), then the
+            citation. */}
+        <div className="mr-2 text-right pb-0.5 leading-snug">
           <VersionChip />
-          <span aria-hidden className="hidden md:inline">
-            |
-          </span>
           <div>
             Please cite data as{" "}
-            <Link className="text-primary-planet-green font-semibold italic" href="">
+            <a
+              className="text-primary-planet-green font-semibold italic"
+              href="https://tfffwatch.org"
+            >
               tfffwatch.org
-            </Link>{" "}
-            <span className="italic"> by Plant-for-the-Planet</span>
+            </a>{" "}
+            <span className="italic">by Plant-for-the-Planet</span>
           </div>
         </div>
 
