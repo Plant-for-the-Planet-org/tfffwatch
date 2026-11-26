@@ -21,6 +21,8 @@ type ChipItemType = {
   investedCapital: number | null;
 };
 
+// Chip colours come from the theme: invested = green (primary), pledged =
+// blue (secondary), everything else = gray (base-gray).
 function chipStatusClasses(item: ChipItemType) {
   if (item.investedCapital) {
     return "border border-primary bg-primary-light";
@@ -28,7 +30,7 @@ function chipStatusClasses(item: ChipItemType) {
   if (item.pledgedCapital) {
     return "border border-secondary bg-secondary-light";
   }
-  return "border border-base-gray bg-secondary-light";
+  return "border border-base-gray bg-base-gray/20";
 }
 
 const COUNTRY_LIST: readonly ChipItemType[] = [
