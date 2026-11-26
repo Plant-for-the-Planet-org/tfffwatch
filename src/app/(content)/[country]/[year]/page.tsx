@@ -17,6 +17,7 @@ import {
   getEndorsementData,
   isSignatoryCountry,
 } from "@/domain/country";
+import { fetchCountryRecords } from "@/lib/forest-records";
 import JsonLd from "@/lib/json-ld";
 import {
   buildBreadcrumbSchema,
@@ -24,6 +25,7 @@ import {
 } from "@/lib/structured-data";
 import { pageOpenGraph } from "@/lib/metadata";
 import { Metadata } from "next";
+import Link from "next/link";
 import { permanentRedirect, redirect } from "next/navigation";
 import { humanize } from "underscore.string";
 
@@ -92,6 +94,18 @@ export default async function Page({ params, searchParams }: PageProps) {
     console.error("Error fetching endorsement data:", error);
   }
 
+  // Countries outside the dataset have no records. Say so instead of showing
+  // empty charts. If the fetch fails, assume data exists and render as usual.
+  let hasData = true;
+  try {
+    const records = await fetchCountryRecords({
+      iso2: details.iso2,
+      dataset: validDataset,
+      nextOptions: { revalidate: 1800 },
+    });
+    hasData = records.length > 0;
+  } catch {}
+
   const path = countryPagePath(country, year);
   const datasetSchema = buildPayoutDatasetSchema({
     countryName: details.name,
@@ -123,9 +137,26 @@ export default async function Page({ params, searchParams }: PageProps) {
         dataset={validDataset}
       />
       <Spacer />
-      <ForestCoverChange />
-      <Spacer />
-      <AnnualPayout />
+      {hasData ? (
+        <>
+          <ForestCoverChange />
+          <Spacer />
+          <AnnualPayout />
+        </>
+      ) : (
+        <div className="border border-base-gray/50 rounding-xl padding-3 text-center typo-p">
+          <h2 className="typo-h2 font-bold">No data for {details.name}</h2>
+          <Spacer />
+          <p>
+            {details.name} is not part of the TFFF Watch estimates, so there are
+            no forest change or payout figures to show.
+          </p>
+          <Spacer />
+          <Link href="/" className="underline underline-offset-4">
+            Back to all countries
+          </Link>
+        </div>
+      )}
       {isSignatory !== null && (
         <>
           <Spacer />
