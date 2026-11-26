@@ -23,6 +23,14 @@ export function classify(
   return "INELIGIBLE";
 }
 
+// Same rule as the world map: only INELIGIBLE countries get no reward.
+// Fully and almost eligible countries are paid.
+export function isPaid(
+  r: Parameters<typeof classify>[0],
+): boolean {
+  return classify(r) !== "INELIGIBLE";
+}
+
 // Blank country fill: Lighter over Light, the section background.
 export const NO_DATA_FILL = "#E9F6EE";
 

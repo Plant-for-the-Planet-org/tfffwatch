@@ -8,6 +8,7 @@
 // Wording mirrors TFFFCard so the page reads consistently ("intact forest",
 // "estimated reward if TFFF already existed", the 20% Indigenous Peoples share).
 import { DATASET_LABEL, DatasetType } from "@/domain/dataset";
+import { isPaid } from "@/domain/eligibility";
 import type { CountryForestRecord } from "@/domain/forest-record.types";
 import { toReadable } from "@/lib/format";
 import { fetchCountryRecords } from "@/lib/forest-records";
@@ -54,8 +55,8 @@ export default async function CountryPayoutSummary({
   const record = await getRecord({ iso2, year, dataset });
   if (!record) return null;
 
-  const isEligible = record.eligibility_combined;
-  // Matches TFFFCard: an ineligible country's reward reads as $0, not the
+  const isEligible = isPaid(record);
+  // Same rule as the world map and TFFFCard: an ineligible country's reward reads as $0, not the
   // raw post-deduction figure.
   const reward = isEligible ? record.reward_after_deductions_usd : 0;
   const iplcReward = isEligible ? record.iplc_reward_usd : 0;

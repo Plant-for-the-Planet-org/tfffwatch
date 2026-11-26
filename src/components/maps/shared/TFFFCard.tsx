@@ -2,6 +2,7 @@
 
 import { Spacer } from "@/components/ui/layout";
 import { countryPagePath } from "@/domain/dataset";
+import { classify } from "@/domain/eligibility";
 import { toReadable } from "@/lib/format";
 import { Check, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
@@ -20,6 +21,10 @@ export default function TFFFCard({
   size = "default",
 }: TFFFCardProps) {
   if (!data) return null;
+
+  // Same rule as the world map: only ineligible countries are not paid.
+  const status = classify(data);
+  const paid = status !== "INELIGIBLE";
 
   const sizeClasses = {
     compact: "w-3xs md:w-80 p-1 sm:p-2 text-xs",
@@ -57,9 +62,13 @@ export default function TFFFCard({
         {/* A <div>, not a <p>: it holds the criteria popover, whose block
             content is invalid inside a <p> and breaks hydration. */}
         <div className="flex items-center gap-2 relative group cursor-default">
-          <StatusIcon pass={data.eligibility_combined} />
+          <StatusIcon pass={status !== "INELIGIBLE"} />
           <span className="underline underline-offset-4 decoration-dashed decoration decoration-base-gray">
-            {data.eligibility_combined ? "Meets" : "Fails"} minimum requirements
+            {status === "ELIGIBLE"
+              ? "Meets minimum requirements"
+              : status === "ALMOST_ELIGIBLE"
+                ? "Almost eligible"
+                : "Fails minimum requirements"}
           </span>
 
           <div className="absolute z-10 bottom-full mb-2 w-72 hidden group-hover:block bg-white p-2 rounded shadow left-1/2 -translate-x-1/2">
@@ -113,7 +122,7 @@ export default function TFFFCard({
       <div
         className={twMerge(
           "p-2 px-4 sm:px-2 md:p-3 md:-mx-3 lg:-mx-4 xl:-mx-5 lg:p-4 xl:p-5 xl:py-4",
-          data.eligibility_combined ? "bg-primary-light" : "bg-danger-light",
+          paid ? "bg-primary-light" : "bg-danger-light",
           showCTA
             ? "rounded-none"
             : "rounded-b-xl md:rounded-b-2xl lg:rounded-b-3xl"
@@ -127,21 +136,19 @@ export default function TFFFCard({
           <span
             className={twMerge(
               "text-sm",
-              !data.eligibility_combined && "text-danger"
+              !paid && "text-danger"
             )}
           >
             <b>
               $
-              {data.eligibility_combined
-                ? toReadable(data.reward_after_deductions_usd)
-                : 0}
+              {paid ? toReadable(data.reward_after_deductions_usd) : 0}
             </b>
           </span>
         </p>
         <p className="flex justify-between items-center font-thin">
           <span>Of which 20% is designated for Indigenous Peoples</span>
           <span className="text-sm">
-            ${data.eligibility_combined ? toReadable(data.iplc_reward_usd) : 0}
+            ${paid ? toReadable(data.iplc_reward_usd) : 0}
           </span>
         </p>
       </div>
