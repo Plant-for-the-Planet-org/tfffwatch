@@ -4,7 +4,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import LinkWithParams from "./ui/LinkWithParams";
+import Link from "next/link";
 
 export default function HeaderMenu({ light = false }: { light?: boolean }) {
   const [customOpen, setCustomOpen] = useState(false);
@@ -50,14 +50,13 @@ export default function HeaderMenu({ light = false }: { light?: boolean }) {
           >
             {options.map((el, key) => (
               <MenuItem key={el.id} as="div">
-                <LinkWithParams
+                <Link
                   href={el?.external ? el?.href : `/${el.href}`}
                   className={twMerge(
                     "block w-full typo-p py-4",
                     key === 0 && "pt-0",
                     key === options.length - 1 && "pb-0",
                   )}
-                  preserveParams={["dataset"]}
                   onClick={() => {
                     close();
                   }}
@@ -65,7 +64,7 @@ export default function HeaderMenu({ light = false }: { light?: boolean }) {
                   rel={el?.external ? "noopener noreferrer" : undefined}
                 >
                   <span>{el.label}</span>
-                </LinkWithParams>
+                </Link>
               </MenuItem>
             ))}
           </MenuItems>

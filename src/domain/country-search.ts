@@ -1,3 +1,4 @@
+import { countryPagePath, type DatasetType } from "@/domain/dataset";
 import countryMapping from "./country-mapping.json";
 
 export type SearchableCountry = {
@@ -71,10 +72,10 @@ export function searchCountries(query: string): SearchableCountry[] {
 export function openCountryPage(
   slug: string,
   year: string | number,
-  dataset: string,
+  dataset: DatasetType,
 ) {
   window.open(
-    `/${slug}/${year}?dataset=${dataset}`,
+    countryPagePath(slug, year, dataset),
     "_blank",
     "noopener,noreferrer",
   );

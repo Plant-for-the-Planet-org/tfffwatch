@@ -9,7 +9,7 @@ import { twMerge } from "tailwind-merge";
 import HeaderCountry from "./HeaderCountry";
 import HeaderLinks from "./HeaderLinks";
 import { Spacer } from "@/components/ui/layout";
-import LinkWithParams from "./ui/LinkWithParams";
+import Link from "next/link";
 
 // Pages whose hero image runs up behind the header. Used only for the first
 // paint, so the header does not flash white before the hero is measured.
@@ -107,7 +107,7 @@ export default function Header() {
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <div>
-      <LinkWithParams href="/" preserveParams={["dataset"]}>
+      <Link href="/">
         <Image
           className=" h-[24px] w-[160px] lg:h-[48px] lg:w-[256px]"
           width={256}
@@ -119,7 +119,7 @@ export function Logo({ light = false }: { light?: boolean }) {
           }
           alt="TFFF Watch"
         />
-      </LinkWithParams>
+      </Link>
     </div>
   );
 }

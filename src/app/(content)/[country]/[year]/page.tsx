@@ -74,10 +74,9 @@ export default async function Page({ params, searchParams }: PageProps) {
     permanentRedirect(countryPagePath(canonicalSlug, validYear));
   }
 
-  // Single dataset mode (MMU). A missing or old ?dataset value (e.g. JRC, GFW)
-  // is sent to ?dataset=MMU so the URL always says which data is shown.
-  // One redirect fixes both the year and the dataset.
-  if (dataset !== DEFAULT_DATASET || validYear !== year) {
+  // Single dataset mode (MMU), implied by the URL. Any ?dataset value (old
+  // links like ?dataset=JRC or ?dataset=MMU) is dropped with the year fix.
+  if (dataset !== undefined || validYear !== year) {
     redirect(countryPagePath(country, validYear));
   }
 

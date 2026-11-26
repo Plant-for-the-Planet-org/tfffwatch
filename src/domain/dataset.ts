@@ -17,12 +17,14 @@ export const DATASET_MIN_YEAR = 2022;
 // captions, country year picker, sitemap). Bump it when a new year lands.
 export const DATASET_LATEST_YEAR = 2025;
 
-// Country pages always carry the dataset in the URL, e.g. /brazil/2025?dataset=MMU.
-// Build every link to a country page with this so the param is never missing.
+// Country page path. The default dataset (MMU) is not mentioned in the URL,
+// e.g. /brazil/2025. Any other dataset would be added as ?dataset=<name>.
+// Build every link to a country page with this.
 export function countryPagePath(
   slug: string,
   year: string | number,
   dataset: DatasetType = DEFAULT_DATASET
 ): string {
-  return `/${slug}/${year}?dataset=${dataset}`;
+  const path = `/${slug}/${year}`;
+  return dataset === DEFAULT_DATASET ? path : `${path}?dataset=${dataset}`;
 }
