@@ -33,6 +33,17 @@ function getCountryGeoJSON(iso2: string): FeatureCollection {
   } as FeatureCollection;
 }
 
+// The Layers tiler paints intact forest in the old light green (#6FCF97).
+// These values shift it to the theme green (#007A49) in the browser. They were
+// fitted for that one source colour, so re-tune (or drop) them if the tiler
+// palette changes. Opacity 1 so the green is not washed out by the map behind.
+const FOREST_TINT = {
+  "raster-opacity": 1,
+  "raster-hue-rotate": 18,
+  "raster-saturation": 0.8,
+  "raster-brightness-max": 0.34,
+} as const;
+
 export default function CountryMap({
   country,
   year,
@@ -181,7 +192,7 @@ export default function CountryMap({
               <Layer
                 id={`${id}-layer`}
                 type="raster"
-                paint={{ "raster-opacity": 0.8 }}
+                paint={id === "mmu-forest" ? FOREST_TINT : { "raster-opacity": 0.8 }}
               />
             </Source>
           ))}
