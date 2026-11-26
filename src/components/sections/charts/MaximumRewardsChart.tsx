@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { Spacer } from "@/components/ui/layout";
 import { useWorldMapStore } from "@/stores/map.store";
+import { eligibilityColor } from "@/domain/eligibility";
 import { buildRewardsDonut } from "./transforms/rewards-donut";
 import { LazyDonutChart as DonutChart } from "./lazy";
 
@@ -53,7 +54,11 @@ export default function MaximumRewardsChart() {
       </div>
       <Spacer />
       <DonutChart
-        data={chartData.countries}
+        // Every segment in the theme green.
+        data={chartData.countries.map((c) => ({
+          ...c,
+          color: eligibilityColor("ELIGIBLE"),
+        }))}
         centerLabel={`$${(chartData.sum / 1000000000).toFixed(1)}bn`}
       />
       <Spacer />
